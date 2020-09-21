@@ -1,0 +1,35 @@
+%======================================================================
+\chapter{Introduction}
+\label{ch: Chapter1}
+%======================================================================
+
+%----------------------------------------------------------------------
+\section{Problem Statement}
+%----------------------------------------------------------------------
+Helicopters are of a paramount importance as
+they are used in many civilian and military applications due to their ability for vertical take-off and landing. To enable their use in such applications, intensive research has been conducted to date since helicopters involve complex nonlinear dynamics. Most of the work on helicopter based research requires dedicated computers for controlling their motion to specific configurations and resistant to turbulent conditions. Such methods are expensive and time-consuming to develop. Implementation of motion control techniques using cost-effective hardware is still a challenge.
+
+In this project, we are proposing an algorithm for smart control of a team of two degree-of freedom (two-DOF) helicopters using conventional motion control in cooperation with machine learning techniques where a user will be able to configure helicopters from any initial position. Even though conventional techniques have been tested with simple platforms in the literature, the current project employs conventional motion control strategies in cooperation with machine learning technique (reinforcement learning, for instance) for a team of helicopters as well as introducing user control via mobile devices. This project is expected to encourage research in this area as well as serve as an educational tool in teaching environments.
+
+
+%----------------------------------------------------------------------
+\section{Literature Review}
+%----------------------------------------------------------------------
+Our project requires a great deal of research as some of our tasks have not been attempted before.  As a result, we have examined research papers, work complete by other projects at Bradley University, and documentation/teaching materials from Quanser Inc.
+
+Among the major challenges in developing unmanned systems is to implement a modular, cost-effective, and robust teleoperation system, where the motion of a group of helicopters is controlled by mobile devices. In some cases, computer simulations are conducted to reveal the performance control structures of a 2-DOF helicopter~\cite{DArpino2010}. A large body of research has been conducted in the literature to focus on developing different control structures, such as linear-quadratic regulators (LQR)/Gaussian (LQG), sliding-mode controls (SMC), and advance nonlinear controls, that are specifically applied to 2-DOF helicopters. See~\cite{Subramanian2016-Robust,Ahmed2010-Sliding}, for example, and some references therein. Furthermore,  soft-computing tools, such as fuzzy-logic, neural networks, and a few combinations of them are employed for controlling the motion of a 2-DOF helicopter~\cite{Chang2017-Fuzzy,Kayacan2016-Fuzzy,Gao2016-DataDriven,Hernandez2012-Decentralized}.
+
+The documentation of Quanser AERO\footnote{See \href{https://www.quanser.com/}{https://www.quanser.com/} for details} employs LQR and LQG motion control techniques for teaching purposes.  This involves creating a linearized system model to calculate the LQR state-feedback gain.  A model reference adaptive control (MARC) scheme using Lyapunov functions has been used by~\cite{Subramanian2016-Robust} for adaptive motion control of a 2-DOF helicopter.  SMC is a nonlinear control technique to drive the system states onto a surface in the state space.  This method has been used  by~\cite{Ahmed2010-Sliding}.  Fuzzy-logic controllers use an inference engine to produce an output as used in~\cite{Chang2017-Fuzzy,Kayacan2016-Fuzzy}.  The ADP technique does not rely on knowledge of the system model.  Instead, it uses data to reconstruct the states as preformed by~\cite{Gao2016-DataDriven}.  Authors in~\cite{Hernandez2012-Decentralized} used high order neural networks (HONN) to approximate non-linearities in the system model.
+
+As can be noticed, most of the motion control techniques are either tested using computer simulations or use dedicated computational platforms, that may not be modular and/or cost-effective, for developing motion control algorithms. This is due to the fact that the aforementioned techniques are mainly to propose novel motion control techniques and not focused on hardware implementation platforms. Therefore, the current work considers implementing a conventional motion control technique using modular and cost-effective hardware platforms in the context of a teleoperation system, where a human operator has the ability to control the motion of a team of helicopters using a smart mobile device.
+
+
+%----------------------------------------------------------------------
+\section{Report Organization}
+%----------------------------------------------------------------------
+This report is organised into 6 chapters.  Chapter \ref{ch: Chapter1} discusses what this project hopes to accomplish and what similar projects have completed.  Chapter \ref{ch: Chapter2} explains how to create a mathematical model for the system.  Chapter \ref{ch: Chapter3} provides a breif explanation of the control algorithms and architectures used.  Chapter \ref{ch: Chapter4} contains the results from our simulations.  Chapter \ref{ch: Chapter5} disucsses results from USB, Raspberry Pi, and Mobile Device implementation.  Chapter \ref{ch: Chapter6} concludes the paper and provides insight into future directions.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../finalReportMainV1"
+%%% End:

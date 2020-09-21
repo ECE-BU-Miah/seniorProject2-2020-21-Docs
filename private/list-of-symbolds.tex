@@ -1,0 +1,51 @@
+% L I S T   O F   S Y M B O L S
+% -----------------------------
+% To include a Nomenclature section
+\addcontentsline{toc}{chapter}{\textbf{Nomenclature}}
+
+\renewcommand{\nomname}{Nomenclature}
+\renewcommand{\nomAname}{\textbf{\large Abbreviations}}
+\renewcommand{\nomGname}{\textbf{\large Mathematical Symbols}}
+\renewcommand{\nomXname}{\textbf{\large Superscripts}}
+\renewcommand{\nomZname}{\textbf{\large Subscripts}}
+
+\printnomenclature
+\cleardoublepage
+\phantomsection % allows hyperref to link to the correct page
+% \newpage
+
+
+\nomAname
+\bigbreak
+\begin{itemize}
+    \item[]\textbf{RC} - Robotic Cart
+    \item[]\textbf{2-DOF} - 2~Degrees-Of-Freedom
+    \item[]\textbf{ADP} - Approximate Dynamic Programming
+    \item[] \textbf{LQG} - Linear Quadratic Gaussian
+    \item[]\textbf{LQR} - Linear Quadratic Regulator
+    \item[]\textbf{RMSE} - Root Mean Square Error
+    \item[]\textbf{SPI} - Serial Peripheral Interface
+    \item[]\textbf{TCP} - Transmission Control Protocol
+    \item[]\textbf{UDP} - User Datagram Protocol
+    \item[]\textbf{USB} - Universal Serial Bus
+\end{itemize}
+
+\nomGname
+\bigbreak
+\begin{itemize}
+    \item[]$D_p$ - viscous damping of the pitch axis
+    \item[]$D_y$ - viscous damping of the yaw axis
+    \item[]$J_p$ - moment of inertia about pitch axis
+    \item[]$J_y$ - moment of inertia about yaw axis
+    \item[]$K_{sp}$ - stiffness of the axes
+    \item[]$K_{pp}$ - pitch motor thrust constant
+    \item[]$K_{py}$ - thrust constant acting on the pitch angle from the yaw motor
+    \item[]$K_{yp}$ - thrust constant acting on yaw angle from pitch motor
+    \item[]$K_{yy}$ - yaw motor thrust constant
+\end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../uottawa-thesis"
+%%% End: 

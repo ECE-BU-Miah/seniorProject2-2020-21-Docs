@@ -1,0 +1,270 @@
+% uOttawa (unofficial) Thesis Template for LaTeX 
+% Edited by Wail Gueaieb based on Stephen Carr's uWaterloo Template
+
+% The files included in this package are slighly modified by Suruz Miah to adapt partial requirements  in writing project/thesis reports of the Bradley University's Department of Electrical and Computer Engineering.
+
+% DON'T USE THIS TEMPLATE IF YOU DON'T KNOW WHAT YOU'RE DOING!
+% Remember, it comes WITH NO WARRANTY!
+
+% Please read the "00readme.txt" file first.
+% Here is how to use this template:
+%
+% DON'T FORGET TO ADD YOUR OWN NAME AND TITLE in the "hyperref" package
+% configuration in the "thesis-preample.tex" file. THIS INFORMATION GETS 
+% EMBEDDED IN THE PDF FINAL PDF DOCUMENT.
+% You can view the information if you view Properties of the PDF document.
+
+% The template is based on the standard "book" document class which provides 
+% all necessary sectioning structures and allows multi-part theses.
+
+% DISCLAIMER
+% To the best of our knowledge, this template satisfies the current 
+% uOttawa thesis requirements.
+% However, it is your responsibility to assure that you have met all 
+% requirements of the university and your particular department.
+% Many thanks to the feedback from many graduates that assisted the 
+% development of this template.
+
+% -----------------------------------------------------------------------
+
+% When using pdflatex, by default the output is geared toward generating a PDF 
+% version optimized for viewing on an electronic display, including 
+% hyperlinks within the PDF.
+ 
+% E.g. to process a thesis based on this template, run:
+
+% (pdf)latex thesisMain	-- first pass of the (pdf)latex processor
+% bibtex thesisMain 	-- generates bibliography from .bib data file(s) 
+% (pdf)latex thesisMain	-- fixes cross-references, bibliographic references, etc
+% (pdf)latex thesisMain	-- fixes cross-references, bibliographic references, etc
+% makeindex -s nomentbl.ist -o thesisMain.nls thesisMain.nlo
+% (pdf)latex thesisMain	-- fixes cross-references, bibliographic references, etc
+% (pdf)latex thesisMain	-- fixes cross-references, bibliographic references, etc
+
+
+
+% N.B. The "pdftex" program allows graphics in the following formats to be
+% included with the "\includegraphics" command: PNG, PDF, JPEG, TIFF
+% Tip 1: Generate your figures and photos in the size you want them to appear
+% in your thesis, rather than scaling them with \includegraphics options.
+% Tip 2: Any drawings you do should be in scalable vector graphic formats:
+% SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
+% the final PDF as well.
+% Tip 3: Photographs should be cropped and compressed so as not to be too large.
+
+% To create a PDF output that is optimized for double-sided printing: 
+%
+% 1) comment-out the \documentclass statement in the preamble below, and
+% un-comment the second \documentclass line.
+%
+% 2) change the value assigned below to the boolean variable
+% "PrintVersion" from "false" to "true".
+
+% --------------------- Start of Document Preamble -----------------------
+
+% Specify the document class, default style attributes, and page dimensions
+% For hyperlinked PDF, suitable for viewing on a computer, use this:
+% \UseRawInputEncoding
+
+% \documentclass[letterpaper,12pt,titlepage,oneside,final]{book}
+ 
+% For PDF, suitable for double-sided printing, change the PrintVersion variable below
+% to "true" and use this \documentclass line instead of the one above:
+\documentclass[letterpaper,12pt,titlepage,openright,twoside,final]{book}
+
+
+% This package allows if-then-else control structures.
+\usepackage{ifthen}
+\newboolean{PrintVersion}
+\setboolean{PrintVersion}{false} 
+% \setboolean{PrintVersion}{true} 
+% CHANGE THIS VALUE TO "true" as necessary, to improve printed results 
+% for hard copies by overriding some options of the hyperref package.
+
+%%%%%%%%%%%%%%%%%%%%%
+% MATLAB Code
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Algorithm 
+\usepackage[english,algo2e,algoruled,vlined,linesnumbered]{algorithm2e}
+%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Table
+\usepackage{booktabs}
+%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Enable Subfigures
+\usepackage{subfigure}
+%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%
+% Enable todonotes
+\usepackage{todonotes}
+%%%%%%%%%%%%%%%%%%%%%
+
+% Load your needed packages and other commands of yours.
+\input{preamble}
+\usepackage{epstopdf}
+\epstopdfsetup{suffix={}}
+
+
+% This is where thesis margins and spaces are set.
+\input{private/thesis-margins-and-spaces}
+
+\fancypagestyle{myFancy}{%
+  \fancyhf{}% Clear header and footer
+  \fancyhead[LE,RO]{\bfseries\nouppercase{\rightmark}}
+  \fancyhead[LO,RE]{\bfseries\nouppercase{\leftmark}}
+  \fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}% Custom footer
+  \fancyfoot[L]{G.~Janiak \& K.~Vonckx (\nameOfUniversity)}% Custom footer
+  \renewcommand{\headrulewidth}{0.4pt}% Line at the header visible
+  \renewcommand{\footrulewidth}{0.1pt}% Line at the footer visible
+}
+
+
+%======================================================================
+%   L O G I C A L    D O C U M E N T -- the content of your thesis
+%======================================================================
+\begin{document}
+
+% For a large document, it is a good idea to divide your thesis
+% into several files, each one containing one chapter.
+% To illustrate this idea, the "front pages" (i.e., title page,
+% declaration, borrowers' page, abstract, acknowledgements,
+% dedication, table of contents, list of tables, list of figures,
+% nomenclature).
+%----------------------------------------------------------------------
+% FRONT MATERIAL
+%----------------------------------------------------------------------
+%
+% C O V E R  P A G E
+% ------------------
+\newcommand{\thesisauthor}{Glenn Janiak and Ken Vonckx}
+\newcommand{\advisor}{Dr. Suruz Miah}
+\newcommand{\thesistitlecoverpage}{%
+Smart Control of 2-Degree of Freedom Helicopters 
+}
+%\newcommand{\degree}{Ph.D.} % possible values are:
+                            % M.A. / M.A.Sc. / M.Sc. / MCS / Ph.D.
+\newcommand{\nameofprogram}{Electrical and Computer Engineering Department}
+\newcommand{\academicunit}{Caterpillar College of Engineering and Technology}
+%\newcommand{\faculty}{Faculty of Engineering}
+\newcommand{\nameOfUniversity}{Bradley University}
+\newcommand{\graduationyear}{2019}
+%
+\input{private/00-frontpage}
+
+
+
+%
+% R E S T  O F  F R O N T  P A G E S
+% ----------------------------------
+% \input{private/01-declarationpage} %This is not needed in a uOttawa thesis.
+%
+% Edit the following 3 files with your abstract, acknowledgements, 
+% and dedication.
+\input{parts/02-abstract}
+\input{parts/03-acknowledgements}
+\input{parts/04-dedication}
+%
+%
+% No need to edit this file.
+\input{private/toc-lot-lof}
+%
+% No need to edit this file. But you may want to comment the whole line if you
+% don't have or want a Nomenclature section.
+\input{private/list-of-symbolds}  
+
+
+% Change page numbering back to Arabic numerals
+\pagenumbering{arabic}
+
+
+
+%
+
+% Redefine the plain page style
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}%
+  \fancyfoot[L]{G.~Janiak \& K.~Vonckx (\nameOfUniversity)}%  
+  \renewcommand{\headrulewidth}{0pt}% Line at the header invisible
+  \renewcommand{\footrulewidth}{0.1pt}% Line at the footer visible
+}
+\pagestyle{myFancy}
+
+
+%----------------------------------------------------------------------
+% MAIN BODY
+%---------------------------------------------------------------------- 
+% Chapters 
+% Include your "sub" source files here (must have extension .tex)
+\input{parts/10-introduction}
+% \input{parts/20-modeling2-DOF.tex}
+% \input{parts/30-controlAlgorithms.tex}
+% \input{parts/40-simulations.tex}
+% \input{parts/50-implementation.tex}
+% \input{parts/60-conclusion.tex}
+
+% %----------------------------------------------------------------------
+% % APPENDICES
+% %---------------------------------------------------------------------- 
+\appendix
+% % Designate with \appendix declaration which just changes numbering style 
+% % from here on
+% % Add a title page before the appendices and a line in the Table of Contents
+\addcontentsline{toc}{chapter}{APPENDICES} 
+% %
+
+% \input{parts/A-quanserParam.tex}
+% \input{parts/B-simulation.tex}
+% %\input{parts/C-USB.tex}
+% \input{parts/D-RP.tex}
+% \input{parts/E-ADP.tex}
+% \input{parts/tutorial.tex}
+
+% %----------------------------------------------------------------------
+% % END MATERIAL
+% %----------------------------------------------------------------------
+
+% % B I B L I O G R A P H Y
+% % -----------------------
+% %
+% % The following statement selects the style to use for references.  It controls the sort order of the entries in the bibliography and also the formatting for the in-text labels.
+\bibliographystyle{plain}
+% % This specifies the location of the file containing the bibliographic information.  
+% % It assumes you're using BibTeX (if not, why not?).
+% \ifthenelse{\boolean{PrintVersion}}{
+% \cleardoublepage % This is needed if the book class is used, to place the anchor in the correct page,
+%                  % because the bibliography will start on its own page.
+% }{
+% \clearpage       % Use \clearpage instead if the document class uses the "oneside" argument
+% }
+% \phantomsection  % With hyperref package, enables hyperlinking from the table of contents to bibliography             
+% % The following statement causes the title "References" to be used for the bibliography section:
+% % \renewcommand*{\bibname}{References}
+% Bibliography 
+\renewcommand{\bibname}{Bibliography}
+
+% Add the References to the Table of Contents
+\addcontentsline{toc}{chapter}{\textbf{References}}
+
+\bibliography{bib/refsHelicopter,bib/refsSuruzWeb}
+% Tip 5: You can create multiple .bib files to organize your references. 
+% Just list them all in the \bibliogaphy command, separated by commas (no spaces).
+
+
+%----------------------------------------------------------------------
+\end{document}
+%======================================================================
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

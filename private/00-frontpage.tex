@@ -1,0 +1,65 @@
+% T I T L E   P A G E
+% -------------------
+% Last updated May 24, 2011, by Stephen Carr, IST-Client Services
+% The title page is counted as page `i' but we need to suppress the
+% page number.  We also don't want any headers or footers.
+\pagestyle{empty}
+\pagenumbering{roman}
+
+% The contents of the title page are specified in the "titlepage"
+% environment.
+\begin{titlepage}
+        \begin{center}
+        \vspace*{1.0cm}
+
+        \Huge
+        {\bf \thesistitlecoverpage }
+
+        \vspace*{1.0cm}
+
+        \normalsize
+        by \\
+
+        \vspace*{1.0cm}
+
+        \Large
+        \thesisauthor\\
+        Advisor:~\advisor\\
+
+        \vspace*{3.0cm}
+
+        % \normalsize
+        % Thesis submitted to the\\
+        % Faculty of Graduate and Postdoctoral Studies\\
+        % In partial fulfillment of the requirements\\
+        % For the \degree~degree in\\
+        % \nameofprogram\\
+
+        \vspace*{2.0cm}
+
+        \nameofprogram\\
+        \academicunit\\
+        %\faculty\\
+        \nameOfUniversity\\
+
+        \vspace*{4.0cm}
+
+        \copyright~\thesisauthor, Peoria, Illinois, \graduationyear\\
+        \end{center}
+\end{titlepage}
+
+% The rest of the front pages should contain no headers and be numbered using Roman numerals starting with `ii'
+% PRELIMINARY PAGES
+
+\pagestyle{plain}
+\setcounter{page}{2}
+
+\cleardoublepage % Ends the current page and causes all figures and tables that have so far appeared in the input to be printed.
+% In a two-sided printing style, it also makes the next page a right-hand (odd-numbered) page, producing a blank page if necessary.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../thesisMain"
+%%% End:
