@@ -1,601 +1,220 @@
+\documentclass[letterpaper,12pt]{article}   %%% Can be report
 
-\documentclass{article}
+%% set paper margins
+\oddsidemargin=0.1in
+\evensidemargin=0.1in
+\textwidth=6.0in
+\topmargin=-0.7in
+\textheight=9.0in
+\parindent=0.2in
 
-\usepackage[bottom=10em]{geometry} % Reduces the whitespace at the bottom of the page so more text can fit
-\usepackage[english]{babel} % English language
-\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
-
-\usepackage[utf8]{inputenc} % Uses the utf8 input encoding
-\usepackage[osf]{mathpazo} % Palatino as the main font
-\linespread{1.05}\selectfont % Palatino needs some extra spacing, here 5% extra
-\usepackage[scaled=.88]{beramono} % Bera-Monospace
-\usepackage[scaled=.86]{berasans} % Bera Sans-Serif
-
-\usepackage{xcolor} %Used to get the bar colors on Gantt chart
-\usepackage{float} % Package used to position figures in exact locations
-\usepackage{booktabs,array} % Packages for tables
-% \usepackage{caption} %for captions 
-% \usepackage{subcaption} %for captions in subfigures
-\usepackage{enumerate} % Used for enumeration other than listing
-\usepackage{amsmath} % For typesetting math
-\usepackage{graphicx} % Required for including images
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{rotating}
 \usepackage{subfigure}
-\usepackage{epstopdf}
-\epstopdfsetup{suffix={}}
-\usepackage{todonotes}
-%=========================================================================================
-%\usepackage[pdftex]{graphicx}   %Enable pdflatex
-\usepackage{pgfgantt} %Added to use the Gantt charts
-\newcounter{myWeekNum}
-\stepcounter{myWeekNum}
-%
-\newcommand{\myWeek}{\themyWeekNum
-    \stepcounter{myWeekNum}
-    \ifnum\themyWeekNum=53
-         \setcounter{myWeekNum}{1}
-    \else\fi
+\graphicspath{%
+  {figs/ipe/}
+  {figs/dia/}
+  {figs/matlab/}
+  {figs/imag/}
+} 
+\usepackage[width=11cm,font=footnotesize,labelfont=bf, %
+format=default,justification=centerlast]{caption} % Figure caption text customization 
+
+\usepackage{pgfgantt}
+
+
+\usepackage{hyperref}
+\usepackage{soul}
+\usepackage{setspace}
+\usepackage{multirow}
+
+\usepackage{siunitx}
+\sisetup{unitsep=\cdot}
+
+\title{ECE498:~Senior Capstone Project I\\\textbf{\underline{Project Proposal}}\\
+\vspace{0.5in}
+Project Title: ZigBee--Based Indoor Robot Localization and Mapping}
+\vspace{1.5in}
+\author{Kyle Hevrdejs and Jacob Knoll\\ Advisor: Dr.~Suruz Miah
 }
+%\date{February 6, 2003}  No need to write, Date will be automatically on the title page
+\date{}  % Do not show date on the title page
 
-%========================================================================================
-\usepackage{etoolbox}
-\usepackage[norule]{footmisc} % Removes the horizontal rule from footnotes
-\usepackage{lastpage} % Counts the number of pages of the document
-\usepackage{fancyhdr} % Allows us to use the fancyhead/fancyfoot commands for the headers and footers
-\pagestyle{fancy} % Allows us to use the fancy format
-
-%\usepackage[dvipsnames]{xcolor}  % Allows the definition of hex colors %Conflicts with the todonotes package
-\definecolor{linkcolor}{rgb}{0,0,0.42} % Custom color for links - dark blue at the moment
-
-%========================================================================================
-% Hyperlink configuration
-\usepackage[
-    pdfauthor={}, % Your name for the author field in the PDF
-    pdftitle={Laboratory Journal}, % PDF title
-    pdfsubject={}, % PDF subject
-    bookmarksopen=true,
-    linktocpage=true,
-    urlcolor=linkcolor, % Color of URLs
-    citecolor=linkcolor, % Color of citations
-    linkcolor=linkcolor, % Color of links to other pages/figures
-    backref=page,
-    pdfpagelabels=true,
-    plainpages=false,
-    colorlinks=true, % Turn off all coloring by changing this to false
-    bookmarks=true,
-    pdfview=FitB]{hyperref}
- 
-%========================================================================================
-% Header/Footer configuration
-    \fancyhf{}
-    \fancyhead[R]{%
-  \small\hspace{15pt}\emph{Adra $\|$ Jones}
-  }
-    \fancyfoot[L]{%
-  \small\hspace{15pt}\emph{\today}%
-  }
-    \fancyfoot[R]{%
-  \small\emph{Page \thepage\ of \pageref{LastPage}}\hspace{15pt}%
-  }
-%========================================================================================
-%========================================================================================
-
-%========================================================================================
-%   TITLE PAGE   %
-%========================================================================================
-%\frontmatter % Use Roman numerals for page numbers
-%\begin{center}
-
-\title{
-\begin{center}
-\href{http://www.bradley.edu}{\includegraphics[height=0.6in]{figs/logoBU1-Print}}
-\\[0.4cm] %
-\Huge \bfseries ECE$498$ Project Proposal 
-\\[1.0cm] % 
-\Huge  Project Title: Area Coverage Optimization using Heterogeneous Mobile Robots 
-\\[10.0cm] % goes to bottom of title anyways
-\end{center} %
-}
-\author{\LARGE Eric Jones and Dakota Adra \\ \LARGE Advisor: Dr. Suruz Miah }
-\date{September 27, 2018} 
-%========================================================================================
-
-
+%%%%%%%%%%%%%%%%% Set document line spacing %%%%%%%%%%%%%%%%%%%%%
+\singlespacing
+%\onehalfspacing
+%\doublespacing
+% all packages are in the following tex file.
+%\input{paper-preamble.tex}
 \begin{document}
 
-\maketitle
+%%% Make title page 
+\begin{titlepage}
+ \maketitle
+
+\vspace*{4.0cm}
+\begin{center}
+\normalsize
+Electrical and Computer Engineering Department\\
+Caterpillar College of Engineering and Technology\\
+\href{http://www.bradley.edu/}{Bradley University}\\
+
+\vspace*{6.0cm}
+\copyright~K.~Hevrdejs~and~J.~Knoll, Peoria, IL, USA, 2016\\
+
+\end{center}
+\thispagestyle{empty}
+
+\end{titlepage} 
+%%%%%%%%%%%%
+%\thispagestyle{empty}
+%\maketitle
 \newpage
-%========================================================================================
-\tableofcontents % Table of contents
-\newpage % Start new page for article
-%========================================================================================
-
-%========================================================================================
-%   INTRODUCTION   %
-%========================================================================================
-\section{ Introduction}
-In a framework of multi-agent systems, the coverage optimization of a spatial area using a team of mobile agents (robots) is of paramount importance due to its variety of uses in robotic applications. Most notability in roles where an agent (or a mobile robot) is preferable to a human or when a task is simply impossible for a human to perform. Typical applications for area coverage optimization in the field of mobile robotics include search and rescue, surveillance, environmental monitoring, cooperative estimation, and indoor navigation, among others. These problems are usually solved using an array of networked mobile agents operating collectively. Recently the implementation of area coverage algorithms has been restricted to a fleet of homogeneous robots at high monetary cost. The purpose of this project is to lower the costs of entry due to the selected robot platform by providing an easily accessible framework for heterogeneous robots that can be implemented both quickly and efficiently. Note that the terms robots and agents will be used interchangeably from now on.
-
-%\todo[inline]{Put the citations in the paragraphs}
-This research is a continuation of a previous project conducted by authors in [3] wherein an area coverage algorithm with a static density is implemented in real-time. The current work seeks to extend this idea by implementing a density that is dynamic.  The term density refers to the importance of a particular point in a given two-dimensional plane. In addition, we are looking to rigorously define a framework that multiple agents will use to implement the area coverage optimization algorithm. Therefore, we focus on developing a multi-agent framework using open-source software (MAFOSS) to standardize this algorithm. The MAFOSS is also aimed to be employed as an implementation platform for other multi-robot control algorithms, the leader-follower and  the cyclic pursuit, for example. Furthermore, as a stretch goal, the MAFOSS is expected to be developed such that a user operating a smart phone is able to provide input to a networked mobile agents regarding the location of the high-density points. Additional stretch goals include the implementation of external sensors and collision detection or mapping.
-
-
-
-% To conduct this research, a team of mobile robots will be used for testing the area coverage algorithm. The mobile robots used in the current work are shown in Figure~\ref{fig:mobileRobots}. % 
-% %
-% \begin{figure}
-%   \centering
-%   \subfigure[][]{
-%     \label{fig:eduMTC}
-%     \includegraphics[width=0.3\textwidth]{figs/img/BBBluePic.png}
-%   }
-%   \subfigure[][]{
-%     \label{fig:pioneer}    
-%     \includegraphics[width=0.3\textwidth]{figs/img/Pioneer3.png}
-%   }
-%   \subfigure[][]{
-%     \label{fig:khepra}    
-%     \includegraphics[width=0.3\textwidth]{figs/img/khepera-iv-mobile-robot.png}    
-%     }
-%   \caption{Mobile robots (agents) used in the current work:~\subref{fig:eduMTC} Customized eduMIP,~\subref{fig:pioneer} Pioneer 3-DX,~and~\subref{fig:khepra} Khepera IV.}
-%   \label{fig:mobileRobots}
-% \end{figure}
-% %
-% Note that the mobile robot shown in Figure~\ref{fig:eduMTC} is customized eduMIP robot that will be used for the current work. The details of these robots will be given in the implementation section of this document. 
-
-
-% % one such being a modified Beaglebone Blue eduMIP platform in a tricycle configuration developed by project team members through previous research. From now on authors will refer to this configuration as the Mobile Tricycle Configuration, or eduMTC. Figure~\ref{fig:eduMTC} depicts the eduMTC. Two other robots we will be using to conduct this research are the Pioneer 3-DX and the Khepera IV. These mobile robots have been designed by independent companies and are already in the Robotics Lab. These two robots can be seen in Figure~\ref{fig:pioneer} and Figure~\ref{fig:khepra}, respectively. The Beaglebone, Khepra, and Pioneer are heterogeneous in the sense that they have different actuators, physical dimensions and processing capabilities. To test the heterogeneous case we will be using the Khepra, Pioneer and one modified Beaglebone. For the homogeneous case, we will be using three eduMTCs.\\
-
-% % %========================================================================================
-% % %   FIGURE OF THE THREE ROBOTS USED   %
-% % %========================================================================================
-% % \begin{figure}[H]
-% %     \centering
-% %     \begin{subfigure}{0.3\textwidth}
-% %     \centering
-
-% %     \caption{Modified eduMIP}
-
-% %     \end{subfigure}
-% %     %========================================================================================
-% %     \begin{subfigure}{0.3\textwidth}
-% %     \centering
-
-% %     \caption{Pioneer 3-DX}
-    
-% %     \end{subfigure}
-% %     %========================================================================================
-% %     \begin{subfigure}{0.3\textwidth}
-% %     \centering
-
-% %     \caption{Khepra IV}
-
-% %     \end{subfigure}
-% % \end{figure}
-
-% \newpage
-% \section{\LARGE Background Study} %review of literature and prior work
-% %========================================================================================
-% %   BACKGROUND STUDY   %
-% %========================================================================================
-% Many papers have been published on algorithms requiring multi\-agent systems to optimize area coverage. However, few of these works describe a flexible framework that provides the means to achieve such a coverage task. 
-
-% Authors in~\cite{Kilinc2015} Kilinic attempts to optimize area coverage of an interconnected network of sensors and actuators that act as a control system. Kilinic’s goal is to maximize the area coverage of the wireless network control system (WNCS) whilst still maintaining convergence of the system in a large environment. Possible applications for the such a control system include smart grid, automatic management and navigation systems.  
-
-% The system is arranged in several heterogeneous subnetworks that communicate ad-hoc.  A single packet of information will hop multiple times through the network until it reaches the Kalman filter. Each of the subnetworks has a connection to the Kalman filter whilst remaining separate from each other. The Kalman filter is used to account for asymmetric packet arrival times as well as packet loss.  
-
-% In \cite{Lee2015} Lee attempts to optimize the area of a given region of interest for a time variant density. Dynamic density coverage has additional application compared to static density coverage. An example of this additional utility can be seen in a search and rescue scenario where the probability of a missing person being found in a particular area is time variant. 
-
-% Lee’s algorithm works by using voronoi regions and a robotic cost function to determine area coverage. Each robot is responsible for covering a particular voronoi region. Time information is used in the robot movement to account for the rapid changes in the density functions. 
-
-% In \cite{Miah2018} Miah adapts previous attempts of area coverage by using a fleet of heterogeneous modular cost-effective robots in real time. This allows for heterogeneous or non-uniform resource allocation and stabilizes the algorithm to allow for variation in the abilities of the constituent robots. 
-
-% The algorithm in Miah’s research is very similar to that of Lee’s. Miah adds additional consideration for the robot actuation limitations for a heterogeneous case whilst Lee does not. Each individual robot is given a coverage metric to describe its area coverage performance. 
-
-% In “Sensing and coverage for a network of heterogeneous robots” \cite{Pimenta2013} Pimenta is attempting to adapt the area coverage model for intruder tracking. Multiple intruders in a specified region can be tracked using this method even if their location is unknown. The coverage is optimized and therefore the probability or detecting any existing intruders in the area is also maximized.  
-
-% Pimenta’s algorithm allows an individual robot to track an intruder in its Voronoi cell whilst the other robots respond to provide optimal area coverage. When an intruder is located within a given distance from a robot it will trigger that particular robot to follow the intruder. 
-
-% In \cite{Varposhti2016} Varposhti uses area coverage optimization to distribute mobile directional sensors over an area. The sensors can move around freely and can adapt in the case of an outage in a particular area. Such networks can be used in target tracking, search and rescue, and surveillance. 
-
-% Varposhti uses a distributed learning algorithm to achieve area coverage in his research. Each sensor collaborates with its neighbors to determine the best position and orientation for each sensor. Each sensor moves in a random direction and turns in a random position until the coverage is maximized. 
-
-% In \cite{Yu2018} Yu attempts to find the optimal area coverage for deployable reconnaissance sensors. His approach involves considering the areas in which the sensors can be deployed, the connectivity and the coverage. Such an algorithm provides the ability to deploy sensors almost anywhere for the purpose of surveillance and intelligence. 
-
-% Yu’s algorithm uses genetic neural networks and particle swarm optimization to achieve optimal deployment. In the genetic algorithm the best performing configurations are passed on to the next generation whilst the poorly performing configurations are slowly phased out. Additionally a mutation rate is maintained to allow for other behavior that was not previously available in an older generation. 
-
-
-% \section{\LARGE Mathematical Model}
-% %=========================================================================
-% %    Mathematical Model    %
-% %=========================================================================
-%  The following sub-sections will cover the work we have done so far. This includes the modelling of algorithm, its derivation, system simulation results in MATLAB, current and future design decisions, and some experiments we have run in the lab.\\
- 
-%  We began this work by looking at the project previously conducted and attempting to simulate their results in MATLAB from scratch. To start, we developed a way to map a set density to a square area. For this we represented any x-y coordinate within the square area as the set \textbf{q}. Furthermore, we assigned \begin{math}\mathbf{\bar{q}}\end{math} to be the desired point for that agent to travel to in order to maximize coverage. As an example:
-% \begin{align}
-%     \mathbf{\bar{q}} = \begin{bmatrix} \bar{x} \\ \bar{y} \end{bmatrix} 
-%     \label{eq:d_q_1}
-% \end{align}
-% The phi function is the measure of the density at any given point \textbf{q}. Through simplification it can be seen that:
-% \begin{align}
-%     \phi(\mathbf{q}) = exp(\frac{-0.5*norm(\mathbf{q - \bar{\mathbf{q}}})^2}{\sigma^2}) \\ 
-%     \label{eq:d_q_2}
-% \end{align}
-% The variable $\sigma$ seen in Equation~\eqref{eq:d_q_1} represents how the density is spread throughout the area. A larger $\sigma$ denotes a larger spread of density. Further simplification yields:
-% \begin{align}
-%     \phi(\mathbf{q}) = exp(\frac{-0.5*norm(\begin{bmatrix} x \\ y \end{bmatrix} - \begin{bmatrix} \bar{x} \\ \bar{y} \end{bmatrix})^2}{\sigma^2}) \\
-%     \label{eq:d_q_3}
-%     \phi(\mathbf{q}) = exp(\frac{-0.5*norm((x-\bar{x})^2 + (y-\bar{y})^2)}{\sigma^2})
-% \end{align}
-% See figure~\ref{fig:voronoiRegions} for an example of the square area we are attempting to map. 
-
-% %\todo[inline]{Add colors to this figure to differentiate the Voronoi regions}
-
-% \begin{figure} [H]
-%     \centering
-%     \includegraphics{figs/ipe/voronoiRegions.eps}
-%     \caption{Plot of Agents in their Respective Voronoi Cells}
-%     \label{fig:voronoiRegions}
-% \end{figure}
-
-% This square area has been divided up into i Voronoi regions, for i number of agents operating in this area. These regions are represented in figure~\ref{fig:voronoiRegions} as V1, V2, and V3. In our case we are using three agents, though note that this number is somewhat arbitrary and can be scaled to any reasonable number. \\
-% \\
-% A Voronoi region is a partition of a plane such that all points within the partition's boundary must be closer to points within its boundary than to points outside. As such, the regions themselves must be convex two dimensional shapes. The Voronoi regions themselves represent a specific area covered by each agent within the region. \\
-% \\ 
-% The density function itself is applied to each x-y coordinate in the square area. Figure~\ref{fig:contour3Density} shows how a single density region is represented in three-dimensional space.
-% %\todo[inline]{Add grid to this picture}
-% \begin{figure} [H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{figs/matlab/contour3Density.eps}
-%     \caption{Density distribution centered at point (50,85)m.}
-%     \label{fig:contour3Density}
-% \end{figure}
-
-% %=========================================================================
-% Now that we had an idea of the how we would represent density we began looking at we would address the concept of coverage in our system. \\
-
-% Dr. Miah provided us with a derivation for coverage that I will detail here. The area coverage metric $H$ in our system for i number of agents is defined as:
-% \begin{align}
-%  H = \displaystyle\sum_{i=1}^{n} \int_{V_i} \phi(\mathbf{q}) f(r_{i}^2) \mathrm{d}{\cal Q}   
-% \end{align}
-% Where $f(r_{i}^2)$ is a function that models sensor characteristics.
-% \begin{align}
-%     f(r_{i}^2) = \alpha*e^{-\beta r_{i}^2}
-% \end{align}
-% Note that alpha and beta from the above represent ideal sensor parameters that we are not interested in modelling exactly. Our goal is to find a point in each Voronoi region ${\mathbf{p}}^{[i]}$ such that $H$ is maximized. In order to do such we first find $\frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}}$ and set it to zero. 
-% \\
-% For that let us define an individual case:
-% \begin{align}
-%     H_{i} = \int_{V_i} \phi(\mathbf{q}) f(r_{i}^2) \mathrm{d}{\cal Q}.
-% \end{align}
-% First let us take the derivative:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \frac{\mathrm{d}}{\mathrm{d}\mathbf{p}^{[i]}} \displaystyle\sum_{i=1}^{n} H_i = \displaystyle\sum_{i=1}^{n} \int_{V_i} f(r_{i}^2) \phi(\mathbf{q}) \mathrm{d}{\cal Q}
-%     \label{eq:d_H_4}
-% \end{align}
-% As the derivative of the coverage metrics $\displaystyle\sum_{i=1}^{n}H_i$ is zero at all other indices other than the current agent index $i$, we can ignore those values and further simplify Equation~\eqref{eq:d_H_4}.
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \frac{\mathrm{d}H_i}{\mathrm{d}\mathbf{p}^{[i]}} = \frac{\mathrm{d}}{\mathrm{d}\mathbf{p}^{[i]}} \int_{V_i} f(r_{i}^2) \phi(\mathbf{q}) \mathrm{d}{\cal Q} = \int_{V_i} \frac{\mathrm{d}f({r_i}^2)}{\mathrm{d}{r_i}^2} \frac{\mathrm{d}{r_i}^2}{\mathbf{p}^{[i]}} \phi(\mathbf{q})\mathrm{d}{\cal Q}
-%     \label{eq:d_H_5}
-% \end{align}
-% After the algebraic manipulation of derivative variables, note that we can find the derivative of the introduced range:
-% \begin{align}
-%     \frac{\mathrm{d}{r_i}}{\mathrm{d}\mathbf{p}^{[i]}} = \frac{\mathrm{d}}{\mathrm{d}\mathbf{p}^{[i]}}\sqrt{(x-{x}^{[i]]})^2 + (y-{y}^{[i]]})^2}
-%     \label{eq:d_ri_6}
-% \end{align}
-% The function is then squared in order to simplify the derivative calculation:
-% \begin{align}
-%     \frac{\mathrm{d}{{r_i}^2}}{\mathrm{d}\mathbf{p}^{[i]}} = \frac{\mathrm{d}}{\mathrm{d}\mathbf{x}^{[i]}\mathrm{d}\mathbf{y}^{[i]}}[(x-{x}^{[i]})^2 + (y-{y}^{[i]})^2] = (-2x+{x}^{[i]}) + (-2y+{y}^{[i]}) = -2(\mathbf{q} - \mathbf{p}^{[i]})
-%     \label{eq:d_ri2_7}
-% \end{align}
-% Using Equations~\eqref{eq:d_ri_6} and \eqref{eq:d_ri2_7}, we are able to simplify Equation~\eqref{eq:d_H_5} even further:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \int_{V_i} [-2 \phi(\mathbf{q}) \frac{\mathrm{d}f}{\mathrm{d}{r_i}^2}](\mathbf{q} - \mathbf{p^{[i]}}) \mathrm{d}{\cal Q}
-%     \label{eq:d_H_8}
-% \end{align}
-% The quantity $[-2 \phi(\mathbf{q}) \frac{\mathrm{d}f}{\mathrm{d}{r_i}^2}]$ shown in Equation~\eqref{eq:d_H_8} is introduced as the modified $\phi(\mathbf{q})$ function. This function takes into account the sensor parameters. We call this new function $\Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]})$. From Equation~\eqref{eq:d_H_8}:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) (\mathbf{q} - \mathbf{p}^{[i]}) \mathrm{d}{\cal Q}
-%     \label{eq:d_H_9}
-% \end{align}
-% Using properties of integrals, we split the integral into two:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \int_{V_i} \mathbf{q} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q} - \mathbf{p}^{[i]} \int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}
-%     \label{eq:d_H_10}
-% \end{align}
-% Finally, we make an algebraic substitution and compare this equation to the mass and centroid equations previously discussed:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q} \frac{\int_{V_i} \mathbf{q} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}}{\int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}} - \mathbf{p}^{[i]} \int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}
-%     \label{eq:d_H_11}
-% \end{align}
-% We know that the mass is defined as the integral of our density function relative to a bounded area $V_i$. As such the modified mass is expressed as $\Tilde{M_{V_i}} =  \int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}$. The modified centroid is expressed as any point within the bounded area scaled by our modified $\Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]})$ function. We call it $\Tilde{C_{V_i}} = \frac{\int_{V_i} \mathbf{q} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}}{\int_{V_i} \Tilde{\phi}(\mathbf{q},\mathbf{p}^{[i]}) \mathrm{d}{\cal Q}}$.
-% \\
-% Therefore we can express:
-% \begin{align}
-%     \frac{\mathrm{d}H}{\mathrm{d}\mathbf{p}^{[i]}} = \Tilde{M_{V_i}} \Tilde{C_{V_i}}-\mathbf{p}^{[i]} \Tilde{M_{V_i}} = 0 \\
-%     \Tilde{M_{V_i}}(\Tilde{C_{V_i}} - \mathbf{p}^{[i]}) = 0 \\
-%     \Tilde{C_{V_i}} = \mathbf{p}^{[i]}
-% \end{align}
-% In conclusion, as the mass can not be zero, the coverage is maximized when the position of the agent is equal to the modified centroid of a bounded area.
-
-
-% %========================================================================================
-% %   MILESTONES (OR MODULES OF OPERATION)   %
-% %========================================================================================
-% \section{\LARGE Milestones} 
-% We have decided to split up the implementation of the project into three main parts. A homogeneous case, a heterogeneous case, and various stretch goals that we will attempt to implement. In both the heterogeneous and homogeneous cases we will be testing the systems functionality with a static (time-invariant) and variable (time-variant) density. 
-% \begin{itemize} 
-%     \item Homogeneous Case 
-%         \begin{itemize}
-%             \item Static Density
-%             \item Variable Density 
-%         \end{itemize}
-%     \item Heterogeneous Case
-%         \begin{itemize}
-%             \item Static Density 
-%             \item Variable Density
-%         \end{itemize}
-%     \item Stretch Goals
-%         \begin{itemize}
-%             \item Smart Phone Application
-%             \item Interfacing External Sensors for Collision Detection or Mapping 
-%         \end{itemize}
-% \end{itemize}
-
-% %========================================================================================
-% %   FUNCTIONAL REQUIREMENTS   %
-% %========================================================================================
-% \section{\LARGE Functional Requirements}
-% %\todo[inline]{In here include a paragraph that describes the following sections}
-% %========================================================================================
-% %   SYSTEM BLOCK DIAGRAM   %
-% %========================================================================================
-% \subsection{\Large High-Level System Block Diagram}
-% %\todo[inline]{Add lead-in sentence}
-% %\todo[inline]{Update this figure}
-%     \begin{figure}[H]
-%     \centering %Could you find pictures of the Khepra and Pioneer and post them into the document?
-%     \includegraphics{figs/ipe/areaCoverageProposalFunctionalDiagram.eps}
-%     \caption{Functional Diagram}
-%     \label{fig:funcDiagram}
-% \end{figure}
-% As can be seen in figure~\ref{fig:funcDiagram} the Heterogeneous area coverage system works by receiving a defined convex area, density sources, and agent positions from the user. The system then moves the robots around using the MAFOSS framework until they maximize their coverage metric or meet some coverage criteria. At this point, the agents will be in their final and optimal positions. Additional user input can be given via the smart phone application functionality such as, altering the density.
-% %========================================================================================
-% \subsubsection{\large Inputs}
-% The inputs for our system are the area that the robots will be operating in, as well as the locations of the density sources in this area. The robots initial positions are also given as this is crucial to the algorithm's operation. 
-% \begin{itemize}
-%     \item Area - The predefined two-dimensional operational area of the robots in our system. Note that this area must be convex for the algorithm to function.
-%     \item Density source - A simulated metric used to excite the system. In order to optimize their coverage the robots will try to cover regions that have higher densities. All other things being equal, the algorithm determines that a region of higher density requires coverage more than a region of lower density.
-%     \item Agents' initial positions - The agents' initial X and Y positions in a two dimensional X-Y plane.
-% \end{itemize}
-% %========================================================================================
-% \subsubsection{\large Heterogeneous area coverage system}
-% The heterogeneous area coverage system is the high level system that provides the networking infrastructure, agent movement, and application services. 
-% \begin{itemize}
-%     \item MAFOSS - A Multi-Agent Open-Source Framework that is used as the backbone for the multi-agent logistics.
-%     \item Application - The communication of a user's desired density to the system from a mobile device. Note that this sub-block of the Heterogeneous Area Coverage System is not required for it's operation.
-%     \item Agent - The mobile robot or vehicle that is being used to achieve area coverage.
-% \end{itemize} 
-% %========================================================================================
-% \subsubsection{\large Outputs}
-% \begin{itemize}
-%     \item Coverage performance metric - A description of how optimally the area is covered.
-%     \item Agents' final positions - The agents' final X and Y coordinates prior to the execution of the area coverage algorithm. The final positions of the robots should be at the centroids of their respective Voronoi regions.
-% \end{itemize}
-
-% %========================================================================================
-% %   SYSTEM ARCHITECTURE   %
-% %========================================================================================
-% \subsection{\Large MAFOSS System Architecture}
-% %\todo[inline]{Need to re-write this with the MATLAB portion in mind.}
-% \begin{figure} [H]
-%     \centering
-%     \includegraphics[width=0.5\textwidth]{figs/ipe/mafossSoftwareArchitecture.eps}
-%     \caption{MAFOSS Software Architecture}
-%     \label{fig:mafossArch}
-% \end{figure}
-% \begin{itemize}
-%     \item \textbf{User Interface} - The UI in the MAFOSS system framework takes user input  regarding the position of high density points and feeds that into the Application. This data is sent through the console, when the algorithm is running, and recorded in a ROS Log file.
-%     %========================================================================================
-%     \item \textbf{Applications} - The Applications section relates to the control code running on the agents in the system. This code will be ran in a loop, sending and receiving the currentPose and desiredPose of the robots. The data transfer will be accomplished through the Robotic Operating System (ROS) and Matlab's Robotic System Toolbox. Note that Matlab is not open source; however, in order to speed up implementation we decided to include it. The alternative is to facilitate all of the ROS master connections through one of the Beaglebone blues. 
-%     %========================================================================================
-%     \item \textbf{Robotic Operating System} - The Robotic Operating System (ROS) is a flexible framework for writing robot software. It is a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms. In our project we will be using ROS's networking abilities as well as it's ability to define individual agents as nodes to standardize the way we approach our algorithms implementation. 
-%     %========================================================================================
-%     \item \textbf{Control API} - The Control APIs in this architecture are each dependent on the target robot we are attempting to interface with. For the Beaglebone we use the well-documented \emph{librobotcontrol} library, as it is specifically intended to be implemented on the Beaglebone with ROS. For the Khepra and the Pioneer, we will be using the proprietary interfacing firmware developed by their respective companies. The direct hardware interfacing will be done through the Linux Headers, as described in each API.
-% \end{itemize}
-
-% %========================================================================================
-
-% %========================================================================================
-% %   ROS NETWORKING   %
-% %========================================================================================
-% \subsection{\Large ROS Networking}
-% In the MAFOSS System architecture ROS handles the networking for us. Figure~\ref{fig:rosNetwork} details on how ROS handles the connections between the agents. %
-% %
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{figs/ipe/rosNetworkingExample.eps}
-%     \caption{ROS Networking}
-%     \label{fig:rosNetwork}
-%   \end{figure}
-% %  
-% %\todo[inline]{This graphic also needs updating, needs to be reflected in text below}
-% %========================================================================================
-% \begin{itemize}
-%     \item \textbf{Nodes} - Nodes are executables that uses ROS to communicate to other nodes through TCPROS across a corresponding Topic. In the above graph, the nodes in question are \emph{robot1}, \emph{robot2}, and \emph{robot3}.
-%     %========================================================================================
-%     \item \textbf{Topics} - Topics are named buses over which nodes exchange messages. In general, nodes are not aware of who they are communicating with. Instead, nodes that are interested in data \emph{subscribe} to the relevant topic; nodes that generate data \emph{publish} to the relevant topic. The graph lists the 4 topics associated with this system as \emph{subscribeCurrent}, \emph{subscribeDesired}, \emph{publishCurrent}, and \emph{publishDesired}. Each node communicating with the master in the system will get its own set of 4 topics. For robot one a full topic name could be \emph{robot1PublishDesired}: this convention will be carried throughout the system independent of the number of agents. %========================================================================================
-%     \item \textbf{Master} - The ROS Master provides naming and registration services to the rest of the nodes in the ROS system. It tracks publishers and subscribers to topics as well as services. The role of the Master is to enable individual ROS nodes to locate one another. Once these nodes have located each other they communicate with each other peer-to-peer. 
-%     %========================================================================================
-%     \item \textbf{Output Data} - Output Data in our system will be sent to the laptop computer running the master node as the raw x and y positions. This data will also be sent to the corresponding ROS system log file for each node. For simulation purposes, we will be using the log files created after running tests to create graphs relating our robot's desired position and it's actual position.
-%     %========================================================================================
-%     \item \textbf{Example} - Note the example next to the graph. This gives a more in-depth view at what occurs inside the nodes on the graph. Given a publisher URI, a subscribing node negotiates a connection, using the appropriate transport, with that publisher, via XMLRPC (Extensible Markup Language Remote Procedure Call). The result of the negotiation is that the two nodes are connected, with messages streaming from publisher to subscriber. Each transport has its own protocol for how the message data is exchanged. For example, using TCP, the negotiation would involve the publisher giving the subscriber the IP address and port on which to call connect. The subscriber then creates a TCP/IP socket to the specified address and port. The nodes exchange a Connection Header that includes information like the message type and the name of the topic, and then the publisher begins sending serialized message data directly over the socket.
-% \end{itemize}
-% %========================================================================================
-
-% For our system, the above graphic gives a holistic view on its operation. Note that the ports specified to the TCP/IP sockets for the nodes are arbitrary. Further, the full URI for the master node will include the standard 11311 port.\\
-% %=========================================================================
-% %=========================================================================
-
-
-% \subsection{\Large Simulation Results}
-% %========================================================================================
-% %   Simulation Results   %
-% %========================================================================================
-% Now that we had a algorithm, we could begin simulation in MATLAB. We began testing a series of algorithms in Matlab: line-following, leader-follower, and the final area coverage algorithm. After we validated these algorithms in this environment we moved on to Coppelia Robotic's virtual experimentation platform (VREP). VREP was chosen because it is based on a distributed control architecture wherein each object/model can be individually controlled via an embedded script, a plugin, a ROS node, a remote API client, or a custom solution. This makes VREP very versatile and ideal for multi-robot applications. Furthermore, the simulator has already designed a physics model for the Pioneer and Khepra. Team members designed the Beaglebone model in the VREP environment to be used for a simulators. The left-most picture in the following figures is the coverage metric H. When this is value reaches its maximum value, the coverage in the system is maximized. We can see from the following graphs that this is the case when the agents are moving to their modified centroids. 
-% %
-% \begin{figure}
-%   \centering
-%   \subfigure[][]{
-%     \label{fig:coverageMetricStarting}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/coverageMetricStarting.PNG}
-%   }
-%   \subfigure[][]{
-%     \label{fig:areaCoverageAlgorithmStarting}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/areaCoverageAlgorithmStarting.PNG}
-%   }  
-%   \caption{Starting Matlab area coverage algorithm.}
-%   \label{fig:results1}
-% \end{figure}
-% %
-% %
-% \begin{figure}
-%   \centering
-%   \subfigure[][]{
-%     \label{fig:coverageMetricInProgress}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/coverageMetricInProgress.PNG}
-%   }
-%   \subfigure[][]{
-%     \label{fig:areaCoverageAlgorithmInProgress}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/areaCoverageAlgorithmInProgress.PNG}
-%   }  
-%   \caption{In progress Matlab area coverage algorithm.}
-%   \label{fig:results2}
-% \end{figure}
-% %
-% %
-% \begin{figure}
-%   \centering
-%   \subfigure[][]{
-%     \label{fig:maximizedCoverageMetric}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/maximizedCoverageMetric.PNG}
-%   }
-%   \subfigure[][]{
-%     \label{fig:areaCoverageAlgorithmEnd}
-%     \includegraphics[width=0.3\textwidth]{figs/matlab/areaCoverageAlgorithmEnd.PNG}
-%   }  
-%   \caption{End Matlab area coverage algoritm.}
-%   \label{fig:results3}
-% \end{figure}
-
-
-
-
-
-% %\todo[inline]{NEED TO ADD BUILDING THE ROBOT AND IMPLEMENTATION THUS FAR}
-
-% %\subsection{\LARGE Experimental Results and Design}
-% %========================================================================================
-% %   Experimental Results and Design   %
-% %========================================================================================
-
-
-
-% \newpage
-% \section{\LARGE Parts List}
-% %========================================================================================
-% %   Parts List   %
-% %========================================================================================
-% \begin{table}[H]
-% \centering
-% \begin{tabular}{|c|c|c|c|}
-%     \hline
-%     Vendor & Part & Price & Quantity \\
-%     \hline 
-%     Digikey & JST SH Jumper 6 Wire Assembly & \$4.50 & 3 \\
-%     \hline
-%     Digikey & JST SH Jumper 4 Wire Assembly & \$9.00 & 6 \\
-%     \hline 
-%     Amazon & SanDisk Ultra 8GB Memory Card & \$23.25 & 3 \\
-%     \hline 
-%     Amazon & USB 2.0 Male to Micro B cable ($3$ Pcs) & \$7.99 & 1 \\
-%     \hline 
-%     Amazon & 10 Sets of Mini Micro ZH 2Pin JST & \$4.99 & 1 \\        
-%     \hline 
-%     Amazon & $M2.5x30mm$ Socket Head Cap Screws (20 Pcs) & \$4.99 & 1 \\ 
-%     \hline 
-%     Renaissance Robotics & Beaglebone Blue & \$219.00 & 3 \\ 
-%     \hline 
-%     Renaissance Robotics & Robotics eduMIP Kit & \$150.00 & 3 \\
-%     \hline 
-%     Polulu & Pololu Ball Caster with 1" Ball & \$29.75 & 5 \\ 
-%     \hline
-% \end{tabular}
-% \caption{List of ordered parts}
-% \label{tab:ordparts}
-% \end{table}
-
-
-% \section{\LARGE Timeline for Milestones}
-% %========================================================================================
-% %   Timeline for Milestones   %
-% %========================================================================================
-% %\todo[inline]{This needs to be more descriptive.}
-% \setcounter{myWeekNum}{47}
-% \ganttset{%
-% calendar week text={\myWeek{}}%
-% }
-% %
-% \begin{figure}[h!bt]
-% \begin{center}
-% \begin{ganttchart}[
-% vgrid={*{6}{draw=none}, dotted},
-% x unit=.1cm,
-% inline,
-% bar label font=\footnotesize,
-% y unit title=.6cm,
-% y unit chart=.6cm,
-% time slot format=isodate,
-% time slot format/start date=2018-11-12]{2018-11-12}{2019-03-31}
-% \ganttset{bar height=.6}
-% \gantttitlecalendar{year, month=name} \\
-% \ganttbar[bar/.append style={fill=yellow}]{Homogeneous Static}{2018-11-18}{2018-12-25}\\
-% \ganttbar[bar/.append style={fill=yellow}]{Heterogeneous Static}{2018-12-25}{2019-1-27}\\
-% \ganttbar[bar/.append style={fill=yellow}]{Homogeneous Variable}{2019-1-27}{2019-2-28}\\
-% \ganttbar[bar/.append style={fill=yellow}]{Heterogeneous Variable}{2019-2-28}{2019-03-30}
-% \end{ganttchart}
-% \end{center}
-% \caption{Timeline for Completion}
-% \end{figure}
-% %=======================================================================
-% %\todo[inline]{Add some specific details here $->$ time frames etc..}
-% \begin{itemize}
-%     \item Homogeneous Case 
-%         \begin{itemize}
-%             \item Static Density
-%             \item Variable Density 
-%         \end{itemize}
-%     \item Heterogeneous Case
-%         \begin{itemize}
-%             \item Static Density 
-%             \item Variable Density
-%         \end{itemize}
-% \end{itemize}
-
-        
-%So homogenous over Christmas break and Hetero by mid semester? 
-
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
 \newpage
+
+\section{Introduction} %introduction (basically what was in the abstract before)
+
+%applications
+As the use of mobile robots becomes more common in the workplace, the need for accurate navigation rises. There are systems currently on the market that aim to meet this need. The major drawback however is the cost, modularity between mobile robots, and scalability to larger environments. In this project, we propose a cost--effective, modular, and easily scalable system utilizing off the shelf components that will allow a mobile robot to navigate and map its environment using an EKF-SLAM (Extended Kalman Filter - Simultaneous Localization and Mapping) algorithm. This system will allow navigation and mapping of an indoor environment with an acceptable level of accuracy. Applications of this system include mining vehicles, research and education, deliveries within office builings, cleaning robots, and warehouses.
+
+\section{Background Study} %review of literature and prior work
+%write more here (related works from subsystem level functional requirements?)
+
+A large amount of research in the field of robotics is concentrated in the areas of localization and navigation (see~\cite{Martinelli2015},~\cite{DiGiampaolo2014},~\cite{Song2012}). Currently, much of the work being done focuses on the use of passive RFID tags~\cite{Martinelli2015}\cite{DiGiampaolo2014}. These methods are highly accurate but also expensive, both in hardware and computational efficiency. In~\cite{Martinelli2015} and~\cite{DiGiampaolo2014}, an algorithm is implemented using UHF (ultra high frequency) RFID in order to localize a mobile robot. In there, the phase information is adopted in order to calculate the angle between the passive tags and the mobile robot. Overall, the system worked well, however, the experiments performed did not fully demonstrate the localization algorithm, as the mobile robot was preprogrammed to follow a line marked on the floor of the environment. This approach also requires understanding of RF such as phase shift and RFID. Another method, seen in~\cite{Song2012}, shows a similar system but instead using wireless sensors as beacons. This setup is easier to implement on a large scale due to the minimal RF knowledge required and ease of implementation of beacons. The system presented in~\cite{Song2012} also uses the technique of partitioning the environment into a grid in order to more accurately calculate signal strength and bearing using a forward mounted directional antenna. This approach shows accuracy over after long operation times, an undesired characteristic of our project. Although not directly used for localization, the work done in~\cite{Hood2011} shows a possible alternative method for localization and mapping. By utilizing a rotating reflector, the authors were able to accurately estimate the angle-of-arrival of wireless signals from multiple wireless sensors. Furthermore, there are similar systems currently in use by the military that implement this technique (rotating radar antennas). There are also similar systems available for civilian use in areas such as commercial marine radar. Using this method, the authors were able to estimate the angle-of-arrival with an accuracy of $\pm \SI{3}{\degree}$.\\
+
+In this project we aim to combine a rotating reflector system similar to the one presented in~\cite{Hood2011} and the widely used EKF-SLAM algorithm. The major challenges of this implementation will be obtaining a high enough accuracy in the range and bearing measurements. As more interference enters the environment, the system will become less accurate. This can, however, be reduced by the introduction of more beacons, at an increase in total cost.
+
+
+\section{Standards and Patents}
+The standards that are applicable to our project include the IEEE 802.15.4 protocol and the ZigBee protocol. The IEEE 802.15.4 protocol\footnote{IEEE Standard for Low-Rate Wireless Networks, 2015} outlines the physical layer (PHY) and the medium access control layer (MAC) specifications for low-data-rate wireless communication in personal area networks (LR-WPAN). The PHY layer contains the radio frequency transceiver and its low-level controller. The MAC layer provides access to the physical channel for transfer and defines an IEEE address for the device. Its goal is to maintain a simple and flexible protocol while also being easy to install, having reliable data transfer, being low cost, and having reasonable battery life. The ceiling mounted beacons will use XBee modules to communicate wirelessly with the mobile robot and uses the 802.15.4 protocol by default. The 802.15.4 protocol allows for a star network topology which is made up of one established personal area network (PAN) coordinator and other functional devices. In our system, the XBee mounted on the mobile robot will act as a coordinator and the ceiling mounted XBee’s will be the other functional devices. During our testing, we have established basic peer-to-peer communication with this protocol.\\
+
+The other standard known as ZigBee\footnote{Zigbee Pro Stack User Guide, 2014}\footnote{XBee/XBee-Pro S2C ZigBee User Guide, 2016} is an open global standard for low-power, low-cost, low-data-rate, wireless networking based on the IEEE 802.15.4 standard. It maintains the specifications of the PHY layer and the MAC layer while defining the higher network layer and setting the framework for the application layer. The network layer takes care of network structure, routing, and security. The application layer has an application support sub-layer (APS) which defines various addressing objects and has other features for device specific applications. The ZigBee protocol allows for star, peer-to-peer, and mesh network topologies. We will still use the star network topology which is made up of a coordinator who creates a network with a channel and a unique PAN ID and end devices who will join this network with extra power saving features. The XBee mounted on the mobile robot will act as the coordinator and the ceiling mounted beacons will act as the end devices. The fully functional system will be implemented with a ZigBee network. It offers well defined packetized communication, power saving features which is important for the battery powered ceiling mounted beacons, and future applications which may require a higher level mesh network.\\
+
+There are several patents that outline designs that are comparable to our project. The first patent~\cite{biehl} describes systems and methods for localization of a mobile device using beacons. This design uses a computer, a location signal receiver and beacons to determine the location of the mobile device. The beacons transmit the location signal and  the computer determines the location from the received location signal strength and a unique key based on the particular transmitting beacon. This patent is relevant to our work as it uses received signal strength from beacons and individual beacon IDs for localization of a mobile device in an indoor environment, but the patent is more general to what the mobile device is and uses a different localization algorithm. The second patent~\cite{lin} outlines positioning of an indoor mobile robot, and mapping of its environment and the beacons it detects. The mobile robot performs several positioning modes depending on the number on beacons it detects in its line of sight. This patent is more applicable to our project than the last patent. It utilizes a simultaneous localization and mapping technique for a mobile robot and beacons. However, the patent's positioning method is different than ours. The third patent~\cite{edlund} describes a localization method for a mobile robot with a system of beacons. It uses the signal strength and angle of arrival of the signal to localize and determine a coarse correction. This design is very similar to our approach by uses signal strength and angle, and similar localization algorithm, but we will be rotating a antennae reflector instead of the entire robot. A similar patent~\cite{younis} to the previous explains an indoor localization method for a mobile device using directional reflectors. The mobile device transmits a signal and the signal is delayed and returned by reflectors in the environment. The location of the mobile device is then determined from the range by the amount of delay and the angle of arrival at the reflector. This patent is relatively similar to our project as it describes an indoor localization technique using range and angle for a mobile device.
+
+\section{Functional Requirements}
+
+\subsection{System Architecture}
+%system architecture
+% For our project, we consider a scenario shown in~\autoref{fig:sysarch} where a mobile robot is deployed in a 3-dimensional environment with beacons distributed throughout. The mobile robot will also be given a list of waypoints located on the floor of the environment. Due to its widespread use in research applications, we have chosen the Pioneer 3-DX to implement our proposed project. 
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=.4]{figs/ipe/3D_System_2.PNG}
+%     \caption{Environment with mobile robot, ceiling mounted beacons, and waypoints}
+%     \label{fig:sysarch}
+% \end{figure}
+
+\subsection{Block Diagrams}
+%system level
+% The system we propose for our project is fairly self--contained in the sense that it will handle its operation once it has started. This consideration will further promote modularity when the system is used with other mobile robots. A high level system block diagram can be seen in~\autoref{fig:highsys}. Many of the outputs shown are used for debugging purposes as well as being used for the proposed algorithm. The subsystem block diagram of the system shown in~\autoref{fig:highsys} can be seen in~\autoref{fig:subsys}. Due to the nature of the algorithm, we arranged our subsystem block diagram to resemble a conventional control system. This helps to better illustrate how data is being used within the system in order to localize the mobile robot and map the indoor environment.\\
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=1]{figs/ipe/highLevelSysRequirements_robot}
+%     \caption{System level block diagram detailing inputs and outputs to the system}
+%     \label{fig:highsys}
+% \end{figure}
+
+% %subsystem level
+% \begin{figure}
+%     \centering
+%     \includegraphics[scale=.9]{figs/ipe/subsystemBlockDiagramAlternate}
+%     \caption{Subsystem level block diagram}
+%     \label{fig:subsys}
+% \end{figure}
+
+% As shown in~\autoref{fig:subsys}, the outputs labelled \emph{estimated pose} and \emph{estimated positions of XBees} are also used internally. This feedback design allows the system to use prior data and predictions to estimate the mobile robot's position with more accuracy each iteration. At the top of~\autoref{fig:subsys}, there are three separate subsystems. The first is the controller, which will be further explained in~\autoref{sec:model}. The internal values output by this subsystem are the linear velocity and the steering angle. These values are then used as inputs to the preprocessor subsystem where they are converted to control inputs accepted by the Pioneer 3-DX. This conversion is detailed in~\autoref{sec:model}. Once these control inputs are applied and the mobile robot has completed its movement, the noisy pose is sent to the estimation block where it is used to estimate the mobile robot's true pose. In this subsystem, the mapping of the XBee beacons within the environment is also done. The estimated pose is then used by the controller in order to repeat the process. As seen in~\autoref{fig:subsys}, the estimated position of the XBees is stored internally for use in the next iteration.
+
+\subsection{Specifications}
+
+\section{Preliminary Work}
+
+\subsection{Modelling} \label{sec:model}
+
+\subsection{Simulation Results} \label{sec:simresults}
+
+\subsection{Design} \label{sec:design}
+
+\subsection{Experimental Activities} \label{sec:expresults}
+
+
+\section{Parts List}
+
+\section{Timeline and Milestones} \label{sec:timeline}
+
+\begin{sidewaysfigure}
+\begin{ganttchart}[hgrid,vgrid,x unit=.8cm, y unit title=.5cm,y unit chart=.8cm,milestone label font=\tiny,bar label font=\tiny, group label font=\small,bar/.append style={fill=green},bar incomplete/.append style={fill=red}]{1}{16}
+\gantttitle{2016}{16}\\
+\gantttitle{Sep}{4}
+\gantttitle{Oct}{4}
+\gantttitle{Nov}{4}
+\gantttitle{Dec}{4}\\
+\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Research}{3}{5} \\
+\ganttbar[progress = 100,progress label text={$\displaystyle#1\%$},bar progress label font = \tiny,bar progress label anchor = east]{Research XBee functionality}{3}{5}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Research EKF-SLAM}{3}{5}\\
+\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Simulation}{6}{12}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Simulate using MATLAB}{6}{8}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Simulate using V-REP}{9}{12}\\
+\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{XBee Communication}{6}{14}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Communication with X-CTU}{6}{7}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{AT Commands}{8}{8}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Remote AT Commands}{9}{10}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{XBee Library}{11}{12}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Get XBee RSSI data from multiple beacons}{13}{14}
+\end{ganttchart}
+\caption{Gantt chart for Fall 2016}
+\label{gantt1}
+\end{sidewaysfigure}
+
+%change this to the correct format and make our schedule
+%\begin{landscape}
+\begin{sidewaysfigure}
+%\begin{figure}
+%\centering
+\begin{ganttchart}[hgrid,vgrid,x unit=.8cm, y unit title=.5cm,y unit chart=.8cm,milestone label font=\tiny,bar label font=\tiny, group label font=\small,bar/.append style={fill=green},bar incomplete/.append style={fill=red}]{1}{18}
+\gantttitle{2017}{18}\\
+\gantttitle{Jan}{4}
+\gantttitle{Feb}{4}
+\gantttitle{Mar}{4}
+\gantttitle{Apr}{4}
+\gantttitle{May}{2}\\
+\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$}, group progress label anchor = east]{XBee Communication}{3}{4}\\
+\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Get XBee RSSI data from multiple beacons}{3}{4}\\
+\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Angle Estimation}{3}{5} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Build Reflector}{3}{3} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Testing and Debugging}{4}{5} \\
+%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{5} \ganttnewline
+\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Subsystem Preparation}{5}{8} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Install ROS for Control of Pioneer 3-DX}{5}{6} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Create ROS Node for Estimator Subsytem}{7}{8} \\
+%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{8} \ganttnewline
+\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Integration and Test}{8}{16} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Integrate subsystems}{8}{9} \\
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Test and Debug System}{10}{13} \\
+%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{13} \ganttnewline
+\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Project Completion Work}{14}{16}
+\end{ganttchart}
+\caption{Gantt Chart for Spring 2017}
+\label{fig:gantt2}
+%\end{figure}
+\end{sidewaysfigure}
+%\end{landscape}
+
+The Gantt chart in~\autoref{fig:gantt2} shows our planned schedule to complete this project. Each month is split into 4 pieces represented by the dotted grid to approximate weekly schedule. The first milestone is to complete the necessary work for our angle estimation technique. This includes building an antenna reflector, then testing the reflector to obtain optimal results. The expected functionality is taking several RSSI samples while rotating the reflector a maximum of $\SI{180}{\degree}$ and using the RSSI sample data to determine an estimated angle. The next milestone is to have full functionality of the mobile robot controller using ROS running on a BeagleBone Black. Controlling the Pioneer 3-DX with MATLAB will simplify testing and control, but our end goal is to have the system self-contained on the mobile robot platform. The last milestone is to integrate the subsystems into one fully functioning system. This will require that each subsystem has met its specifications and is ready to implemented. We expect that testing the system will require debugging and tuning, thus we have set aside a large amount of time dedicated to testing. We have also set time for completing documentation and any other work necessary to complete our project.\\
+
+%\section{Conclusion}
+%\label{sec:conclusion}
+%In this paper, we presented a neighboring optimal control law for a mobile robot to track a pre--defined trajectory with its range--limited sensory capabilities. The robot receives signal strength measurement of RF sensors placed on 2-D environment and estimates its states based on the noise sensory model. The robot’s states are partially observed simply because it estimates its position and orientation based on signal strength measurements coming from RF sensors. The proposed controller is the direct consequence of our previously published article but this paper shows how a mobile robot tracks a pre-defined trajectory when RF sensors are placed on 2-D positions and robot receives only signal strength measurements from a subset of RF sensors due its range--limited capabilities.
+
+
 \bibliographystyle{IEEEtran}
-\bibliography{bib/refsMultiAgent,bib/seniorProject2-2018,bib/refsSuruzWeb,bib/refsBooksTRTheses}
+\bibliography{bib/references.bib}
 
 \end{document} 
-
-
-
-
-
-
-
 
 %%% Local Variables:
 %%% mode: latex
