@@ -1,0 +1,11 @@
+# Ignore the lab notebook pdf
+labNotebook.pdf
+
+# Ignore auxiliary files
+*.aux
+*.brf
+*.idx
+*.log
+*.out
+*.synctex.gz
+*.toc

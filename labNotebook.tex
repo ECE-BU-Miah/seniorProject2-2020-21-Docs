@@ -106,7 +106,8 @@
 \DeclareFixedFont{\textcap}{T1}{phv}{bx}{n}{1.5cm} % Font for main title: Helvetica 1.5 cm
 \DeclareFixedFont{\textaut}{T1}{phv}{bx}{n}{0.8cm} % Font for author name: Helvetica 0.8 cm
 
-\usepackage[nouppercase,headsepline]{scrpage2} % Provides headers and footers configuration
+\usepackage{scrhack}
+\usepackage[headsepline]{scrlayer-scrpage} % Provides headers and footers configuration
 \pagestyle{scrheadings} % Print the headers and footers on all pages
 \clearscrheadfoot % Clean old definitions if they exist
 
@@ -114,7 +115,6 @@
 \ohead{\headmark} % Prints outer header
 
 \setlength{\headheight}{25pt} % Makes the header take up a bit of extra space for aesthetics
-\setheadsepline{.4pt} % Creates a thin rule under the header
 \addtokomafont{headsepline}{\color{lightgray}} % Colors the rule under the header light gray
 
 \ofoot[\normalfont\normalcolor{\thepage\ |\  \pageref{LastPage}}]{\normalfont\normalcolor{\thepage\ |\  \pageref{LastPage}}} % Creates an outer footer of: "current page | total pages"
@@ -132,7 +132,7 @@
 
 % Hyperlink configuration
 \usepackage[
-    pdfauthor={Glenn Janiak and Ken Vonckx}, % Your name for the author field in the PDF
+    pdfauthor={Kalli Allen, Darrah Beebe, and Jason Braker}, % Your name for the author field in the PDF
     pdftitle={Laboratory Journal}, % PDF title
     pdfsubject={labNotebookSeniorProject3}, % PDF subject
     bookmarksopen=true,
@@ -194,7 +194,7 @@
 \HRule \\[1.5cm]
 \end{center}
 }
-\author{ Kalli Allen, Darrah Beebe, and Jason Braker \\ \\\Large kjallen@mail.bradley.edu, dbeebe@mail.bradley.edu, jbraker@mail.bradley.edu} % Your name and email address
+\author{ Kalli Allen, Darrah Beebe, and Jason Braker \\ \\\Large kjallen@mail.bradley.edu, dbeebe@mail.bradley.edu, \\jbraker@mail.bradley.edu} % Your name and email address
 \date{Beginning September 14, 2020} % Beginning date
 \maketitle
 
@@ -228,7 +228,7 @@ In today's meeting, Dr. Miah gave us an overview of the LaTex files we will be u
 \labday{Thursday, September 24, 2020}
 \experiment{Meeting Minutes}
 JB \\
-Today we Kalli, Darrah, and I met to come up with the inputs and outputs of the robotic cart system. We brainstormed together to come up with a list of inputs and outputs for both the robotic cart and the remote. We then assigned Kalli to draw the block diagram, Darrah to write a functional description of the blocks, and Jason to write the end-use requirements.
+Today Kalli, Darrah, and I met to come up with the inputs and outputs of the robotic cart system. We brainstormed together to come up with a list of inputs and outputs for both the robotic cart and the remote. We then assigned Kalli to draw the block diagram, Darrah to write a functional description of the blocks, and Jason to write the end-use requirements.
 
 %-------------------------------------------
 
@@ -1664,7 +1664,7 @@ Today we Kalli, Darrah, and I met to come up with the inputs and outputs of the 
 
 
 \bibliographystyle{plain}
-\bibliography{bib/seniorProject2017.bib}
+\bibliography{bib/references.bib}
 
 
 % \begin{thebibliography}{9}
