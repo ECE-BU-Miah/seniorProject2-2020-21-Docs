@@ -1,7 +1,8 @@
 # TeX auxiliary files #
 #######################
-# Ignore the lab notebook pdf
+# Ignore the output pdfs
 labNotebook.pdf
+systemLevelFunctionalRequirements.pdf
 
 # Ignore auxiliary files
 *.aux
