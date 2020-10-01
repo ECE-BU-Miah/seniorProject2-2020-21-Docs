@@ -72,9 +72,9 @@
 
 %%% The "real" document content comes below...
 
-\title{Smart Control of 2-DOF Helicopter}
-\author{Glenn Janiak \and Kenneth Vonckx \and \underline{Advisor}: Dr. Suruz Miah
-}
+\title{Robotic Cart System}
+\author{Kalli Allen, Darrah Beebe, and Jason Braker \\ \underline{Advisor}: Dr. Suruz Miah}
+
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
          
@@ -84,33 +84,63 @@
 \maketitle
 
 \section{Project Description}
-%\todo[inline]{} Previously used
-%The aim of this project is to utilize machine learning techniques to control a team of helicopters.  Helicopters are very nonlinear and the dynamics complex, so control of them is challenging.  Convectional control techniques, such as (LQR) and LQG, are too simple to for this application.  Most research today based on simple control.  Additionally, this project will apply the concept of internet of things by providing a user interface for direct control via mobile devices. 
+Robotic carts are of paramount importance to conduct many indoor or outdoor tasks. There are many applications of autonomous robotic carts. For example, in a grocery store, a customer (especially a person with disability) may need more than one cart but is incapable of pushing two carts simultaneously. Therefore, a second cart that is capable of identifying the customer to follow and is able to track and follow the customer through the store would be very useful. In an indoor office environment, such an autonomous robotic cart may be used to carry items such as files from one office to another. In an outdoor environment, such a cart may be used to carry sheets of glass.
 
-Helicopters are of a paramount importance as they are used in many civilian and military applications due to their ability for vertical take-off and landing.  To enable their use in such applications, intensive research has been conducted in the literature to date since helicopters involve complex nonlinear dynamics.  Most of the work on helicopter-based research requires dedicated computers for controlling their motion to specific configurations and resistant to turbulent conditions.  Such methods are expensive and time-consuming to develop.  Implementation of motion control techniques using cost-effective hardware is still a challenge.
+There are many solutions available in the market for such robotic carts. However, all of them require line of sight communication. In this project, we are proposing a robotic cart using mainly analog signals using cost-effective wireless communication. Implementation of a fully functional robotic cart will be out of the scope of this project but is an ultimate goal for this project in the coming years. However, this project is expected to encourage further research in this area as well as provide a foundation for that research.
 
-
-In this project, we are proposing an algorithm for smart control of a team of two degree-of-freedom (2-DOF) helicopters using conventional motion control in cooperation with machine learning techniques where a user will be able to configure helicopters from any initial position.  Even though conventional techniques have been tested with simple platforms in the literature, the current project employs conventional motion control strategies in cooperation with machine learning technique (reinforcement learning, for instance) for a team of helicopters as well as introducing user control via mobile devices.  This project is expected to encourage research in this area as well as serve as an educational tool in teaching environments.   
-
-%billions of dollars for
-%aurdio (hobbies) platform for quanser
-
-
+%------------------------------------------------
 \section{System Architecture}
-%Multiple helicopters will be controlled via embedded hardware interfacing devices which will receive input from a smart mobile device.  This general architecture is shown in \autoref{fig:ProblemStatementImage}.
-%
-% \autoref{fig:highLevel} shows the high-level system architecture of the proposed project for control of a team of helicopters.  %
-% %
-% \begin{figure}
-%   \centering
-%   \begin{mdframed}[backgroundcolor=yellow!20, roundcorner=7pt,outerlinewidth=1.2pt,outerlinecolor=blue!50]
-%   \includegraphics[scale=0.749]{figs/ipe/highLevel_yel_grn}
-%   \end{mdframed}
-%   \caption{General High-Level System Architecture}
-%   \label{fig:highLevel}
-% \end{figure}
-% %
-% As shown, mobile devices will serve as terminals for users to communicate with the helicopters.  Mobile devices can be used in a wider variety of locations over stationary and is desired by more people.  Information sent by the users will be transmitted through a wireless TCP/IP network.  Their inputs will interface with our proposed smart control algorithm and change the configuration of the helicopters.  In particular, we will be applying Linear Quadratic Regression (LQR), Linear Quadratic Gaussian (LQG), and a machine learning based algorithm for the control of these helicopters, Approximate Dynamic Programming (ADP).  
+\subsection{System Block Diagram}
+The robotic cart system will be comprised of two main subsystems - a mobile cart and a remote target device. \textlangle Darrah's block description here\textrangle
+
+A block diagram of the robotic cart system is shown in \autoref{fig:sysBlockDiag}
+\begin{figure}
+    \centering
+    \captionsetup{justification=centering, margin=3cm}
+    % Uncomment the below line once Kalli's block diagram figure is included in the figs folder
+    % \includegraphics{figs/img/sysBlockDiag}
+    \caption{Block Diagram of the Robotic Cart System}
+    \label{fig:sysBlockDiag}
+\end{figure}
+
+\subsection{System Inputs and Outputs}
+\subsubsection{Inputs}
+There are four inputs to the robotic cart system.
+\begin{enumerate}
+    \item Power - Both the mobile cart and the remote will require power from a battery.
+    \item On/Off Switch - The user must be able to turn both the cart and the remote off to save power when the robotic cart system is not in use.
+    \item Movement of the Remote - The user will control the mobile cart by moving with the remote.
+    \item Mode Selection - The user must be able to select which mode of operation the robotic cart system should use.
+\end{enumerate}
+
+\subsubsection{Outputs}
+There are two outputs from the robotic cart system.
+\begin{enumerate}
+    \item Cart Position Trajectory on 2D Plane - The cart will move to follow the remote.
+    \item Status Indicators - Both the mobile cart and the remote will have status indicators to provide the user with the status of the system.
+\end{enumerate}
+
+%------------------------------------------------
+\section{Requirements and Specifications}
+\subsection{Requirements}
+The robotic cart system will meet the following requirements:
+\begin{enumerate}
+    \item Cart must follow remote at a reasonable distance
+    \item Cart must be able to travel at a speed reasonable for walking
+    \item User must be alerted if cart falls too far behind
+    \item Cart must not require line-of-sight to follow remote
+    \item Cart must avoid obstacles
+\end{enumerate}
+
+\subsection{Specifications}
+Based on the requirements, the robotic cart system must meet the following specifications:
+\begin{enumerate}
+    \item Cart must be able to follow the remote while maintaining a distance of 1 to 1.5 meters.
+    \item Cart must be able to travel at 2 m/s
+    \item User must be alerted if the cart falls more than 2 meters behind
+    \item Cart must be not require line-of-sight to follow remote
+    \item Cart must not collide with obstacles while following remote
+\end{enumerate}
 
 % %Each of the helicopters we will be using have fixed bases as shown in \autoref{fig:QuanserAero} (courtesy of Quanser Inc.).
 
