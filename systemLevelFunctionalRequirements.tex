@@ -34,7 +34,7 @@
 \usepackage{epstopdf}
 \epstopdfsetup{suffix = {}}
 \usepackage{siunitx}
-\sisetup{unitsep = \cdot}
+\sisetup{inter-unit-product = \cdot}
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 % These packages are all incorporated in the memoir class to one degree or another...
@@ -68,11 +68,21 @@
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Command to make the lines in the title page
+
 %%% END Article customizations
 
 %%% The "real" document content comes below...
 
-\title{Robotic Cart System}
+\title{
+    \begin{center}
+        \href{http://www.bradley.edu}{\includegraphics[height=1in]{figs/logoBU1-Print}}
+        \vskip10pt
+        \HRule \\[0.4cm]
+        {\Huge \bfseries Robotic Cart System \\\Large Project Statement and Functional Requirements}\\[0.4cm] % Degree
+        \HRule \\[0.4cm]
+    \end{center}
+    }
 \author{Kalli Allen, Darrah Beebe, and Jason Braker \\ \underline{Advisor}: Dr. Suruz Miah}
 
 %\date{} % Activate to display a given date or no date (if empty),
@@ -80,8 +90,14 @@
          
 % \setlength{\parindent}{4em} % this should indent paragraphs
 
+\setlength{\marginparwidth}{2cm}
+
 \begin{document}
 \maketitle
+
+% \newpage
+% \tableofcontents % Table of contents
+\newpage % Start lab look on a new page
 
 \section{Project Description}
 Robotic carts are of paramount importance to conduct many indoor or outdoor tasks. There are many applications of autonomous robotic carts. For example, in a grocery store, a customer (especially a person with disability) may need more than one cart but is incapable of pushing two carts simultaneously. Therefore, a second cart that is capable of identifying the customer to follow and is able to track and follow the customer through the store would be very useful. In an indoor office environment, such an autonomous robotic cart may be used to carry items such as files from one office to another. In an outdoor environment, such a cart may be used to carry sheets of glass.
@@ -97,8 +113,7 @@ A block diagram of the robotic cart system is shown in \autoref{fig:sysBlockDiag
 \begin{figure}
     \centering
     \captionsetup{justification=centering, margin=3cm}
-    % Uncomment the below line once Kalli's block diagram figure is included in the figs folder
-    % \includegraphics{figs/img/sysBlockDiag}
+    \includegraphics[width=6.5in]{figs/img/sysBlockDiag}
     \caption{Block Diagram of the Robotic Cart System}
     \label{fig:sysBlockDiag}
 \end{figure}
