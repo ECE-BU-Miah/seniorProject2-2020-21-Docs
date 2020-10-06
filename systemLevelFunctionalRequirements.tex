@@ -107,10 +107,10 @@ There are many solutions available in the market for such robotic carts. However
 %------------------------------------------------
 \section{System Architecture}
 \subsection{System Block Diagram}
-The robotic cart system will be comprised of two main subsystems - a mobile cart and a remote target device. \textlangle Darrah's block description here\textrangle
+The robotic cart system will be comprised of two main subsystems - a mobile cart and a remote target device. The system, as a whole, will take into consideration of the world around it and avoid obstacles while trying to follow the remote target.  The system will also be trying to follow the remote pointer even if it loses the line of site detection.  If the robot loses track or falls to far behind the remote the remote will indicate this to the user.
 
 A block diagram of the robotic cart system is shown in \autoref{fig:sysBlockDiag}
-\begin{figure}
+\begin{figure}[b]
     \centering
     \captionsetup{justification=centering, margin=3cm}
     \includegraphics[width=6.5in]{figs/system_block_diagram}
