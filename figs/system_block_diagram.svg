@@ -14,7 +14,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="system_bloc_diagram_draft.svg">
+   sodipodi:docname="system_block_diagram.svg">
   <defs
      id="defs2">
     <marker
@@ -374,16 +374,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.473546"
-     inkscape:cx="485.42108"
+     inkscape:cx="653.48346"
      inkscape:cy="204.49527"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g8369"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-y="235"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
@@ -397,7 +397,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -420,7 +420,7 @@
          id="tspan3832"
          x="103.1875"
          y="92.655487"
-         style="stroke-width:0.26458332"></tspan></text>
+         style="stroke-width:0.26458332" /></text>
     <g
        id="g8369"
        transform="translate(-20.828441,55.562529)">
@@ -485,7 +485,7 @@
              id="rect3804-0-9-6" /></flowRegion><flowPara
            style="font-size:24px"
            id="flowPara3806-8-0-0">Cart Position Trajectory</flowPara></flowRoot>      <flowRoot
-         transform="matrix(0.26458333,0,0,0.26458333,135.40785,63.719759)"
+         transform="matrix(0.26458333,0,0,0.26458333,135.40785,54.194753)"
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
          id="flowRoot3800-5-1-3"
          xml:space="preserve"><flowRegion
@@ -567,7 +567,7 @@
              y="0"
              x="0"
              id="use995"
-             style="fill:#6563ee;fill-opacity:1;stroke:#000000"
+             style="fill:#ebeeb2;fill-opacity:1;stroke:#000000"
              xlink:href="#Keying" />
           <g
              transform="translate(0,-0.23812831)"
@@ -604,7 +604,7 @@
              y="0"
              x="0"
              id="use995-4"
-             style="fill:#6563ee;fill-opacity:1;stroke:#000000"
+             style="fill:#ebeeb2;fill-opacity:1;stroke:#000000"
              xlink:href="#Keying" />
           <text
              y="-3.8945677"
@@ -628,7 +628,7 @@
       <path
          inkscape:connector-curvature="0"
          id="path3935-7-4-9"
-         d="m 182.5625,133.27083 h 17.1979 v 0"
+         d="m 182.5625,123.74577 h 17.1979 v 0"
          style="fill:none;stroke:#000000;stroke-width:0.5444476;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-mid:url(#Arrow2Mend-8-2-2)" />
     </g>
   </g>
