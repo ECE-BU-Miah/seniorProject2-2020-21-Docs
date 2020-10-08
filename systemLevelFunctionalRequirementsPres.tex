@@ -66,12 +66,13 @@
 
 
 
-\title[2-DOF Helicopter]{Smart Control Algorithm for 2-DOF Helicopter}
+\title[Robotic Cart System]{Robotic Cart System}
 
 % % A subtitle is optional and this may be deleted
 % \subtitle{Product Proposal}
 
-\author[G.~Janiak, K.~Vonckx]{Glenn~Janiak \and Kenneth~Vonckx \and
+\author[K.~Allen, D.~Beebe, J.~Braker]{Kallistah~Allen \and Darrah~Beebe \and
+Jason~Braker\\
 Advisor: Dr. Suruz Miah}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
@@ -87,7 +88,7 @@ Advisor: Dr. Suruz Miah}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date[May~4,~2019]{Saturday, May~4,~2019}
+\date[October~13,~2020]{Tuesday, October~13,~2020}
 
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -96,7 +97,7 @@ Advisor: Dr. Suruz Miah}
 \logo{\hfill\href{http://www.bradley.edu}{\includegraphics[width=0.75cm]{figs/logoBU1-Print}}}  % place logo in every page 
 
 
-\subject{Mobile Robot Localization}
+% \subject{Mobile Robot Localization}
 % This is only inserted into the PDF information catalog. Can be left
 % out. 
 
@@ -135,44 +136,82 @@ Advisor: Dr. Suruz Miah}
 \begin{frame}{Introduction}{}
   % applications of mobile robot navigation and problem description
     \begin{itemize}
-        \item Helicopter are important for short-distance travel
+        \item Purpose of Robotic Carts
             \begin{itemize}
-                \item air-sea rescue
-                \item fire fighting
-                \item traffic control
-                \item tourism
+                \item Carry groceries at a store
+                \item Carry files in an office
+                \item Carry objects in the home
+                \item Useful for people with disabilities
             \end{itemize}
-        \item Purpose of control system
+        \item Existing Solutions
             \begin{itemize}
-                \item resistance to turbulence
-                \item enable use of mobile device
+                \item Follow user carrying a remote device
+                \item Require line-of-sight communication
             \end{itemize}
-        \item Which is better?
+        \item Proposed Improvement
             \begin{itemize}
-                \item Optimal Control (Linear Quadratic Regulator)
-                \item Optimal Noise Resistant Control (Linear Quadratic Gaussian) 
-                \item Machine Learning (Approximate Dynamic Programming)
+              \item Use wireless signal strength
+              \item Does not require line-of-sight communication
             \end{itemize}
     \end{itemize}
 \end{frame}
 
 %----------------------------------
 
-% \subsection*{Demonstration}
+\section{System Architecture}
 
-% \begin{frame}{Demonstration}
-%     \centering
-%     \includemedia[
-%      width=0.8\linewidth,
-%      height=0.6\linewidth,
-%      activate=pageopen,  
-%      addresource=videos/Demonstration_Trim.mp4,
-%      flashvars={
-%       source=videos/Demonstration_Trim.mp4
-%       &loop=true  % loop the video
-%      }
-%     ]{}{VPlayer.swf}
-% \end{frame}
+\begin{frame}{System Architecture}
+    \begin{itemize}
+        \item Two main components of system
+            \begin{itemize}
+                \item Mobile Cart
+                \item Remote Target
+            \end{itemize}
+        \item Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+    \end{itemize}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=\textwidth]{figs/system_block_diagram}
+        \caption{Block Diagram of the Robotic Cart System}
+        \label{fig:sysBlockDiag}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{itemize}
+        \item Inputs
+            \begin{itemize}
+                \item Power
+                \item On/Off Switch
+                \item Movement of the Remote
+                \item Mode Selection
+            \end{itemize}
+        \item Outputs
+            \begin{itemize}
+                \item Movement of the Cart
+                \item Status Indicators
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%----------------------------------
+
+\section{Specifications}
+
+\begin{frame}{Specifications}
+    \begin{itemize}
+        \item Specifications
+            \begin{itemize}
+                \item Cart should be able to follow the remote while maintaining a distance of 1 to 1.5 meters.
+                \item Cart should be able to travel at 2 m/s
+                \item User should be alerted if the cart falls more than 2 meters behind
+                \item Cart should not require line-of-sight to follow remote
+                \item Cart should not collide with obstacles while following remote
+            \end{itemize}
+    \end{itemize}
+\end{frame}
 
 %----------------------------------
 
@@ -948,14 +987,14 @@ Advisor: Dr. Suruz Miah}
 %   \end{frame}
 
 % All of the following is optional and typically not needed. 
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
+% \appendix
+% \section<presentation>*{\appendixname}
+% \subsection<presentation>*{For Further Reading}
 
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-  \bibliographystyle{IEEEtran}
-  \bibliography{bib/references,bib/refsHelicopter}
+% \begin{frame}[allowframebreaks]
+%   \frametitle<presentation>{For Further Reading}
+%   \bibliographystyle{IEEEtran}
+%   \bibliography{bib/references,bib/refsHelicopter}
   
 %   \begin{thebibliography}{10}
     
@@ -1000,7 +1039,7 @@ Advisor: Dr. Suruz Miah}
 % %     \newblock {\em Journal of This and That}, 2(1):50--100,
 % %     2000.
 %   \end{thebibliography}
-\end{frame}
+% \end{frame}
 
 \end{document}
 
