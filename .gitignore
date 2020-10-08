@@ -3,6 +3,8 @@
 # Ignore the output pdfs
 labNotebook.pdf
 systemLevelFunctionalRequirements.pdf
+finalReportPres.pdf
+proposal.pdf
 
 # Ignore auxiliary files
 *.aux
@@ -14,8 +16,10 @@ systemLevelFunctionalRequirements.pdf
 *.lot
 *.log
 *.out
-*.synctex.gz
+*.synctex*
 *.toc
+*.nav
+*.snm
 # TeX auxiliary files #
 #######################
 *.aux
