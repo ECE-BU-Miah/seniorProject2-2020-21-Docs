@@ -287,11 +287,27 @@ After we finished the presentation slides I worked on the CoppeliaSim model of t
 
 %-------------------------------------------
 
-\labday{Tuesday, October 13, 2020}
+\labday{Thursday, October 15, 2020}
+\experiment{CoppeliaSim Model}
+JB\\
+Today we worked on the CoppeliaSim model. We found that if we commanded the robot with $v = 0$ [m/s] and $\omega = \pi/2$ [rad/s] for 1 second, the robot did not turn $\pi/2$ radians as expected. After looking at the math for a while, we determined that we needed to modify our definition of the distance between the wheels. Previously, we were using the distance between the left wheels and the right wheels, but the actual circle that the wheels follow when turning will have a diameter equivalent to the diagonal distance between wheels (for example, the distance from the front left wheel to the rear right wheel). Also, the linear speed of the wheels is not tangent to the circular path the wheels must follow. Therefore, we need to only account for the tangential component. The final formulae we got for the left and right wheel speeds ($v_L$ and $v_R$ respectively) were
+$$v_L = v - \frac{\omega L^2}{2d_{LR}}$$
+$$v_L = v + \frac{\omega L^2}{2d_{LR}}$$
+where $d_{LR}$ is the distance between the left and right wheels.
+
+%-------------------------------------------
+
+\labday{Tuesday, October 20, 2020}
+\experiment{XBee Training}
+
+JB\\
+In today's lab session, Darrah went over what he knows about the XBee modules and the code he has written for interfacing with them. He also informed us that from his experimentation, it may be very difficult to get a good distance measurement from signal strength when there are obstacles present. After that, I worked on creating the appendix to explain how to model the Runt Rover in CoppeliaSim.
+
 \experiment{Meeting Minutes}
 Agenda:
 \begin{itemize}
     \item Give System Level Functional Requirements Presentation
+    \item Discuss XBee external circuitry
 \end{itemize}
 
 % \experiment{Quick Start}
