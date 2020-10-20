@@ -5,6 +5,7 @@ labNotebook.pdf
 systemLevelFunctionalRequirements.pdf
 systemLevelFunctionalRequirementsPres.pdf
 finalReportPres.pdf
+finalReport.pdf
 proposal.pdf
 
 # Ignore auxiliary files
@@ -21,6 +22,7 @@ proposal.pdf
 *.toc
 *.nav
 *.snm
+*.nlo
 # TeX auxiliary files #
 #######################
 *.aux
