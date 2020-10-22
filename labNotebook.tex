@@ -308,10 +308,77 @@ $$v_L = v + \frac{\omega L^2}{2d_{LR}}$$
 where $d_{LR}$ is the distance between the left and right wheels.
 
 \vspace*{12pt}DB\\
-Will update with corresponding equations hear for
-Figure \autoref{fig:rotMathDiagram}
+The Following math is what we worked out during lab and uses the variables from \autoref{fig:rotMathDiagram}. The first step is to define the Actual velocity for rotation, $v_A$, and map it to wheel velocity, $v$, where $\theta_A$ is the angle between the ideal tangent velocity to the rotation and the wheels velocity.  Then use new axle length, $L$, along with actual velocity to get new rotational velocity equation from wheel velocities.
+
+\center
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{ c | c | c }
+	\begin{math}
+		\begin{array}{c}
+		$$\theta_{A} = atan(L_{2}/L_{1})$$\\
+		$$L = \sqrt{(L_{1})^2+(L_{2})^2}$$
+		\end{array}
+	\end{math} &
+	\begin{math}
+		\begin{array}{c}
+		$$v = v_{A}*cos(\theta_{A})$$\\
+		$$cos(\theta_{A}) = L_{1}/L$$\\
+		$$v = v_{A}*\frac{L_{1}}{L}$$
+		\end{array}
+	\end{math} &
+	\begin{math}
+		$$\begin{array}{rcl}
+		w &=& \frac{v_{AR}-v_{AL}}{L}\\
+		  &=& \frac{\frac{L_1}{L}(v_R-v_L)}{L}\\
+		  &=& \frac{L_1}{L^2}(v_R-v_L)
+		\end{array}$$
+	\end{math} \\
+\end{tabular}
+
+The resulting equations for mapping the rovers wheels to a unicycle are now put together.  The linear velocity equation is not modified since linear velocity is still perpendicular with the rovers wheel alignments.  For the angular velocity equation the coefficient on its main $(w_R-w_L)$ term of wheel speed difference has been modified to reflect the modified turning radius and the wheels offset orientation from the path they rotate on.
+
+$$v = \frac{r}{2}(w_R+w_L)$$
+\vspace*{-12pt}
+$$w = \frac{rL_1}{L^2}(w_R-w_L)$$
+\vspace*{12pt}
+
+Next substitution in used to get the left and right angular wheel speeds, $w_R$ and $w_L$.
+
+\vspace*{-18pt}
+\center
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{ c | c | c }
+	\begin{math}
+		$$\begin{array}{rcl}
+		v &=& \frac{r}{2}(w_R+w_L)\\
+		w_R &=& \frac{2v}{r}-w_L
+		\end{array}$$
+	\end{math} &
+	\begin{math}
+		$$\begin{array}{rcl}
+		w &=& \frac{rL_1}{L^2}(w_R-w_L)\\
+		w &=& \frac{rL_1}{L^2}((\frac{2v}{r}-w_L)-w_L)\\
+		w_L &=& (v - \frac{w}{2}\frac{L^2}{L_1})/r
+		\end{array}$$
+	\end{math} &
+	\begin{math}
+		$$\begin{array}{rcl}
+		w_R &=& \frac{2v}{r}-((v - \frac{w}{2}\frac{L^2}{L_1})/r)\\
+		w_R &=& (v + \frac{w}{2}\frac{L^2}{L_1})/r\\
+		\end{array}$$
+	\end{math} \\
+\end{tabular}
+\vspace*{12pt}
+
+Now we have the final angular wheel velocity equations in terms of robot velocity, $v$, robot angular velocity, $w$, axle length, $L_1$, wheel radius, $r$, and turning diameter, $L$.
+\vspace*{-6pt}
+$$\alpha = \frac{L^2}{2L_1}$$
+\vspace*{-12pt}
+$$w_R = \frac{v + {\alpha}w}{r}$$
+$$w_L = \frac{v - {\alpha}w}{r}$$
+
 \begin{figure}
-    \centering
+    \center
     \includegraphics[width=6in]{figs/roatationalVelocityMathDiagram}
     \caption{Diagram for Rotational Velocity mapping}
     \label{fig:rotMathDiagram}
