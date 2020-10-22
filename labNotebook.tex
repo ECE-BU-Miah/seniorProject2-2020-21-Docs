@@ -45,7 +45,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%    PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------                               
 
 % \UseRawInputEncoding
@@ -152,10 +152,13 @@
 \usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
 \usepackage{todonotes}
 
+% This package is for plotting graphs
+\usepackage{pgfplots}
+
 %\setlength\parindent{0pt} % Uncomment to remove all indentation from paragraphs
 
 %----------------------------------------------------------------------------------------
-%	DEFINITION OF EXPERIMENTS
+%    DEFINITION OF EXPERIMENTS
 %----------------------------------------------------------------------------------------
 
 % Template: \newexperiment{<abbrev>}[<short form>]{<long form>}
@@ -177,7 +180,7 @@
 \begin{document}
 
 %----------------------------------------------------------------------------------------
-%	TITLE PAGE
+%    TITLE PAGE
 %----------------------------------------------------------------------------------------
 %\frontmatter % Use Roman numerals for page numbers
 
@@ -209,7 +212,7 @@
 \pagestyle{scrheadings} % Begin using headers
 
 %----------------------------------------------------------------------------------------
-%	LAB BOOK CONTENTS
+%    LAB BOOK CONTENTS
 %----------------------------------------------------------------------------------------
 
 \labday{Monday, September 14, 2020}
@@ -295,7 +298,7 @@ After we finished the presentation slides I worked on the CoppeliaSim model of t
 \labday{Tuesday, October 13, 2020}
 \experiment{Lab Session}
 DB\\
-Lab was canceled today to work on Dr. Miahs test instead during the time.
+Lab was canceled today to work on Dr. Miah's test instead during the time.
 
 %-------------------------------------------
 
@@ -310,31 +313,31 @@ where $d_{LR}$ is the distance between the left and right wheels.
 \vspace*{12pt}DB\\
 The Following math is what we worked out during lab and uses the variables from \autoref{fig:rotMathDiagram}. The first step is to define the Actual velocity for rotation, $v_A$, and map it to wheel velocity, $v$, where $\theta_A$ is the angle between the ideal tangent velocity to the rotation and the wheels velocity.  Then use new axle length, $L$, along with actual velocity to get new rotational velocity equation from wheel velocities.
 
-\center
+\begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{ c | c | c }
-	\begin{math}
-		\begin{array}{c}
-		$$\theta_{A} = atan(L_{2}/L_{1})$$\\
-		$$L = \sqrt{(L_{1})^2+(L_{2})^2}$$
-		\end{array}
-	\end{math} &
-	\begin{math}
-		\begin{array}{c}
-		$$v = v_{A}*cos(\theta_{A})$$\\
-		$$cos(\theta_{A}) = L_{1}/L$$\\
-		$$v = v_{A}*\frac{L_{1}}{L}$$
-		\end{array}
-	\end{math} &
-	\begin{math}
-		$$\begin{array}{rcl}
-		w &=& \frac{v_{AR}-v_{AL}}{L}\\
-		  &=& \frac{\frac{L_1}{L}(v_R-v_L)}{L}\\
-		  &=& \frac{L_1}{L^2}(v_R-v_L)
-		\end{array}$$
-	\end{math} \\
+    \begin{math}
+        \begin{array}{c}
+        $$\theta_{A} = atan(L_{2}/L_{1})$$\\
+        $$L = \sqrt{(L_{1})^2+(L_{2})^2}$$
+        \end{array}
+    \end{math} &
+    \begin{math}
+        \begin{array}{c}
+        $$v = v_{A}*cos(\theta_{A})$$\\
+        $$cos(\theta_{A}) = L_{1}/L$$\\
+        $$v = v_{A}*\frac{L_{1}}{L}$$
+        \end{array}
+    \end{math} &
+    \begin{math}
+        $$\begin{array}{rcl}
+        w &=& \frac{v_{AR}-v_{AL}}{L}\\
+          &=& \frac{\frac{L_1}{L}(v_R-v_L)}{L}\\
+          &=& \frac{L_1}{L^2}(v_R-v_L)
+        \end{array}$$
+    \end{math} \\
 \end{tabular}
-
+\end{center}
 The resulting equations for mapping the rovers wheels to a unicycle are now put together.  The linear velocity equation is not modified since linear velocity is still perpendicular with the rovers wheel alignments.  For the angular velocity equation the coefficient on its main $(w_R-w_L)$ term of wheel speed difference has been modified to reflect the modified turning radius and the wheels offset orientation from the path they rotate on.
 
 $$v = \frac{r}{2}(w_R+w_L)$$
@@ -345,29 +348,30 @@ $$w = \frac{rL_1}{L^2}(w_R-w_L)$$
 Next substitution in used to get the left and right angular wheel speeds, $w_R$ and $w_L$.
 
 \vspace*{-18pt}
-\center
+\begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{ c | c | c }
-	\begin{math}
-		$$\begin{array}{rcl}
-		v &=& \frac{r}{2}(w_R+w_L)\\
-		w_R &=& \frac{2v}{r}-w_L
-		\end{array}$$
-	\end{math} &
-	\begin{math}
-		$$\begin{array}{rcl}
-		w &=& \frac{rL_1}{L^2}(w_R-w_L)\\
-		w &=& \frac{rL_1}{L^2}((\frac{2v}{r}-w_L)-w_L)\\
-		w_L &=& (v - \frac{w}{2}\frac{L^2}{L_1})/r
-		\end{array}$$
-	\end{math} &
-	\begin{math}
-		$$\begin{array}{rcl}
-		w_R &=& \frac{2v}{r}-((v - \frac{w}{2}\frac{L^2}{L_1})/r)\\
-		w_R &=& (v + \frac{w}{2}\frac{L^2}{L_1})/r\\
-		\end{array}$$
-	\end{math} \\
+    \begin{math}
+        $$\begin{array}{rcl}
+        v &=& \frac{r}{2}(w_R+w_L)\\
+        w_R &=& \frac{2v}{r}-w_L
+        \end{array}$$
+    \end{math} &
+    \begin{math}
+        $$\begin{array}{rcl}
+        w &=& \frac{rL_1}{L^2}(w_R-w_L)\\
+        w &=& \frac{rL_1}{L^2}((\frac{2v}{r}-w_L)-w_L)\\
+        w_L &=& (v - \frac{w}{2}\frac{L^2}{L_1})/r
+        \end{array}$$
+    \end{math} &
+    \begin{math}
+        $$\begin{array}{rcl}
+        w_R &=& \frac{2v}{r}-((v - \frac{w}{2}\frac{L^2}{L_1})/r)\\
+        w_R &=& (v + \frac{w}{2}\frac{L^2}{L_1})/r\\
+        \end{array}$$
+    \end{math} \\
 \end{tabular}
+\end{center}
 \vspace*{12pt}
 
 Now we have the final angular wheel velocity equations in terms of robot velocity, $v$, robot angular velocity, $w$, axle length, $L_1$, wheel radius, $r$, and turning diameter, $L$.
@@ -379,7 +383,7 @@ $$w_L = \frac{v - {\alpha}w}{r}$$
 
 \begin{figure}
     \center
-    \includegraphics[width=6in]{figs/roatationalVelocityMathDiagram}
+    \includegraphics[width=5.5in]{figs/roatationalVelocityMathDiagram}
     \caption{Diagram for Rotational Velocity mapping}
     \label{fig:rotMathDiagram}
 \end{figure}
@@ -508,6 +512,23 @@ Today, I worked on experimentally finding the relationship between duty cycle ap
         \toprule
         \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
         \toprule
+        4.0 & 2.25 & 1.778 & 0.5419\\
+        4.0 & 2.27 & 1.762 & 0.5371\\
+        4.0 & 2.24 & 1.786 & 0.5444\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.5411\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.6}
+    \label{tab:duty0.6}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
         4.0 & 1.88 & 2.128 & 0.6486\\
         4.0 & 1.87 & 2.139 & 0.6520\\
         4.0 & 1.89 & 2.116 & 0.6450\\
@@ -517,6 +538,40 @@ Today, I worked on experimentally finding the relationship between duty cycle ap
     \end{tabular}
     \caption{Experimental data with duty cycle 0.7}
     \label{tab:duty0.7}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 1.71 & 2.339 & 0.7129\\
+        4.0 & 1.65 & 2.424 & 0.7388\\
+        4.0 & 1.64 & 2.439 & 0.7434\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.7317\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.8}
+    \label{tab:duty0.8}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 1.48 & 2.703 & 0.8239\\
+        4.0 & 1.47 & 2.721 & 0.8294\\
+        4.0 & 1.45 & 2.759 & 0.8409\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.8314\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.9}
+    \label{tab:duty0.9}
 \end{table}
 
 \begin{table}[h!]
@@ -535,6 +590,91 @@ Today, I worked on experimentally finding the relationship between duty cycle ap
     \caption{Experimental data with duty cycle 1.0}
     \label{tab:duty1.0}
 \end{table}
+
+The combined data for all of the tested duty cycles is in \autoref{tab:dutySpeed}. A duty cycle of 0 results in no movement of the robot, so the linear speed is 0.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c}
+        \toprule
+        \textbf{Duty Cycle} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        0.0 & 0\\
+        0.1 & 0.0576\\
+        0.2 & 0.1635\\
+        0.3 & 0.2639\\
+        0.4 & 0.3621\\
+        0.5 & 0.4589\\
+        0.6 & 0.5411\\
+        0.7 & 0.6485\\
+        0.8 & 0.7317\\
+        0.9 & 0.8314\\
+        1.0 & 0.9403\\
+        \bottomrule
+    \end{tabular}
+    \caption{Measured speeds at various duty cycles}
+    \label{tab:dutySpeed}
+\end{table}
+
+Using a 4th degree polynomial fit with the $y$-intercept fixed at 0, we can approximate this data with the following formula, where $v$ is the linear speed, and $d$ is the duty cycle applied:
+\begin{equation}
+    \label{eq:v(d)}
+    v(d) = 1.2176d^4 - 2.5174d^3 + 1.6943d^2 + 0.5475d
+\end{equation}
+The scatterplot of the data with the curve of best fit is shown in \autoref{fig:v(d)bestfit}.
+
+\begin{figure}[h!]
+    \center
+    \begin{tikzpicture}
+        \begin{axis}[
+            title={Linear Speed vs. Duty Cycle},
+            xlabel={Duty Cycle},
+            ylabel={Linear Speed [m/s]},
+            xmin=0, xmax=1,
+            ymin=0, ymax=1,
+            xtick={0,0.1,...,1},
+            ytick={0,0.1,...,1},
+            legend pos=north west,
+            xmajorgrids=true,
+            ymajorgrids=true,
+            width=4in,
+        ]
+            \addplot[
+                color=blue,
+                mark=o,
+                mark size=2pt,
+                only marks,
+            ]
+            table
+            {
+                x y
+                0 0
+                0.1 0.0576
+                0.2 0.1635
+                0.3 0.2639
+                0.4 0.3621
+                0.5 0.4589
+                0.6 0.5411
+                0.7 0.6485
+                0.8 0.7317
+                0.9 0.8314
+                1.0 0.9403
+            };
+            \addlegendentry{Experimental Data}
+
+            \addplot[
+                domain=0:1,
+                samples=100,
+                color=blue,
+            ]
+            {1.2176*x^4 - 2.5174*x^3 + 1.6943*x^2 + 0.5475*x};
+            \addlegendentry{4th Degree Polynomial of Best Fit}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Best fit curve for speed and duty cycle}
+    \label{fig:v(d)bestfit}
+\end{figure}
+
 
 % \experiment{Quick Start}
 % GJ\\
@@ -1957,7 +2097,7 @@ Today, I worked on experimentally finding the relationship between duty cycle ap
 \end{addmargin}
 
 %----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
+%    BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
 
