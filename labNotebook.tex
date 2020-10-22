@@ -335,6 +335,133 @@ Agenda:
 JB\\
 In today's meeting, we gave our presentation to Dr. Miah and Dr. Shastry. Their main point of feedback was that for future presentations, we should use more figures and videos to help convey what we are talking about. We were also encouraged to research existing solutions to following robots. We were also encouraged to research the multipath phenomenon, which causes signal strength variations due to the environment (walls, ceiling, floor, objects in the room, etc.).
 
+%-------------------------------------------
+
+\labday{Thursday, October 22, 2020}
+\experiment{Linear Speed Testing}
+
+JB\\
+Today, I worked on experimentally finding the relationship between duty cycle applied to the wheels and linear speed. To do this, I applied the same duty cycle to all wheels to run the Runt Rover alongside a measuring tape. I then measured the time it took for the Runt Rover to move 4 feet along the tape. From this, I calculated the linear speed. I repeated this 3 times for each duty cycle and averaged the results. The results of these experiments are shown in Tables \ref{tab:duty0.1} - \ref{tab:duty1.0}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 21.10 & 0.1896 & 0.05779\\
+        4.0 & 20.99 & 0.1906 & 0.05810\\
+        4.0 & 21.43 & 0.1867 & 0.05691\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.05760\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.1}
+    \label{tab:duty0.1}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 7.47 & 0.5355 & 0.1632\\
+        4.0 & 7.43 & 0.5384 & 0.1641\\
+        4.0 & 7.47 & 0.5355 & 0.1632\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.1635\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.2}
+    \label{tab:duty0.2}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 4.63 & 0.8639 & 0.2633\\
+        4.0 & 4.60 & 0.8696 & 0.2651\\
+        4.0 & 4.63 & 0.8639 & 0.2633\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.2639\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.3}
+    \label{tab:duty0.3}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 3.40 & 1.176 & 0.3584\\
+        4.0 & 3.37 & 1.187 & 0.3618\\
+        4.0 & 3.33 & 1.201 & 0.3661\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.3621\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.4}
+    \label{tab:duty0.4}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 2.68 & 1.493 & 0.4551\\
+        4.0 & 2.64 & 1.515 & 0.4618\\
+        4.0 & 2.65 & 1.509 & 0.4599\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.4589\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.5}
+    \label{tab:duty0.5}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 1.88 & 2.128 & 0.6486\\
+        4.0 & 1.87 & 2.139 & 0.6520\\
+        4.0 & 1.89 & 2.116 & 0.6450\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.6485\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 0.7}
+    \label{tab:duty0.7}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{r|r|r|r}
+        \toprule
+        \textbf{Distance [ft]} & \textbf{Time [s]} & \textbf{Linear Speed [ft/s]} & \textbf{Linear Speed [m/s]}\\
+        \toprule
+        4.0 & 1.30 & 3.077 & 0.9379\\
+        4.0 & 1.29 & 3.101 & 0.9452\\
+        4.0 & 1.30 & 3.077 & 0.9379\\
+        \bottomrule
+        \multicolumn{3}{r|}{\textbf{Average Linear Speed [m/s]}} & 0.9403\\
+        \bottomrule
+    \end{tabular}
+    \caption{Experimental data with duty cycle 1.0}
+    \label{tab:duty1.0}
+\end{table}
+
 % \experiment{Quick Start}
 % GJ\\
 % Tested both Quanser AERO Helicopter's using the Quick Start Guide.  They both worked as expected according to the guide.
