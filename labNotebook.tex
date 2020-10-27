@@ -307,7 +307,7 @@ Lab was canceled today to work on Dr. Miah's test instead during the time.
 JB\\
 Today we worked on the CoppeliaSim model. We found that if we commanded the robot with $v = 0$ [m/s] and $\omega = \pi/2$ [rad/s] for 1 second, the robot did not turn $\pi/2$ radians as expected. After looking at the math for a while, we determined that we needed to modify our definition of the distance between the wheels. Previously, we were using the distance between the left wheels and the right wheels, but the actual circle that the wheels follow when turning will have a diameter equivalent to the diagonal distance between wheels (for example, the distance from the front left wheel to the rear right wheel). Also, the linear speed of the wheels is not tangent to the circular path the wheels must follow. Therefore, we need to only account for the tangential component. The final formula we got for the left and right wheel speeds ($v_L$ and $v_R$ respectively) were
 $$v_L = v - \frac{\omega L^2}{2d_{LR}}$$
-$$v_L = v + \frac{\omega L^2}{2d_{LR}}$$
+$$v_R = v + \frac{\omega L^2}{2d_{LR}}$$
 where $d_{LR}$ is the distance between the left and right wheels.
 
 \vspace*{12pt}DB\\
@@ -675,6 +675,26 @@ The scatterplot of the data with the curve of best fit is shown in \autoref{fig:
     \label{fig:v(d)bestfit}
 \end{figure}
 
+%-------------------------------------------
+
+\labday{Tuesday, October 27, 2020}
+\experiment{Lab Time}
+
+JB\\
+Today we worked on putting together a list of parts since we cannot do much experimentation until we have the necessary parts. Dr. Miah advised us to get some external encoders as well as new motors with built-in encoders to allow us to detect wheel revolutions. We searched for 
+
+\experiment{Meeting Minutes}
+Agenda: Discuss parts:
+\begin{itemize}
+    \item Encoders
+    \item Motors
+    \begin{itemize}
+        \item Wheel motors
+        \item Sensor motor - servo or stepper
+    \end{itemize}
+    \item Second Runt Rover kit
+    \item Parabolic reflector
+\end{itemize}
 
 % \experiment{Quick Start}
 % GJ\\
