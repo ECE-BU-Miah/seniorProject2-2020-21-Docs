@@ -716,6 +716,44 @@ In today's meeting, we discussed the possibility of buying external encoders to 
 
 Finally, we discussed the parabolic reflector to directionalize the XBee sensor that will be mounted on the robot. Dr. Miah gave us the link to a previous senior project (\href{http://ee.bradley.edu/projects/proj2017/ekf_slam/Downloads/downloads.html}{found here}) that used such a parabolic reflector and directed us to the lab notebook for more information. We plan to look at the information there and decide whether to use the same design or to modify it.
 
+%-------------------------------------------
+
+\labday{Thursday, October 29, 2020}
+\experiment{Budget Bot Evaluation}
+
+JB\\
+Today, we researched the Budget Bot chassis to see if it would be a better option than the Runt Rover. The motors included in the Budget Bot have a no-load speed of 212 RPM, and a rated load speed of 163 RPM. Since the wheels have a diameter of 3.875 inches (0.098425 m), the linear speed that can be achieved at 163 RPM is
+$$v = r\omega = \left(\frac{0.098425}{2} [m]\right)\left(163 [RPM]\right)\left(\frac{1 [min]}{60 [s]}\right)\left(\frac{2\pi [rad]}{1 [rev]}\right) = 0.840 [m/s]$$
+We would like to be able to reach a speed of at least 1 m/s, if possible. Then the loaded speed of the motor must be
+$$\Omega_L = \left(\frac{1 [m/s]}{2\pi\frac{0.098425}{2} [m]}\right)\left(\frac{60 [s]}{1 [min]}\right) = 194 [RPM]$$
+We found the Pololu 4751 motor on Digikey (\href{https://www.digikey.com/en/products/detail/pololu-corporation/4751/10450205}{here}) which has a no-load speed of 540 RPM at 12V. Since our batteries are only 7.4V, the no-load speed would be approximately $\frac{7.4}{12}(540 [RPM]) = 333 [RPM]$. This gives us a good tolerance for the effects of loading. However, these motors are somewhat expensive at \$39.95 each. We decided to ask Dr. Miah for his opinion on this.
+
+\experiment{Project Proposal Planning}
+
+JB\\
+Today we divided out the tasks for the project proposal since the draft is due Tuesday, November 3. According to the information from Dr. Shastry, the proposal should have the following content:
+\begin{enumerate}
+    \item Title, Project Team, Advisors
+    \item Abstract
+    \item Introduction
+    \item Literature review
+    \item Expanded project statement
+    \item Specifications of the system and the subsystems
+    \item List of parts and complete specs of the parts needed
+    \item List of tasks and task-sharing by the team members
+    \item Timeline for accomplishing the tasks
+    \item Include the following tasks:
+    \begin{enumerate}
+        \item Presentation to IAB members
+        \item Final presentation
+        \item Project demo
+        \item Project report
+    \end{enumerate}
+    \item Bibliography and references
+\end{enumerate}
+
+Kalli will work on items 1 - 4 and 11. Darrah will work on items 5 - 7, and Jason will work on items 8 - 10.
+
 % \experiment{Quick Start}
 % GJ\\
 % Tested both Quanser AERO Helicopter's using the Quick Start Guide.  They both worked as expected according to the guide.
