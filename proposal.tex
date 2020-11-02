@@ -34,9 +34,9 @@ format=default,justification=centerlast]{caption} % Figure caption text customiz
 
 \title{ECE498:~Senior Capstone Project I\\\textbf{\underline{Project Proposal}}\\
 \vspace{0.5in}
-Project Title: ZigBee--Based Indoor Robot Localization and Mapping}
+Project Title: Robotic Cart
 \vspace{1.5in}
-\author{Kyle Hevrdejs and Jacob Knoll\\ Advisor: Dr.~Suruz Miah
+\author{Kallistah Allen, Darrah Beebe and Jason Braker\\ Advisors: Dr.~Suruz Miah and Dr.~Prasad Shastry}
 }
 %\date{February 6, 2003}  No need to write, Date will be automatically on the title page
 \date{}  % Do not show date on the title page
@@ -61,7 +61,7 @@ Caterpillar College of Engineering and Technology\\
 \href{http://www.bradley.edu/}{Bradley University}\\
 
 \vspace*{6.0cm}
-\copyright~K.~Hevrdejs~and~J.~Knoll, Peoria, IL, USA, 2016\\
+\copyright~K.~Allen,~D.~Beebe~and~J.~Braker, Peoria, IL, USA, 2016\\
 
 \end{center}
 \thispagestyle{empty}
@@ -80,7 +80,7 @@ Caterpillar College of Engineering and Technology\\
 %applications
 As the use of mobile robots becomes more common in the workplace, the need for accurate navigation rises. There are systems currently on the market that aim to meet this need. The major drawback however is the cost, modularity between mobile robots, and scalability to larger environments. In this project, we propose a cost--effective, modular, and easily scalable system utilizing off the shelf components that will allow a mobile robot to navigate and map its environment using an EKF-SLAM (Extended Kalman Filter - Simultaneous Localization and Mapping) algorithm. This system will allow navigation and mapping of an indoor environment with an acceptable level of accuracy. Applications of this system include mining vehicles, research and education, deliveries within office builings, cleaning robots, and warehouses.
 
-\section{Background Study} %review of literature and prior work
+\section{Literature Review} %review of literature and prior work
 %write more here (related works from subsystem level functional requirements?)
 
 A large amount of research in the field of robotics is concentrated in the areas of localization and navigation (see~\cite{Martinelli2015},~\cite{DiGiampaolo2014},~\cite{Song2012}). Currently, much of the work being done focuses on the use of passive RFID tags~\cite{Martinelli2015}\cite{DiGiampaolo2014}. These methods are highly accurate but also expensive, both in hardware and computational efficiency. In~\cite{Martinelli2015} and~\cite{DiGiampaolo2014}, an algorithm is implemented using UHF (ultra high frequency) RFID in order to localize a mobile robot. In there, the phase information is adopted in order to calculate the angle between the passive tags and the mobile robot. Overall, the system worked well, however, the experiments performed did not fully demonstrate the localization algorithm, as the mobile robot was preprogrammed to follow a line marked on the floor of the environment. This approach also requires understanding of RF such as phase shift and RFID. Another method, seen in~\cite{Song2012}, shows a similar system but instead using wireless sensors as beacons. This setup is easier to implement on a large scale due to the minimal RF knowledge required and ease of implementation of beacons. The system presented in~\cite{Song2012} also uses the technique of partitioning the environment into a grid in order to more accurately calculate signal strength and bearing using a forward mounted directional antenna. This approach shows accuracy over after long operation times, an undesired characteristic of our project. Although not directly used for localization, the work done in~\cite{Hood2011} shows a possible alternative method for localization and mapping. By utilizing a rotating reflector, the authors were able to accurately estimate the angle-of-arrival of wireless signals from multiple wireless sensors. Furthermore, there are similar systems currently in use by the military that implement this technique (rotating radar antennas). There are also similar systems available for civilian use in areas such as commercial marine radar. Using this method, the authors were able to estimate the angle-of-arrival with an accuracy of $\pm \SI{3}{\degree}$.\\
