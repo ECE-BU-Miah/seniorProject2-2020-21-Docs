@@ -146,65 +146,122 @@ There are several patents that outline designs that are comparable to our projec
 
 \section{Timeline and Milestones} \label{sec:timeline}
 
-\begin{sidewaysfigure}
-\begin{ganttchart}[hgrid,vgrid,x unit=.8cm, y unit title=.5cm,y unit chart=.8cm,milestone label font=\tiny,bar label font=\tiny, group label font=\small,bar/.append style={fill=green},bar incomplete/.append style={fill=red}]{1}{16}
-\gantttitle{2016}{16}\\
-\gantttitle{Sep}{4}
-\gantttitle{Oct}{4}
-\gantttitle{Nov}{4}
-\gantttitle{Dec}{4}\\
-\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Research}{3}{5} \\
-\ganttbar[progress = 100,progress label text={$\displaystyle#1\%$},bar progress label font = \tiny,bar progress label anchor = east]{Research XBee functionality}{3}{5}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Research EKF-SLAM}{3}{5}\\
-\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Simulation}{6}{12}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Simulate using MATLAB}{6}{8}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Simulate using V-REP}{9}{12}\\
-\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{XBee Communication}{6}{14}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Communication with X-CTU}{6}{7}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{AT Commands}{8}{8}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Remote AT Commands}{9}{10}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{XBee Library}{11}{12}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Get XBee RSSI data from multiple beacons}{13}{14}
-\end{ganttchart}
-\caption{Gantt chart for Fall 2016}
-\label{gantt1}
-\end{sidewaysfigure}
+\begin{figure}
+  \centering
+  \begin{ganttchart}[
+    hgrid,
+    vgrid,
+    x unit=.6cm,
+    y unit title=.8cm,
+    y unit chart=.6cm,
+    milestone label font=\tiny,
+    milestone progress label font = \tiny,
+    milestone progress label anchor = east,
+    bar label font=\tiny,
+    group label font=\small,
+    bar/.append style={fill=green},
+    bar incomplete/.append style={fill=red},
+    group progress label font = \tiny,
+    progress label text={$\displaystyle#1\%$},
+    group progress label anchor = east,
+    bar progress label font = \tiny,
+    bar progress label anchor = east,
+    ]{1}{16}
 
-%change this to the correct format and make our schedule
-%\begin{landscape}
-\begin{sidewaysfigure}
-%\begin{figure}
-%\centering
-\begin{ganttchart}[hgrid,vgrid,x unit=.8cm, y unit title=.5cm,y unit chart=.8cm,milestone label font=\tiny,bar label font=\tiny, group label font=\small,bar/.append style={fill=green},bar incomplete/.append style={fill=red}]{1}{18}
-\gantttitle{2017}{18}\\
-\gantttitle{Jan}{4}
-\gantttitle{Feb}{4}
-\gantttitle{Mar}{4}
-\gantttitle{Apr}{4}
-\gantttitle{May}{2}\\
-\ganttgroup[progress = 100,group progress label font = \tiny,progress label text={$\displaystyle#1\%$}, group progress label anchor = east]{XBee Communication}{3}{4}\\
-\ganttbar[progress = 100,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Get XBee RSSI data from multiple beacons}{3}{4}\\
-\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Angle Estimation}{3}{5} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Build Reflector}{3}{3} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Testing and Debugging}{4}{5} \\
-%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{5} \ganttnewline
-\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Subsystem Preparation}{5}{8} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Install ROS for Control of Pioneer 3-DX}{5}{6} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Create ROS Node for Estimator Subsytem}{7}{8} \\
-%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{8} \ganttnewline
-\ganttgroup[progress = 0,group progress label font = \tiny,progress label text={$\displaystyle#1\%$},group progress label anchor = east]{Integration and Test}{8}{16} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Integrate subsystems}{8}{9} \\
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Test and Debug System}{10}{13} \\
-%\ganttmilestone[progress = 0,milestone progress label font = \tiny,milestone progress label anchor = east]{Finalize Functionality}{13} \ganttnewline
-\ganttbar[progress = 0,bar progress label font = \tiny,progress label text={$\displaystyle#1\%$},bar progress label anchor = east]{Project Completion Work}{14}{16}
-\end{ganttchart}
-\caption{Gantt Chart for Spring 2017}
-\label{fig:gantt2}
-%\end{figure}
-\end{sidewaysfigure}
-%\end{landscape}
+    \gantttitle{2020}{16}\\
+    \gantttitle{Sep}{4}
+    \gantttitle{Oct}{4}
+    \gantttitle{Nov}{4}
+    \gantttitle{Dec}{4}\\
+    
+    \ganttgroup[progress = 50]{Research}{3}{12} \\
+    \ganttbar[progress = 50]{Research Multipath}{3}{12}\\
+    \ganttbar[progress = 50]{Research Reflector}{3}{12}\\
 
-The Gantt chart in~\autoref{fig:gantt2} shows our planned schedule to complete this project. Each month is split into 4 pieces represented by the dotted grid to approximate weekly schedule. The first milestone is to complete the necessary work for our angle estimation technique. This includes building an antenna reflector, then testing the reflector to obtain optimal results. The expected functionality is taking several RSSI samples while rotating the reflector a maximum of $\SI{180}{\degree}$ and using the RSSI sample data to determine an estimated angle. The next milestone is to have full functionality of the mobile robot controller using ROS running on a BeagleBone Black. Controlling the Pioneer 3-DX with MATLAB will simplify testing and control, but our end goal is to have the system self-contained on the mobile robot platform. The last milestone is to integrate the subsystems into one fully functioning system. This will require that each subsystem has met its specifications and is ready to implemented. We expect that testing the system will require debugging and tuning, thus we have set aside a large amount of time dedicated to testing. We have also set time for completing documentation and any other work necessary to complete our project.\\
+    \ganttgroup[progress = 15]{Simulation}{8}{10}\\
+    \ganttbar[progress = 15]{CoppeliaSim simulation}{8}{10}\\
+    \ganttmilestone[progress = 0]{Simulation Complete}{10}\\
+
+    \ganttgroup[progress = 0]{Project Proposal}{11}{12}\\
+    \ganttbar[progress = 0]{Proposal Document}{11}{11}\\
+    \ganttbar[progress = 0]{Proposal Presentation}{12}{12}\\
+
+    \ganttgroup[progress = 0]{XBee Setup}{13}{14}\\
+    \ganttbar[progress = 0]{Voltage Regulator Circuit}{13}{13}\\
+    \ganttbar[progress = 0]{Configuration with X-CTU}{14}{14}\\
+    \ganttbar[progress = 0]{Sensing RSSI}{14}{14}\\
+  \end{ganttchart}
+\caption{Gantt chart for Fall 2020}
+\label{fig:gantt1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{ganttchart}[
+    hgrid,
+    vgrid,
+    x unit=.6cm,
+    y unit title=.8cm,
+    y unit chart=.6cm,
+    milestone label font=\tiny,
+    milestone progress label font = \tiny,
+    milestone progress label anchor = east,
+    bar label font=\tiny,
+    group label font=\small,
+    bar/.append style={fill=green},
+    bar incomplete/.append style={fill=red},
+    group progress label font = \tiny,
+    progress label text={$\displaystyle#1\%$},
+    group progress label anchor = east,
+    bar progress label font = \tiny,
+    bar progress label anchor = east,
+    ]{1}{18}
+    \gantttitle{2020}{18}\\
+    \gantttitle{Jan}{2}
+    \gantttitle{Feb}{4}
+    \gantttitle{Mar}{4}
+    \gantttitle{Apr}{4}
+    \gantttitle{May}{4}\\
+
+    \ganttgroup[progress = 0]{Assembly}{2}{3}\\
+    \ganttbar[progress = 0]{Replace Motors}{2}{2}\\
+    \ganttbar[progress = 0]{Construct and Mount Reflector}{3}{3}\\
+    \ganttmilestone[progress = 0]{Assembly Complete}{3}\\
+
+    \ganttgroup[progress = 0]{Software}{4}{5}\\
+    \ganttbar[progress = 0]{XBee Library}{4}{4}\\
+    \ganttbar[progress = 0]{Control Algorithm}{5}{5}\\
+
+    \ganttgroup[progress = 0]{Angle Estimation}{6}{7}\\
+    \ganttbar[progress = 0]{Rotate XBee on Stepper Motor}{6}{6}\\
+    \ganttbar[progress = 0]{Determine Angle}{7}{7}\\
+
+    \ganttgroup[progress = 0]{Distance Estimation}{8}{9}\\
+    \ganttbar[progress = 0]{Calibrate Distance Calculation}{8}{9}\\
+
+    \ganttgroup[progress = 0]{Subsystem Integration}{10}{14}\\
+    \ganttbar[progress = 0]{Angle Estimation Testing}{10}{10}\\
+    \ganttbar[progress = 0]{Distance Estimation Testing}{11}{12}\\
+    \ganttbar[progress = 0]{System Testing}{13}{14}\\
+    \ganttmilestone[progress = 0]{Integration Complete}{14}\\
+
+    \ganttgroup[progress = 0]{Project Report}{15}{16}\\
+    \ganttbar[progress = 0]{Final Report}{15}{15}\\
+    \ganttbar[progress = 0]{Final Presentation}{16}{16}\\
+    
+    \ganttmilestone[progress = 0]{Project Complete}{16}
+  \end{ganttchart}
+  \caption{Gantt Chart for Spring 2020}
+  \label{fig:gantt2}
+\end{figure}
+
+The Gantt charts in Figures \ref{fig:gantt1} and \ref{fig:gantt2} show our planned schedule to complete this project. In these charts, there are four sections in each month represented by the dotted grid. This is to approximate a weekly schedule. Our first milestone is to complete the simulation of the system in MATLAB and CoppeliaSim. This includes simulating a remote as well as the robotic cart. The simulation of the RSSI detection will be handled in Matlab based on the positions of the cart and remote. We will add noise to the simulated RSSI in order to simulate the multipath effect. The expected functionality is that the cart will follow the remote.
+
+The second milestone is to complete the assembly of both the cart and the remote. The cart assembly involves replacing the existing motors with the purchased motors, as well as mounting the stepper motor, reflector, and XBee on top of the robot. The assembly of the remote involves constructing the voltage regulator circuit.
+
+The third milestone is to integrate the subsystems into one system. This will involve testing the angle and distance estimation from the cart to the remote. It will also include testing the following capabilities of the overall system. We expect that this will require a large amount of debugging and tuning. Therefore, we have allotted several weeks for this purpose.
+
+The fourth and final milestone is to complete the final report and presentation. This involves documenting our findings and creating a presentation of our work. At this point, the project will be complete. 
 
 %\section{Conclusion}
 %\label{sec:conclusion}
