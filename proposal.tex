@@ -23,6 +23,7 @@ format=default,justification=centerlast]{caption} % Figure caption text customiz
 
 \usepackage{pgfgantt}
 
+\usepackage{booktabs,array} % Packages for tables
 
 \usepackage{hyperref}
 \usepackage{soul}
@@ -90,11 +91,11 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 
 \section{Standards and Patents}
-The standards that are applicable to our project include the IEEE 802.15.4 protocol and the ZigBee protocol. The IEEE 802.15.4 protocol\footnote{IEEE Standard for Low-Rate Wireless Networks, 2015} outlines the physical layer (PHY) and the medium access control layer (MAC) specifications for low-data-rate wireless communication in personal area networks (LR-WPAN). The PHY layer contains the radio frequency transceiver and its low-level controller. The MAC layer provides access to the physical channel for transfer and defines an IEEE address for the device. Its goal is to maintain a simple and flexible protocol while also being easy to install, having reliable data transfer, being low cost, and having reasonable battery life. The ceiling mounted beacons will use XBee modules to communicate wirelessly with the mobile robot and uses the 802.15.4 protocol by default. The 802.15.4 protocol allows for a star network topology which is made up of one established personal area network (PAN) coordinator and other functional devices. In our system, the XBee mounted on the mobile robot will act as a coordinator and the ceiling mounted XBee’s will be the other functional devices. During our testing, we have established basic peer-to-peer communication with this protocol.\\
+% The standards that are applicable to our project include the IEEE 802.15.4 protocol and the ZigBee protocol. The IEEE 802.15.4 protocol\footnote{IEEE Standard for Low-Rate Wireless Networks, 2015} outlines the physical layer (PHY) and the medium access control layer (MAC) specifications for low-data-rate wireless communication in personal area networks (LR-WPAN). The PHY layer contains the radio frequency transceiver and its low-level controller. The MAC layer provides access to the physical channel for transfer and defines an IEEE address for the device. Its goal is to maintain a simple and flexible protocol while also being easy to install, having reliable data transfer, being low cost, and having reasonable battery life. The ceiling mounted beacons will use XBee modules to communicate wirelessly with the mobile robot and uses the 802.15.4 protocol by default. The 802.15.4 protocol allows for a star network topology which is made up of one established personal area network (PAN) coordinator and other functional devices. In our system, the XBee mounted on the mobile robot will act as a coordinator and the ceiling mounted XBee’s will be the other functional devices. During our testing, we have established basic peer-to-peer communication with this protocol.\\
 
-The other standard known as ZigBee\footnote{Zigbee Pro Stack User Guide, 2014}\footnote{XBee/XBee-Pro S2C ZigBee User Guide, 2016} is an open global standard for low-power, low-cost, low-data-rate, wireless networking based on the IEEE 802.15.4 standard. It maintains the specifications of the PHY layer and the MAC layer while defining the higher network layer and setting the framework for the application layer. The network layer takes care of network structure, routing, and security. The application layer has an application support sub-layer (APS) which defines various addressing objects and has other features for device specific applications. The ZigBee protocol allows for star, peer-to-peer, and mesh network topologies. We will still use the star network topology which is made up of a coordinator who creates a network with a channel and a unique PAN ID and end devices who will join this network with extra power saving features. The XBee mounted on the mobile robot will act as the coordinator and the ceiling mounted beacons will act as the end devices. The fully functional system will be implemented with a ZigBee network. It offers well defined packetized communication, power saving features which is important for the battery powered ceiling mounted beacons, and future applications which may require a higher level mesh network.\\
+% The other standard known as ZigBee\footnote{Zigbee Pro Stack User Guide, 2014}\footnote{XBee/XBee-Pro S2C ZigBee User Guide, 2016} is an open global standard for low-power, low-cost, low-data-rate, wireless networking based on the IEEE 802.15.4 standard. It maintains the specifications of the PHY layer and the MAC layer while defining the higher network layer and setting the framework for the application layer. The network layer takes care of network structure, routing, and security. The application layer has an application support sub-layer (APS) which defines various addressing objects and has other features for device specific applications. The ZigBee protocol allows for star, peer-to-peer, and mesh network topologies. We will still use the star network topology which is made up of a coordinator who creates a network with a channel and a unique PAN ID and end devices who will join this network with extra power saving features. The XBee mounted on the mobile robot will act as the coordinator and the ceiling mounted beacons will act as the end devices. The fully functional system will be implemented with a ZigBee network. It offers well defined packetized communication, power saving features which is important for the battery powered ceiling mounted beacons, and future applications which may require a higher level mesh network.\\
 
-There are several patents that outline designs that are comparable to our project. The first patent~\cite{biehl} describes systems and methods for localization of a mobile device using beacons. This design uses a computer, a location signal receiver and beacons to determine the location of the mobile device. The beacons transmit the location signal and  the computer determines the location from the received location signal strength and a unique key based on the particular transmitting beacon. This patent is relevant to our work as it uses received signal strength from beacons and individual beacon IDs for localization of a mobile device in an indoor environment, but the patent is more general to what the mobile device is and uses a different localization algorithm. The second patent~\cite{lin} outlines positioning of an indoor mobile robot, and mapping of its environment and the beacons it detects. The mobile robot performs several positioning modes depending on the number on beacons it detects in its line of sight. This patent is more applicable to our project than the last patent. It utilizes a simultaneous localization and mapping technique for a mobile robot and beacons. However, the patent's positioning method is different than ours. The third patent~\cite{edlund} describes a localization method for a mobile robot with a system of beacons. It uses the signal strength and angle of arrival of the signal to localize and determine a coarse correction. This design is very similar to our approach by uses signal strength and angle, and similar localization algorithm, but we will be rotating a antennae reflector instead of the entire robot. A similar patent~\cite{younis} to the previous explains an indoor localization method for a mobile device using directional reflectors. The mobile device transmits a signal and the signal is delayed and returned by reflectors in the environment. The location of the mobile device is then determined from the range by the amount of delay and the angle of arrival at the reflector. This patent is relatively similar to our project as it describes an indoor localization technique using range and angle for a mobile device.
+% There are several patents that outline designs that are comparable to our project. The first patent~\cite{biehl} describes systems and methods for localization of a mobile device using beacons. This design uses a computer, a location signal receiver and beacons to determine the location of the mobile device. The beacons transmit the location signal and  the computer determines the location from the received location signal strength and a unique key based on the particular transmitting beacon. This patent is relevant to our work as it uses received signal strength from beacons and individual beacon IDs for localization of a mobile device in an indoor environment, but the patent is more general to what the mobile device is and uses a different localization algorithm. The second patent~\cite{lin} outlines positioning of an indoor mobile robot, and mapping of its environment and the beacons it detects. The mobile robot performs several positioning modes depending on the number on beacons it detects in its line of sight. This patent is more applicable to our project than the last patent. It utilizes a simultaneous localization and mapping technique for a mobile robot and beacons. However, the patent's positioning method is different than ours. The third patent~\cite{edlund} describes a localization method for a mobile robot with a system of beacons. It uses the signal strength and angle of arrival of the signal to localize and determine a coarse correction. This design is very similar to our approach by uses signal strength and angle, and similar localization algorithm, but we will be rotating a antennae reflector instead of the entire robot. A similar patent~\cite{younis} to the previous explains an indoor localization method for a mobile device using directional reflectors. The mobile device transmits a signal and the signal is delayed and returned by reflectors in the environment. The location of the mobile device is then determined from the range by the amount of delay and the angle of arrival at the reflector. This patent is relatively similar to our project as it describes an indoor localization technique using range and angle for a mobile device.
 
 \section{Functional Requirements}
 
@@ -226,7 +227,8 @@ There are several patents that outline designs that are comparable to our projec
 
     \ganttgroup[progress = 0]{Assembly}{2}{3}\\
     \ganttbar[progress = 0]{Replace Motors}{2}{2}\\
-    \ganttbar[progress = 0]{Construct and Mount Reflector}{3}{3}\\
+    \ganttbar[progress = 0]{Design and Construct Reflector}{2}{3}\\
+    \ganttbar[progress = 0]{Mount Reflector}{3}{3}\\
     \ganttmilestone[progress = 0]{Assembly Complete}{3}\\
 
     \ganttgroup[progress = 0]{Software}{4}{5}\\
@@ -264,7 +266,47 @@ The second milestone is to complete the assembly of both the cart and the remote
 
 The third milestone is to integrate the subsystems into one system. This will involve testing the angle and distance estimation from the cart to the remote. It will also include testing the following capabilities of the overall system. We expect that this will require a large amount of debugging and tuning. Therefore, we have allotted several weeks for this purpose.
 
-The fourth and final milestone is to complete the final report and presentation. This involves documenting our findings and creating a presentation of our work. At this point, the project will be complete. 
+The fourth and final milestone is to complete the final report and presentation. This involves documenting our findings in a report and presenting our work. At this point, the project will be complete.
+
+% The tentative distribution of the tasks is shown in \autoref{tab:taskdist}, where each task has an X in the cells corresponding to the individuals who will be working on the task.
+% \begin{table}[h!]
+%   \centering
+%   \begin{tabular}{|r|c|c|c|}
+%       \toprule
+%       & \textbf{Kallistah} & \textbf{Darrah} & \textbf{Jason}\\
+%       \textbf{Task} & \textbf{Allen} & \textbf{Beebe} & \textbf{Braker}\\
+%       \toprule
+%       Research Multipath & X & X & X\\
+%       \hline
+%       Research Reflector & X & X & X\\
+%       \hline
+%       CoppeliaSim Simulation & & & X\\
+%       \hline
+%       Proposal Document & X & X & X\\
+%       \hline
+%       Proposal Presentation & X & X & X\\
+%       \hline
+%       Build Voltage Regulator Circuit & X & & X\\
+%       \hline
+%       Learn Configuration with X-CTU & X & & X\\
+%       \hline
+%       Read RSSI Using XBee & X & X & X\\
+%       \hline
+%       Replace Motors on Robot & X & X & X\\
+%       \hline
+%       Design and Construct Reflector & & X & X\\
+%       \hline
+%       Mount Reflector & X & X & X\\
+%       \hline
+%       XBee Library & & X & \\
+%       \hline
+%       Control Algorithm & X & X & X\\
+%       \hline
+%       \bottomrule
+%   \end{tabular}
+%   \caption{Task distribution}
+%   \label{tab:taskdist}
+% \end{table}
 
 %\section{Conclusion}
 %\label{sec:conclusion}
