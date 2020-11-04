@@ -82,7 +82,6 @@ Caterpillar College of Engineering and Technology\\
 Robotic carts are a prevailing invention designed to aid the customer in a number of important indoor and outdoor tasks. There are systems currently on the market that perform these tasks in a variety of ways. For example, in a grocery store, a customer may require the need of more than one cart but cannot push or pull two carts simultaneously. One major drawback however is that people with disabilities cannot push one cart let alone have a second cart to carry more items. In this project, we are proposing a robotic cart that would primarily use analog signals with the use of cost-effective wireless communication to identify the customer and be able to track and follow the customer through the store. This implementation of a fully functional robotic cart will outreach the scope of the project but is the overall goal for this project in the coming years while encouraging further research into this field. Applications of this system include mail delivery carts, file transferring carts in offices, hospital carts to aid nurses and doctors by carrying medicine or surgery supplies, and use in construction sites to carry tools and other supplies across the job site.
 
 \section{Literature Review} %review of literature and prior work
-%write more here (related works from subsystem level functional requirements?)
 
 Abounding research in the field of robotic carts shows various ways in which to implement a system that will help consumers with carrying groceries through stores (see~\cite{inproceedings},~\cite{islam_lam_fukuda_kobayashi_kuno_2019},~\cite{article}). Currently, the work being done focuses on a few different methods of having the robotic cart interface with the customer and follow them through the store. A mobile platform interface that implements ultrasound and radio transmissions technology is one such method that has been utilized to follow a customer through a store~\cite{article}. Another method that has been implemented is the use of a GRU (Gated Recurrent Unit) network to detect shopping habits of customers while also using a LiDAR sensor and camera to detect and map the customer using a two-dimensional skeleton and follow them through the store~\cite{islam_lam_fukuda_kobayashi_kuno_2019}. In the last method, the authors utilized an Arduino MEGA 2560, six ultrasonic sensors, two DC motors with PWM (Pulse Width Modulation), an Android Studio IDE device, and Bluetooth in order to detect the customer and follow them through the store~\cite{inproceedings}. In our project we are implementing XBee S2C RF radios, which are inexpensive and easily configurable, as a remote that the robot will be abe to track instead of using line of sight methods~\cite{8168364}. In addition with the XBee S2C RF radios we will equip the robot with a parabolic reflector, which improves Wi-Fi reception at various distances and angles, based on research done previously in this type of robot localization and mapping~\cite{8168364}~\cite{Li2013ANA}. This approach also requires understanding of multipath interference which is common in Wi-Fi based wireless positioning sensing systems. Some methods, seen in~\cite{xie_jiang_zhao_zhang_2019}, explains that using course estimation calculations such as received signal strength indicator (RSSI) and time difference of arrival (TDoA) is key to compensate for the multipath interference in received signals.~\cite{ladd_bekris_rudys_kavraki_wallach_2005} shows a different approach to the multipath issue by using an IEEE 802.11b wireless Ethernet device to measure RF signals. This device system was used because it is communicable between a mobile device and a localization based service with low complexity for the user. Also, in~\cite{lindhe_johansson_bicchi_2007} the research states several other ways to counteract the multipath fading with methods such as antenna diversity, frequency spreading, or adaptive antenna arrays. The method used in this paper was to sample the radio signal strength (RSS) at discrete points without too much deviation from the robot's desired position in an indoor environment. Lastly, in~\cite{Lindhe2009} the method that is utilized exploits multipath fading by measuring the signal-to-noise ratio (SNR) and adjusting the robot's motion to spend more time where the channel strength is greater.
 
@@ -99,7 +98,7 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 \section{Functional Requirements}
 \subsection{System Architecture}
-\hspace{\parindent} The system for this project consists of two sub systems witch are the Mobile Cart and the Remote Target.  The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target.  The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
+\hspace{\parindent} The system for this project consists of two subsystems which are the Mobile Cart and the Remote Target. The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target. The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
 
 \begin{figure}
     \centering
@@ -110,9 +109,9 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 \vspace*{12pt}
 \subsection{Block Diagrams}
-\hspace{\parindent} Both subsystems of this project those being the Mobile Cart and Remote Target both act as there own enclosed systems only relaying radio messages between them.  For the Remote Target subsystem Figure \ref{fig:remote_block_diag} contains the block diagram for it. Of the two subsystems the Remote Target is the simplest since it only is requires a XBee modal attached to a 9 volt battery.
+\hspace{\parindent} Both subsystems of this project, being the Mobile Cart and Remote Target, act as their own enclosed systems, only relaying radio messages between them. For the Remote Target subsystem, Figure \ref{fig:remote_block_diag} contains the block diagram for it. Of the two subsystems the Remote Target is the simplest since it only is requires an XBee module attached to a 9 volt battery.
 
-\hspace{\parindent} The Mobile Cart section of the system is shown as a block diagram in Figure \ref{fig:remote_block_diag}.  The Mobile Cart for inputs consists of Power coming from a Li-Po battery toggled by a On/Off switch, buttons for changing carts operating mode, and messages revived from the remote target.  The Mobile Cart works off of a central controller, which is the Beagle Bone Blue, DC Motors for the driving of the cart as well as a stepper motor used for the radio sensor array, and a sensor array consisting of one omnidirectional transmitter and 4 directional receivers. The transmitters and receivers are all XBee modules connected to the central Beagle Bone Blue which are used in tandem along with the stepper motor to check signal strength with the Remote Target.
+\hspace{\parindent} The Mobile Cart section of the system is shown as a block diagram in Figure \ref{fig:remote_block_diag}. The Mobile Cart for inputs consists of Power coming from a Li-Po battery toggled by a On/Off switch, buttons for changing carts operating mode, and messages received from the remote target. The Mobile Cart works off of a central controller, which is the BeagleBone Blue, DC Motors for the driving of the cart as well as a stepper motor used for the radio sensor array, and a sensor array consisting of one omnidirectional transmitter and 4 directional receivers. The transmitters and receivers are all XBee modules connected to the central BeagleBone Blue which are used in tandem along with the stepper motor to check signal strength with the Remote Target.
 
 \begin{figure}
     \centering
@@ -122,41 +121,10 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[scale=0.9]{figs/mobile_cart_block_diagram}
+    \includegraphics[scale=0.82]{figs/mobile_cart_block_diagram}
     \caption{System level block diagram detailing inputs and outputs to the system}
 	\label{fig:mobile_block_diag}
 \end{figure}
-
-%system architecture
-% For our project, we consider a scenario shown in~\autoref{fig:sysarch} where a mobile robot is deployed in a 3-dimensional environment with beacons distributed throughout. The mobile robot will also be given a list of waypoints located on the floor of the environment. Due to its widespread use in research applications, we have chosen the Pioneer 3-DX to implement our proposed project. 
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[scale=.4]{figs/ipe/3D_System_2.PNG}
-%     \caption{Environment with mobile robot, ceiling mounted beacons, and waypoints}
-%     \label{fig:sysarch}
-% \end{figure}
-
-% \subsection{Block Diagrams}
-%system level
-% The system we propose for our project is fairly self--contained in the sense that it will handle its operation once it has started. This consideration will further promote modularity when the system is used with other mobile robots. A high level system block diagram can be seen in~\autoref{fig:highsys}. Many of the outputs shown are used for debugging purposes as well as being used for the proposed algorithm. The subsystem block diagram of the system shown in~\autoref{fig:highsys} can be seen in~\autoref{fig:subsys}. Due to the nature of the algorithm, we arranged our subsystem block diagram to resemble a conventional control system. This helps to better illustrate how data is being used within the system in order to localize the mobile robot and map the indoor environment.\\
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[scale=1]{figs/ipe/highLevelSysRequirements_robot}
-%     \caption{System level block diagram detailing inputs and outputs to the system}
-%     \label{fig:highsys}
-% \end{figure}
-
-% %subsystem level
-% \begin{figure}
-%     \centering
-%     \includegraphics[scale=.9]{figs/ipe/subsystemBlockDiagramAlternate}
-%     \caption{Subsystem level block diagram}
-%     \label{fig:subsys}
-% \end{figure}
-
-% As shown in~\autoref{fig:subsys}, the outputs labelled \emph{estimated pose} and \emph{estimated positions of XBees} are also used internally. This feedback design allows the system to use prior data and predictions to estimate the mobile robot's position with more accuracy each iteration. At the top of~\autoref{fig:subsys}, there are three separate subsystems. The first is the controller, which will be further explained in~\autoref{sec:model}. The internal values output by this subsystem are the linear velocity and the steering angle. These values are then used as inputs to the preprocessor subsystem where they are converted to control inputs accepted by the Pioneer 3-DX. This conversion is detailed in~\autoref{sec:model}. Once these control inputs are applied and the mobile robot has completed its movement, the noisy pose is sent to the estimation block where it is used to estimate the mobile robot's true pose. In this subsystem, the mapping of the XBee beacons within the environment is also done. The estimated pose is then used by the controller in order to repeat the process. As seen in~\autoref{fig:subsys}, the estimated position of the XBees is stored internally for use in the next iteration.
 
 % \subsection{Specifications}
 
