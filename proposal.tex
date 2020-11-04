@@ -97,9 +97,36 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 % There are several patents that outline designs that are comparable to our project. The first patent~\cite{biehl} describes systems and methods for localization of a mobile device using beacons. This design uses a computer, a location signal receiver and beacons to determine the location of the mobile device. The beacons transmit the location signal and  the computer determines the location from the received location signal strength and a unique key based on the particular transmitting beacon. This patent is relevant to our work as it uses received signal strength from beacons and individual beacon IDs for localization of a mobile device in an indoor environment, but the patent is more general to what the mobile device is and uses a different localization algorithm. The second patent~\cite{lin} outlines positioning of an indoor mobile robot, and mapping of its environment and the beacons it detects. The mobile robot performs several positioning modes depending on the number on beacons it detects in its line of sight. This patent is more applicable to our project than the last patent. It utilizes a simultaneous localization and mapping technique for a mobile robot and beacons. However, the patent's positioning method is different than ours. The third patent~\cite{edlund} describes a localization method for a mobile robot with a system of beacons. It uses the signal strength and angle of arrival of the signal to localize and determine a coarse correction. This design is very similar to our approach by uses signal strength and angle, and similar localization algorithm, but we will be rotating a antennae reflector instead of the entire robot. A similar patent~\cite{younis} to the previous explains an indoor localization method for a mobile device using directional reflectors. The mobile device transmits a signal and the signal is delayed and returned by reflectors in the environment. The location of the mobile device is then determined from the range by the amount of delay and the angle of arrival at the reflector. This patent is relatively similar to our project as it describes an indoor localization technique using range and angle for a mobile device.
 
-% \section{Functional Requirements}
+\section{Functional Requirements}
+\subsection{System Architecture}
+\hspace{\parindent} The system for this project consists of two sub systems witch are the Mobile Cart and the Remote Target.  The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target.  The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
 
-% \subsection{System Architecture}
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.9]{figs/system_block_diagram_2}
+    \caption{System level block diagram detailing inputs and outputs to the system}
+	\label{fig:sys_block_diag}
+\end{figure}
+
+\vspace*{12pt}
+\subsection{Block Diagrams}
+\hspace{\parindent} Both subsystems of this project those being the Mobile Cart and Remote Target both act as there own enclosed systems only relaying radio messages between them.  For the Remote Target subsystem Figure \ref{fig:remote_block_diag} contains the block diagram for it. Of the two subsystems the Remote Target is the simplest since it only is requires a XBee modal attached to a 9 volt battery.
+
+\hspace{\parindent} The Mobile Cart section of the system is shown as a block diagram in Figure \ref{fig:remote_block_diag}.  The Mobile Cart for inputs consists of Power coming from a Li-Po battery toggled by a On/Off switch, buttons for changing carts operating mode, and messages revived from the remote target.  The Mobile Cart works off of a central controller, which is the Beagle Bone Blue, DC Motors for the driving of the cart as well as a stepper motor used for the radio sensor array, and a sensor array consisting of one omnidirectional transmitter and 4 directional receivers. The transmitters and receivers are all XBee modules connected to the central Beagle Bone Blue which are used in tandem along with the stepper motor to check signal strength with the Remote Target.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.9]{figs/remote_target_block_diagram}
+    \caption{System level block diagram detailing inputs and outputs to the system}
+	\label{fig:remote_block_diag}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.9]{figs/mobile_cart_block_diagram}
+    \caption{System level block diagram detailing inputs and outputs to the system}
+	\label{fig:mobile_block_diag}
+\end{figure}
+
 %system architecture
 % For our project, we consider a scenario shown in~\autoref{fig:sysarch} where a mobile robot is deployed in a 3-dimensional environment with beacons distributed throughout. The mobile robot will also be given a list of waypoints located on the floor of the environment. Due to its widespread use in research applications, we have chosen the Pioneer 3-DX to implement our proposed project. 
 
