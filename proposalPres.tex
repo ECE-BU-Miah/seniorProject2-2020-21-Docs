@@ -66,10 +66,10 @@
 
 
 
-\title[Robotic Cart System]{Robotic Cart System}
+\title[Robotic Cart System (Proposal)]{Robotic Cart System}
 
 % % A subtitle is optional and this may be deleted
-% \subtitle{Product Proposal}
+\subtitle{Product Proposal}
 
 \author[K.~Allen, D.~Beebe, J.~Braker]{Kallistah~Allen \and Darrah~Beebe \and
 Jason~Braker
@@ -88,7 +88,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date[October~20,~2020]{Tuesday, October~20,~2020}
+\date[November~10,~2020]{Tuesday, November~10,~2020}
 
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -136,24 +136,116 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \begin{frame}{Introduction}{}
   % applications of mobile robot navigation and problem description
     \begin{itemize}
-        \item Purpose of Robotic Carts
+        \item Applications
             \begin{itemize}
-                \item Carry groceries at a store
-                \item Carry files in an office
-                \item Carry objects in the home
-                \item Useful for people with disabilities
+                \item Mail delivery carts
+                \item File transferring carts in offices
+                \item Hospital carts that carry medical supplies
+                \item Construction site carts to carry materials and tools
+                \item Shopping carts for ease of use and people with disabilities
             \end{itemize}
-        \item Existing Solutions
-            \begin{itemize}
-                \item Follow user carrying a remote device
-                \item Require line-of-sight communication
-            \end{itemize}
-        \item Proposed Improvement
-            \begin{itemize}
-              \item Use wireless signal strength
-              \item Does not require line-of-sight communication
-            \end{itemize}
+        %\item Existing Solutions
+         %   \begin{itemize}
+          %      \item Follow user carrying a remote device
+           %     \item Require line-of-sight communication
+           % \end{itemize}
+        %\item Proposed Improvement
+         %   \begin{itemize}
+          %    \item Use wireless signal strength
+           %   \item Does not require line-of-sight communication
+            %\end{itemize}
     \end{itemize}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Introduction}
+
+  \begin{block}{Problem Statement}
+  In this project, we are proposing a robotic cart that would primarily utilize analog signals along with cost-effective wireless communication to identify the customer and be able to track and follow the customer through the store.
+    %\begin{itemize}
+    %  \item Power
+    %  \item On/Off Switch
+    %  \item Movement of the Remote
+    %  \item Mode Selection
+    %\end{itemize}
+  \end{block}
+  %\pause
+  %\begin{block}{Outputs}
+   % \begin{itemize}
+   %   \item Movement of the Cart
+   %   \item Status Indicators
+   % \end{itemize}
+  %\end{block}
+\end{frame}
+
+%----------------------------------
+
+\section{Literature Review}
+
+\begin{frame}{Literature}
+  \begin{block}{Methods Implemented}
+    \begin{itemize}
+        \item Methods of tracking a customer and following them through the store
+            \begin{itemize}
+                \item Mobile platform interface with ultrasound and radio transmission technology
+                \item Gated Recurrent Unit (GRU) network with LiDAR sensor and camera to map the customer
+                \item Arduino MEGA 2560, six ultrasonic sensors, two DC motors with Pulse Width Modulation (PWM), an Android Studio IDE device, and Bluetooth
+            \end{itemize}
+       % \item Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+    \end{itemize}
+  \end{block}
+    %\begin{figure}[b]
+     %   \centering
+     %   \includegraphics[width=\textwidth]{figs/system_block_diagram}
+     %   \caption{Block Diagram of the Robotic Cart System}
+     %   \label{fig:sysBlockDiag}
+    %\end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Literature}
+  \begin{block}{Multipath Interference}
+    \begin{itemize}
+        \item Proposed solutions to multipath interference
+            \begin{itemize}
+                \item Course estimation calculations such as recieved signal strength indicator (RSSI) and time difference of arrival (TDoA)
+                \item IEEE 802.11b wireless Ethernet device to measure RF signals
+                \item Sampling radio signal strength (RSS) at discrete points without too much deviation from the robot's desired position
+            \end{itemize}
+       % \item Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+    \end{itemize}
+  \end{block}
+    %\begin{figure}[b]
+     %   \centering
+     %   \includegraphics[width=\textwidth]{figs/system_block_diagram}
+     %   \caption{Block Diagram of the Robotic Cart System}
+     %   \label{fig:sysBlockDiag}
+    %\end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Literature}
+  \begin{block}{Challenges}
+    \begin{itemize}
+        \item Communication between the robot and the remote
+        \item Buffer distance between the robotic cart and the customer without using line of sight sensing
+           % \begin{itemize}
+            %    \item Course estimation calculations such as recieved signal strength indicator (RSSI) and time difference of arrival (TDoA)
+             %   \item IEEE 802.11b wireless Ethernet device to measure RF signals
+             %   \item Sampling radio signal strength (RSS) at discrete points without too much deviation from the robot's desired position
+           % \end{itemize}
+       % \item Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+    \end{itemize}
+  \end{block}
+    %\begin{figure}[b]
+     %   \centering
+     %   \includegraphics[width=\textwidth]{figs/system_block_diagram}
+     %   \caption{Block Diagram of the Robotic Cart System}
+     %   \label{fig:sysBlockDiag}
+    %\end{figure}
 \end{frame}
 
 %----------------------------------
@@ -167,11 +259,11 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
                 \item Mobile Cart
                 \item Remote Target
             \end{itemize}
-        \item Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+        \item System Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
     \end{itemize}
     \begin{figure}[b]
         \centering
-        \includegraphics[width=\textwidth]{figs/system_block_diagram}
+        \includegraphics[width=\textwidth]{figs/system_block_diagram_2}
         \caption{Block Diagram of the Robotic Cart System}
         \label{fig:sysBlockDiag}
     \end{figure}
@@ -180,22 +272,31 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 %----------------------------------
 
 \begin{frame}{System Architecture}
+    \begin{itemize}
+        \item Mobile Cart Subsystem
+        \item System Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
+    \end{itemize}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=\textwidth]{figs/mobile_cart_block_diagram}
+        \caption{Mobile Cart Block Diagram of the Robotic Cart System}
+        \label{fig:sysMobileBlockDiag}
+    \end{figure}
+\end{frame}
 
-  \begin{block}{Inputs}
+%----------------------------------
+
+\begin{frame}{System Architecture}
     \begin{itemize}
-      \item Power
-      \item On/Off Switch
-      \item Movement of the Remote
-      \item Mode Selection
+        \item Remote Target Subsystem
+        \item System Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
     \end{itemize}
-  \end{block}
-  \pause
-  \begin{block}{Outputs}
-    \begin{itemize}
-      \item Movement of the Cart
-      \item Status Indicators
-    \end{itemize}
-  \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=\textwidth]{figs/remote_target_block_diagram}
+        \caption{Mobile Cart Block Diagram of the Robotic Cart System}
+        \label{fig:sysRemoteBlockDiag}
+    \end{figure}
 \end{frame}
 
 %----------------------------------
