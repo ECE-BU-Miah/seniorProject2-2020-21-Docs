@@ -51,6 +51,9 @@
 \usepackage{media9}
 \usepackage{subfigure}
 \usepackage{booktabs,array}
+\usepackage{tabulary}
+\usepackage{caption}
+
 
 
 % Customize Warsaw color 
@@ -254,6 +257,49 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \begin{frame}{System Architecture}
     \begin{itemize}
+        \item Mobile robot (Budget Bot)
+        \item BeagleBone Blue interface
+        \item XBee wireless communication from the mobile robot to the remote target
+    \end{itemize}
+    
+    \begin{figure}
+    	\centering
+    	\begin{minipage}[b]{0.32\textwidth}
+        	\includegraphics[width=1\textwidth]{figs/img/budgetbot_chassis}
+        	\caption{(a)}
+        	%\label{fig:budgetBotChassis}
+    	\end{minipage}%
+    	\begin{minipage}[b]{0.32\textwidth}
+        	\includegraphics[width=1\textwidth]{figs/img/beaglebone_blue}
+        	\caption{(b)}
+        	%\label{fig:beagleboneBlue}
+    	\end{minipage}
+    	\begin{minipage}[b]{0.32\textwidth}
+        	\includegraphics[width=1\textwidth]{figs/img/Xbee-S2C-Module}
+        	\caption{(c)}
+        	%\label{fig:XBeeModule}
+    	\end{minipage}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{CoppeliaSim Model of Mobile Robot}
+    Draft of the CoppeliaSim Budget Bot model created by Jason Braker
+    \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.75\textwidth]{figs/img/budgetBotModel}
+        \caption{Budget Bot Chassis in CoppeliaSim}
+        \label{fig:sysMobileBlockDiag}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{itemize}
         \item Two main components of system
             \begin{itemize}
                 \item Mobile Cart
@@ -263,7 +309,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \end{itemize}
     \begin{figure}[b]
         \centering
-        \includegraphics[width=\textwidth]{figs/system_block_diagram_2}
+        \includegraphics[width=0.85\textwidth]{figs/system_block_diagram_2}
         \caption{Block Diagram of the Robotic Cart System}
         \label{fig:sysBlockDiag}
     \end{figure}
@@ -278,7 +324,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \end{itemize}
     \begin{figure}[b]
         \centering
-        \includegraphics[width=\textwidth]{figs/mobile_cart_block_diagram}
+        \includegraphics[width=0.9\textwidth]{figs/mobile_cart_block_diagram}
         \caption{Mobile Cart Block Diagram of the Robotic Cart System}
         \label{fig:sysMobileBlockDiag}
     \end{figure}
