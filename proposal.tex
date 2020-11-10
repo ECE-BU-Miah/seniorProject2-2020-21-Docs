@@ -163,30 +163,32 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
     group progress label anchor = east,
     bar progress label font = \tiny,
     bar progress label anchor = east,
-    ]{1}{16}
+    ]{1}{17}
 
-    \gantttitle{2020}{16}\\
+    \gantttitle{2020}{17}\\
     \gantttitle{Sep}{4}
     \gantttitle{Oct}{4}
     \gantttitle{Nov}{4}
-    \gantttitle{Dec}{4}\\
-    
-    \ganttgroup[progress = 50]{Research}{3}{12} \\
-    \ganttbar[progress = 50]{Research Multipath}{3}{12}\\
-    \ganttbar[progress = 50]{Research Reflector}{3}{12}\\
+    \gantttitle{Dec}{4}
+    \gantttitle{}{1}\\
 
-    \ganttgroup[progress = 15]{Simulation}{8}{10}\\
-    \ganttbar[progress = 15]{CoppeliaSim simulation}{8}{10}\\
+    \ganttgroup[progress = 100]{Research}{3}{12} \\
+    \ganttbar[progress = 100]{Research Multipath}{3}{12}\\
+    \ganttbar[progress = 100]{Research Reflector}{3}{12}\\
+
+    \ganttgroup[progress = 50]{Simulation}{8}{10}\\
+    \ganttbar[progress = 50]{CoppeliaSim simulation}{8}{10}\\
     \ganttmilestone[progress = 0]{Simulation Complete}{10}\\
 
-    \ganttgroup[progress = 0]{Project Proposal}{11}{12}\\
-    \ganttbar[progress = 0]{Proposal Document}{11}{11}\\
-    \ganttbar[progress = 0]{Proposal Presentation}{12}{12}\\
+    \ganttgroup[progress = 55]{Project Proposal}{11}{12}\\
+    \ganttbar[progress = 60]{Proposal Document}{11}{11}\\
+    \ganttbar[progress = 50]{Proposal Presentation}{12}{12}\\
 
-    \ganttgroup[progress = 0]{XBee Setup}{13}{14}\\
+    \ganttgroup[progress = 12.5]{XBee Setup}{13}{14}\\
     \ganttbar[progress = 0]{Voltage Regulator Circuit}{13}{13}\\
     \ganttbar[progress = 0]{Configuration with X-CTU}{14}{14}\\
     \ganttbar[progress = 0]{Sensing RSSI}{14}{14}\\
+    \ganttbar[progress = 50]{UART Communication}{14}{14}\\
   \end{ganttchart}
 \caption{Gantt chart for Fall 2020}
 \label{fig:gantt1}
@@ -248,7 +250,7 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
     \ganttbar[progress = 0]{Final Presentation}{16}{16}\\
     \ganttbar[progress = 0]{Presentation to IAB}{16}{16}\\
     \ganttbar[progress = 0]{Project Demo}{16}{16}\\
-    
+
     \ganttmilestone[progress = 0]{Project Complete}{16}
   \end{ganttchart}
   \caption{Gantt Chart for Spring 2020}
@@ -262,46 +264,6 @@ The second milestone is to complete the assembly of both the cart and the remote
 The third milestone is to integrate the subsystems into one system. This will involve testing the angle and distance estimation from the cart to the remote. It will also include testing the following capabilities of the overall system. We expect that this will require a large amount of debugging and tuning. Therefore, we have allotted several weeks for this purpose.
 
 The fourth and final milestone is to complete the final report and presentation. This involves documenting our findings in a report and presenting our work. At this point, the project will be complete.
-
-% The tentative distribution of the tasks is shown in \autoref{tab:taskdist}, where each task has an X in the cells corresponding to the individuals who will be working on the task.
-% \begin{table}[h!]
-%   \centering
-%   \begin{tabular}{|r|c|c|c|}
-%       \toprule
-%       & \textbf{Kallistah} & \textbf{Darrah} & \textbf{Jason}\\
-%       \textbf{Task} & \textbf{Allen} & \textbf{Beebe} & \textbf{Braker}\\
-%       \toprule
-%       Research Multipath & X & X & X\\
-%       \hline
-%       Research Reflector & X & X & X\\
-%       \hline
-%       CoppeliaSim Simulation & & & X\\
-%       \hline
-%       Proposal Document & X & X & X\\
-%       \hline
-%       Proposal Presentation & X & X & X\\
-%       \hline
-%       Build Voltage Regulator Circuit & X & & X\\
-%       \hline
-%       Learn Configuration with X-CTU & X & & X\\
-%       \hline
-%       Read RSSI Using XBee & X & X & X\\
-%       \hline
-%       Replace Motors on Robot & X & X & X\\
-%       \hline
-%       Design and Construct Reflector & & X & X\\
-%       \hline
-%       Mount Reflector & X & X & X\\
-%       \hline
-%       XBee Library & & X & \\
-%       \hline
-%       Control Algorithm & X & X & X\\
-%       \hline
-%       \bottomrule
-%   \end{tabular}
-%   \caption{Task distribution}
-%   \label{tab:taskdist}
-% \end{table}
 
 %\section{Conclusion}
 %\label{sec:conclusion}
