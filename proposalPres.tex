@@ -266,17 +266,17 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     	\centering
     	\begin{minipage}[b]{0.32\textwidth}
         	\includegraphics[width=1\textwidth]{figs/img/budgetbot_chassis}
-        	\caption{(a)}
+        	\caption{Budget Bot Chassis}
         	%\label{fig:budgetBotChassis}
     	\end{minipage}%
     	\begin{minipage}[b]{0.32\textwidth}
         	\includegraphics[width=1\textwidth]{figs/img/beaglebone_blue}
-        	\caption{(b)}
+        	\caption{BeagleBone Blue}
         	%\label{fig:beagleboneBlue}
     	\end{minipage}
     	\begin{minipage}[b]{0.32\textwidth}
         	\includegraphics[width=1\textwidth]{figs/img/Xbee-S2C-Module}
-        	\caption{(c)}
+        	\caption{XBee S2C Module}
         	%\label{fig:XBeeModule}
     	\end{minipage}
     \end{figure}
@@ -349,11 +349,9 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \begin{block}{Specifications}
     \begin{itemize}
       \item Cart should be able to follow the remote while maintaining a distance of 1 to 1.5 meters.
-      \item Cart should be able to travel at 2 m/s
-      \item User should be alerted if the cart falls more than 2 meters behind
+      \item Cart should be able to travel at 1 m/s
       \item Cart should not require line-of-sight to follow remote
-      \item Cart should not collide with obstacles while following remote
-    \end{itemize}
+     \end{itemize}
   \end{block}
 \end{frame}
 
@@ -417,7 +415,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \section{Timeline and Milestones}
 
-\begin{frame}
+\begin{frame}{Fall Semester}
 
 	\begin{figure}
   		\centering
@@ -435,7 +433,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     		bar/.append style={fill=green},
     		bar incomplete/.append style={fill=red},
     		group progress label font = \tiny,
-    		progress label text={$\displaystyle#1\%$},
+    		progress label text={$\displaystyle####1\%$},
     		group progress label anchor = east,
     		bar progress label font = \tiny,
     		bar progress label anchor = east,
@@ -464,7 +462,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
    			\ganttbar[progress = 0]{Configuration with X-CTU}{14}{14}\\
     		\ganttbar[progress = 0]{Sensing RSSI}{14}{14}\\
   		\end{ganttchart}
-		%\caption{Gantt chart for Fall 2020}
+		\caption{Gantt chart for Fall 2020}
 		\label{fig:gantt1}
 	\end{figure}
 	
@@ -478,59 +476,61 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \begin{ganttchart}[
     hgrid,
     vgrid,
-    x unit=.6cm,
-    y unit title=.8cm,
-    y unit chart=.6cm,
+    x unit=.27cm,
+    y unit title=.5cm,
+    y unit chart=.27cm,
+    title label font=\scriptsize,
     milestone label font=\tiny,
     milestone progress label font = \tiny,
     milestone progress label anchor = east,
     bar label font=\tiny,
-    group label font=\small,
+    group label font=\footnotesize,
     bar/.append style={fill=green},
     bar incomplete/.append style={fill=red},
     group progress label font = \tiny,
-    progress label text={$\displaystyle#1\%$},
+    progress label text={$\displaystyle####1\%$},
     group progress label anchor = east,
     bar progress label font = \tiny,
     bar progress label anchor = east,
-    ]{1}{18}
-    \gantttitle{2020}{18}\\
-    \gantttitle{Jan}{2}
+    ]{1}{20}
+    \gantttitle{2020}{20}\\
+    \gantttitle{Jan}{3}
     \gantttitle{Feb}{4}
     \gantttitle{Mar}{4}
     \gantttitle{Apr}{4}
-    \gantttitle{May}{4}\\
+    \gantttitle{May}{4}
+    \gantttitle{}{1}\\
 
-    \ganttgroup[progress = 0]{Assembly}{2}{3}\\
-    \ganttbar[progress = 0]{Replace Motors}{2}{2}\\
-    \ganttbar[progress = 0]{Design and Construct Reflector}{2}{3}\\
-    \ganttbar[progress = 0]{Mount Reflector}{3}{3}\\
-    \ganttmilestone[progress = 0]{Assembly Complete}{3}\\
+    \ganttgroup[progress = 0]{Assembly}{3}{4}\\
+    \ganttbar[progress = 0]{Replace Motors}{3}{3}\\
+    \ganttbar[progress = 0]{Design and Construct Reflector}{3}{4}\\
+    \ganttbar[progress = 0]{Mount Reflector}{4}{4}\\
+    \ganttmilestone[progress = 0]{Assembly Complete}{4}\\
 
-    \ganttgroup[progress = 0]{Software}{4}{5}\\
-    \ganttbar[progress = 0]{XBee Library}{4}{4}\\
-    \ganttbar[progress = 0]{Control Algorithm}{5}{5}\\
+    \ganttgroup[progress = 0]{Software}{5}{6}\\
+    \ganttbar[progress = 0]{XBee Library}{5}{5}\\
+    \ganttbar[progress = 0]{Control Algorithm}{6}{6}\\
 
-    \ganttgroup[progress = 0]{Angle Estimation}{6}{7}\\
-    \ganttbar[progress = 0]{Rotate XBee on Stepper Motor}{6}{6}\\
-    \ganttbar[progress = 0]{Determine Angle}{7}{7}\\
+    \ganttgroup[progress = 0]{Angle Estimation}{7}{8}\\
+    \ganttbar[progress = 0]{Rotate XBee on Stepper Motor}{7}{7}\\
+    \ganttbar[progress = 0]{Determine Angle}{8}{8}\\
 
-    \ganttgroup[progress = 0]{Distance Estimation}{8}{9}\\
-    \ganttbar[progress = 0]{Calibrate Distance Calculation}{8}{9}\\
+    \ganttgroup[progress = 0]{Distance Estimation}{9}{10}\\
+    \ganttbar[progress = 0]{Calibrate Distance Calculation}{9}{10}\\
 
-    \ganttgroup[progress = 0]{Subsystem Integration}{10}{14}\\
-    \ganttbar[progress = 0]{Angle Estimation Testing}{10}{10}\\
-    \ganttbar[progress = 0]{Distance Estimation Testing}{11}{12}\\
-    \ganttbar[progress = 0]{System Testing}{13}{14}\\
-    \ganttmilestone[progress = 0]{Integration Complete}{14}\\
+    \ganttgroup[progress = 0]{Subsystem Integration}{11}{15}\\
+    \ganttbar[progress = 0]{Angle Estimation Testing}{11}{11}\\
+    \ganttbar[progress = 0]{Distance Estimation Testing}{12}{13}\\
+    \ganttbar[progress = 0]{System Testing}{14}{15}\\
+    \ganttmilestone[progress = 0]{Integration Complete}{15}\\
 
-    \ganttgroup[progress = 0]{Project Completion}{15}{16}\\
-    \ganttbar[progress = 0]{Final Report}{15}{15}\\
-    \ganttbar[progress = 0]{Final Presentation}{16}{16}\\
-    \ganttbar[progress = 0]{Presentation to IAB}{16}{16}\\
-    \ganttbar[progress = 0]{Project Demo}{16}{16}\\
-    
-    \ganttmilestone[progress = 0]{Project Complete}{16}
+    \ganttgroup[progress = 0]{Project Completion}{16}{17}\\
+    \ganttbar[progress = 0]{Final Report}{16}{16}\\
+    \ganttbar[progress = 0]{Final Presentation}{17}{17}\\
+    \ganttbar[progress = 0]{Presentation to IAB}{17}{17}\\
+    \ganttbar[progress = 0]{Project Demo}{17}{17}\\
+
+    \ganttmilestone[progress = 0]{Project Complete}{17}
   \end{ganttchart}
   \caption{Gantt Chart for Spring 2020}
   \label{fig:gantt2}
@@ -541,9 +541,39 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \section{References}
 
-\begin{frame}{Refernces}
+\begin{frame}{References}
 	\bibliographystyle{IEEEtran}
-	\bibliography{bib/references.bib}
+	\begin{itemize}
+		\item N. Rawashdeh, R. Haddad, O. Jadallah, and A. To’ma, “A person-following
+robotic cart controlled via a smartphone application: design and evaluation,”
+09 2017, pp. 1–5.
+		\item M. M. Islam, A. Lam, H. Fukuda, Y. Kobayashi, and Y. Kuno, “An intelligent
+shopping support robot: understanding shopping behavior from 2d skeleton data using gru network,” ROBOMECH Journal, vol. 6, no. 1, 2019.
+		\item J. Sales, J. Marti, R. Marin Prades, E. Cervera, and P. Sanz, “Comparob: The
+shopping cart assistance robot,” International Journal of Distributed Sensor Networks, vol. 2016, pp. 1–15, 02 2016.
+		\item M. S. Miah, J. Knoll, and K. Hevrdejs, “Intelligent range-only mapping and navigation for mobile robots,” IEEE Transactions on Industrial Informatics, vol. 14, no. 3, pp. 1164–1174, 2018.
+		\item D. Li and S. Lane, “A novel and versatile parabolic reflector that significantly
+improves wi-fi reception at different distances and angles,” 2013.
+	
+	\end{itemize}
+
+
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{References}
+
+	\bibliographystyle{IEEEtran}
+	\begin{itemize}
+		\item T. Xie, H. Jiang, X. Zhao, and C. Zhang, “A wi-fi-based wireless indoor position sensing system with multipath interference mitigation,” Sep 2019. [Online].
+Available: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6767237/
+		\item A. M. Ladd, K. E. Bekris, A. Rudys, L. E. Kavraki, and D. S. Wallach, “Robotics-
+based location sensing using wireless ethernet,” Wireless Networks, vol. 11, no. 1-2, p. 189–204, 2005.
+		\item M. Lindhe, K. Johansson, and A. Bicchi, “An experimental study of exploiting multipath fading for robot communications,” Robotics: Science and Systems III, 2007.
+		\item M. Lindhe and K. Johansson, “Using robot mobility to exploit multipath fading,”Wireless Communications, IEEE, vol. 16, pp. 30 – 37, 03 2009.
+	\end{itemize}
+
 \end{frame}
 
 %----------------------------------
