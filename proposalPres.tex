@@ -253,7 +253,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\section{System Architecture}
+\section{Functional Requirements}
 
 \begin{frame}{System Architecture}
     \begin{itemize}
@@ -284,7 +284,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\begin{frame}{System Architecture}
+\begin{frame}{Block Diagrams}
     \begin{block}{CoppeliaSim Model of Mobile Robot}
     Draft of the CoppeliaSim Budget Bot model created by Jason Braker
     \end{block}
@@ -298,7 +298,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\begin{frame}{System Architecture}
+\begin{frame}{Block Diagrams}
     \begin{itemize}
         \item Two main components of system
             \begin{itemize}
@@ -317,10 +317,9 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\begin{frame}{System Architecture}
+\begin{frame}{Block Diagrams}
     \begin{itemize}
-        \item Mobile Cart Subsystem
-        \item System Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
+        \item Mobile Cart Subsystem Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
     \end{itemize}
     \begin{figure}[b]
         \centering
@@ -332,10 +331,9 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\begin{frame}{System Architecture}
+\begin{frame}{Block Diagrams}
     \begin{itemize}
-        \item Remote Target Subsystem
-        \item System Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
+        \item Remote Target Subsystem Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
     \end{itemize}
     \begin{figure}[b]
         \centering
@@ -347,9 +345,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-
-\begin{frame}
-
+\begin{frame}{System Requirements}
   \begin{block}{Specifications}
     \begin{itemize}
       \item Cart should be able to follow the remote while maintaining a distance of 1 to 1.5 meters.
@@ -359,9 +355,196 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       \item Cart should not collide with obstacles while following remote
     \end{itemize}
   \end{block}
-  
 \end{frame}
 
+%----------------------------------
+
+\section{Parts List}
+
+\begin{frame}{Parts List}
+
+	\begin{table}[h!]
+    	\centering
+    	\begin{tabular}{c|c|c}
+        	\toprule
+        	\textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
+        	\toprule
+        	4 & Pololu 37D Metal Gaermotor 4751 & \$ 39.95\\
+        	12 & XBee S2C Module & \$ 23.10\\
+        	10 & XBee Adapter Board & \$ 4.99\\
+        	2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\
+        	1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
+        	1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\
+        	1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
+        	\bottomrule
+        	\multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+        	\bottomrule
+    	\end{tabular}
+    	\caption{Comprised parts list for the Robotic Cart project}
+    	\label{tab:Partslist}
+	\end{table}
+
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Parts List}
+
+	\begin{table}[h!]
+    	\centering
+    	\begin{tabular}{c|c}
+        	\toprule
+        	\textbf{Quantity} & \textbf{Parts}\\
+        	\toprule
+        	2 & Budget Bot Chassis\\
+        	4 & 10 uF Ceramic Capacitor\\
+        	4 & LM1117 Regulator\\
+        	2 & Battery Packs for Budget Bot\\
+        	8 & 9V Batteries\\
+        	4 & Solderable PCB Boards\\
+        	3 & XBee USB Adapter\\
+        	\bottomrule
+        	%\multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+        	%\bottomrule
+    	\end{tabular}
+    	\caption{List of laboratory parts}
+    	\label{tab:Partslablist}
+	\end{table}
+
+\end{frame}
+
+%----------------------------------
+
+\section{Timeline and Milestones}
+
+\begin{frame}
+
+	\begin{figure}
+  		\centering
+  		\begin{ganttchart}[
+    		hgrid,
+    		vgrid,
+    		x unit=.4cm,
+    		y unit title=.6cm,
+    		y unit chart=.4cm,
+    		milestone label font=\tiny,
+    		milestone progress label font = \tiny,
+    		milestone progress label anchor = east,
+    		bar label font=\tiny,
+    		group label font=\small,
+    		bar/.append style={fill=green},
+    		bar incomplete/.append style={fill=red},
+    		group progress label font = \tiny,
+    		progress label text={$\displaystyle#1\%$},
+    		group progress label anchor = east,
+    		bar progress label font = \tiny,
+    		bar progress label anchor = east,
+    		]{1}{16}
+
+    		\gantttitle{2020}{16}\\
+    		\gantttitle{Sep}{4}
+    		\gantttitle{Oct}{4}
+    		\gantttitle{Nov}{4}
+    		\gantttitle{Dec}{4}\\
+    
+    		\ganttgroup[progress = 50]{Research}{3}{12} \\
+    		\ganttbar[progress = 50]{Research Multipath}{3}{12}\\
+    		\ganttbar[progress = 50]{Research Reflector}{3}{12}\\
+
+    		\ganttgroup[progress = 15]{Simulation}{8}{10}\\
+    		\ganttbar[progress = 15]{CoppeliaSim simulation}{8}{10}\\
+    		\ganttmilestone[progress = 0]{Simulation Complete}{10}\\
+
+    		\ganttgroup[progress = 0]{Project Proposal}{11}{12}\\
+    		\ganttbar[progress = 0]{Proposal Document}{11}{11}\\
+    		\ganttbar[progress = 0]{Proposal Presentation}{12}{12}\\
+
+		    \ganttgroup[progress = 0]{XBee Setup}{13}{14}\\
+    		\ganttbar[progress = 0]{Voltage Regulator Circuit}{13}{13}\\
+   			\ganttbar[progress = 0]{Configuration with X-CTU}{14}{14}\\
+    		\ganttbar[progress = 0]{Sensing RSSI}{14}{14}\\
+  		\end{ganttchart}
+		%\caption{Gantt chart for Fall 2020}
+		\label{fig:gantt1}
+	\end{figure}
+	
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}
+\begin{figure}
+  \centering
+  \begin{ganttchart}[
+    hgrid,
+    vgrid,
+    x unit=.6cm,
+    y unit title=.8cm,
+    y unit chart=.6cm,
+    milestone label font=\tiny,
+    milestone progress label font = \tiny,
+    milestone progress label anchor = east,
+    bar label font=\tiny,
+    group label font=\small,
+    bar/.append style={fill=green},
+    bar incomplete/.append style={fill=red},
+    group progress label font = \tiny,
+    progress label text={$\displaystyle#1\%$},
+    group progress label anchor = east,
+    bar progress label font = \tiny,
+    bar progress label anchor = east,
+    ]{1}{18}
+    \gantttitle{2020}{18}\\
+    \gantttitle{Jan}{2}
+    \gantttitle{Feb}{4}
+    \gantttitle{Mar}{4}
+    \gantttitle{Apr}{4}
+    \gantttitle{May}{4}\\
+
+    \ganttgroup[progress = 0]{Assembly}{2}{3}\\
+    \ganttbar[progress = 0]{Replace Motors}{2}{2}\\
+    \ganttbar[progress = 0]{Design and Construct Reflector}{2}{3}\\
+    \ganttbar[progress = 0]{Mount Reflector}{3}{3}\\
+    \ganttmilestone[progress = 0]{Assembly Complete}{3}\\
+
+    \ganttgroup[progress = 0]{Software}{4}{5}\\
+    \ganttbar[progress = 0]{XBee Library}{4}{4}\\
+    \ganttbar[progress = 0]{Control Algorithm}{5}{5}\\
+
+    \ganttgroup[progress = 0]{Angle Estimation}{6}{7}\\
+    \ganttbar[progress = 0]{Rotate XBee on Stepper Motor}{6}{6}\\
+    \ganttbar[progress = 0]{Determine Angle}{7}{7}\\
+
+    \ganttgroup[progress = 0]{Distance Estimation}{8}{9}\\
+    \ganttbar[progress = 0]{Calibrate Distance Calculation}{8}{9}\\
+
+    \ganttgroup[progress = 0]{Subsystem Integration}{10}{14}\\
+    \ganttbar[progress = 0]{Angle Estimation Testing}{10}{10}\\
+    \ganttbar[progress = 0]{Distance Estimation Testing}{11}{12}\\
+    \ganttbar[progress = 0]{System Testing}{13}{14}\\
+    \ganttmilestone[progress = 0]{Integration Complete}{14}\\
+
+    \ganttgroup[progress = 0]{Project Completion}{15}{16}\\
+    \ganttbar[progress = 0]{Final Report}{15}{15}\\
+    \ganttbar[progress = 0]{Final Presentation}{16}{16}\\
+    \ganttbar[progress = 0]{Presentation to IAB}{16}{16}\\
+    \ganttbar[progress = 0]{Project Demo}{16}{16}\\
+    
+    \ganttmilestone[progress = 0]{Project Complete}{16}
+  \end{ganttchart}
+  \caption{Gantt Chart for Spring 2020}
+  \label{fig:gantt2}
+\end{figure}
+\end{frame}
+
+%----------------------------------
+
+\section{References}
+
+\begin{frame}{Refernces}
+	\bibliographystyle{IEEEtran}
+	\bibliography{bib/references.bib}
+\end{frame}
 
 %----------------------------------
 
