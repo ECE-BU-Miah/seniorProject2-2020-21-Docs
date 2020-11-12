@@ -852,6 +852,31 @@ Agenda:
     \item Discuss simulation
 \end{itemize}
 
+JB\\
+In today's meeting, we discussed the current status of the simulation. The robot was not following the remote correctly, but it was following somewhat. We determined that we should get the simulation to work in the ideal, noise-free scenario first. After that is working we will add noise. Dr. Miah also told us to create a video to show at the beginning of the presentation.
+
+%-------------------------------------------
+
+\labday{Tuesday, November 10, 2020}
+\experiment{Lab Time}
+
+JB\\
+Today I worked on coming up with a way to simulate the angle estimation that we plan to use. We discussed methods of determining what the signal strength should be for the receivers in the reflectors based on the angle to the remote. We determined that we should use some form of the cosine of the angle between the receiver and the remote to determine what the signal strength should be. We also discussed the shape of the reflectors. Since the remote is likely to be higher than the receivers under normal usage, a strictly paraboloidal shape (see \autoref{fig:paraboloidalReflectors}) may not work correctly. We thought that a paraboloidal shape below the antenna and a parabolic shape above the antenna (see \autoref{fig:paraboloidalParabolicReflectors}) might work better. I worked on creating a 3d model of the reflectors to use in CoppeliaSim so we can see the rotation of the reflectors on the top of the robot.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=4.5in]{figs/img/paraboloidalReflector.png}
+    \caption{Paraboloidal Reflectors}
+    \label{fig:paraboloidalReflectors}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=4.5in]{figs/img/parabolicReflector.png}
+    \caption{Paraboloidal/Parabolic Reflectors}
+    \label{fig:paraboloidalParabolicReflectors}
+\end{figure}
+
 % \experiment{Quick Start}
 % GJ\\
 % Tested both Quanser AERO Helicopter's using the Quick Start Guide.  They both worked as expected according to the guide.
