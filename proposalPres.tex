@@ -211,6 +211,33 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 %----------------------------------
 
 \begin{frame}{Literature}
+    \begin{itemize}
+        \item Methods Implemented:
+    \end{itemize}
+    
+    \begin{figure}
+      \centering
+      \begin{minipage}[t]{0.32\textwidth}
+          \includegraphics[width=1\textwidth]{figs/img/CompaRob}
+          \caption{CompaRob}
+      %   \label{fig:budgetBotChassis}
+      \end{minipage}%
+      \begin{minipage}[t]{0.32\textwidth}
+          \includegraphics[width=1\textwidth]{figs/img/ShoppingSuportRobot}
+          \caption{Shopping Support Robot}
+      %   \label{fig:beagleboneBlue}
+      \end{minipage}
+      \begin{minipage}[t]{0.32\textwidth}
+          \includegraphics[width=1\textwidth]{figs/img/SmartCart}
+          \caption{Smart Cart Robot}
+      %   \label{fig:XBeeModule}
+      \end{minipage}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Literature}
   \begin{block}{Multipath Interference}
     \begin{itemize}
         \item Proposed solutions to multipath interference
@@ -294,8 +321,78 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
         \centering
         \includegraphics[width=0.75\textwidth]{figs/img/budgetBotModel}
         \caption{Budget Bot Chassis in CoppeliaSim}
-        \label{fig:sysMobileBlockDiag}
+        \label{fig:coppeliasimModel}
     \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{Quad-Parabolic Reflector}
+    Draft design of a quad-parabolic reflector created by Jason Braker
+    \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.65\textwidth]{figs/img/paraboloidalReflector}
+        \caption{Quad-Parabolic Reflector Model}
+        \label{fig:parabolodialReflector}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{Quad-Parabolic Reflector}
+    Our group's draft design of a quad-parabolic reflector created by Jason Braker
+    \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.50\textwidth]{figs/img/parabolicReflector}
+        \caption{Proposed Changes to the Quad-Parabolic Reflector}
+        \label{fig:parabolicReflector}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{Updated CoppeliaSim Model of Mobile Robot}
+    Finalized version of the CoppeliaSim Budget Bot model created by Jason Braker
+    \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.75\textwidth]{figs/img/budgetBotModel}
+        \caption{Finalized Budget Bot Chassis in CoppeliaSim}
+        \label{fig:coppeliasimModel}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{CoppeliaSim Model Demonstration of Mobile Robot}
+    CoppeliaSim demonstration of the Budget Bot model implementing a modified point navigation Matlab code
+    \end{block}
+    %\begin{figure}[b]
+    %    \centering
+    %    \includegraphics[width=0.75\textwidth]{figs/img/budgetBotModel}
+    %    \caption{Budget Bot Chassis in CoppeliaSim}
+    %    \label{fig:coppeliasimModel}
+    %\end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{System Architecture}
+    \begin{block}{Proposed Demonstration of the Robotic Cart Project}
+    Draft demonstration of how the Robotic Cart project will run once all the components are assembled
+    \end{block}
+    %\begin{figure}[b]
+    %    \centering
+    %    \includegraphics[width=0.65\textwidth]{figs/img/paraboloidalReflector}
+    %    \caption{Quad-Parabolic Reflector Model}
+    %    \label{fig:parabolodialReflector}
+    %\end{figure}
 \end{frame}
 
 %----------------------------------
@@ -455,8 +552,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
         \ganttbar[progress = 100]{Research Multipath}{3}{12}\\
         \ganttbar[progress = 100]{Research Reflector}{3}{12}\\
 
-        \ganttgroup[progress = 50]{Simulation}{8}{10}\\
-        \ganttbar[progress = 50]{CoppeliaSim simulation}{8}{10}\\
+        \ganttgroup[progress = 80]{Simulation}{8}{10}\\
+        \ganttbar[progress = 80]{CoppeliaSim simulation}{8}{10}\\
         \ganttmilestone[progress = 0]{Simulation Complete}{10}\\
 
         \ganttgroup[progress = 55]{Project Proposal}{11}{12}\\
