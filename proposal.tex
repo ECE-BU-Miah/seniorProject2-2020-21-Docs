@@ -98,9 +98,9 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 \section{Functional Requirements}
 \subsection{System Architecture}
-\hspace{\parindent} The system for this project consists of two subsystems which are the Mobile Cart and the Remote Target. The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target. The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
+\hspace{\parindent} The system for this project consists of two subsystems which are the Mobile Cart and the Remote Target as seen in Figure \ref{fig:sys_block_diag}. The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target. The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[scale=0.9]{figs/system_block_diagram_2}
     \caption{System level block diagram detailing inputs and outputs to the system}
@@ -113,16 +113,16 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 
 \hspace{\parindent} The Mobile Cart section of the system is shown as a block diagram in Figure \ref{fig:remote_block_diag}. The Mobile Cart for inputs consists of Power coming from a Li-Po battery toggled by a On/Off switch, buttons for changing carts operating mode, and messages received from the remote target. The Mobile Cart works off of a central controller, which is the BeagleBone Blue, DC Motors for the driving of the cart as well as a stepper motor used for the radio sensor array, and a sensor array consisting of one omnidirectional transmitter and 4 directional receivers. The transmitters and receivers are all XBee modules connected to the central BeagleBone Blue which are used in tandem along with the stepper motor to check signal strength with the Remote Target.
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[scale=0.9]{figs/remote_target_block_diagram}
-    \caption{System level block diagram detailing inputs and outputs to the system}
+    \caption{Remote Target block diagram}
 	\label{fig:remote_block_diag}
 \end{figure}
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[scale=0.82]{figs/mobile_cart_block_diagram}
-    \caption{System level block diagram detailing inputs and outputs to the system}
+    \caption{Mobile Robot block diagram}
 	\label{fig:mobile_block_diag}
 \end{figure}
 
