@@ -816,7 +816,7 @@ Today I worked on putting together the project proposal presentation slides that
 \experiment{Lab Time}
 
 JB\\
-Today I worked on the CoppeliaSim model of the Budget Bot robot. I was able to get the model to successfully complete the point navigation task for a static point. Then I worked on updating the simulation to have the model follow a moving target. I used \autoref{alg:remoteTracking} to accomplish this.
+Today I worked on the CoppeliaSim model of the Budget Bot robot. I was able to get the model to successfully complete the point navigation task for a static point. Then I worked on updating the simulation to have the model follow a moving target. I used \autoref{alg:remoteFollowing} to accomplish this.
 
 \begin{algorithm}[h!]
     \SetAlgoLined
@@ -828,12 +828,12 @@ Today I worked on the CoppeliaSim model of the Budget Bot robot. I was able to g
     \Begin
     {
         Initialize robot pose $q_0 = [x_0, y_0, \theta_0]^T$\\
-        Initialize robot parameters, sampling time $T > 0$, $K_p$, $K_\omega$\\
+        Initialize parameters, sampling time $T > 0$, distance $d_{maint}$, $K_p$, $K_\omega$\\
         Initialize time index $k = 0$\\
         Set total number of simulation time steps $k_f$\\
         \While{$k \leq k_f$}{
             $t = kT$\\
-            Compute coordinates of target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - 1)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - 1)\sin \theta_{Ref}$\\
+            Compute coordinates of target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_{maint})\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_{maint})\sin \theta_{Ref}$\\
             Compute linear speed $v(t) = sign(xRef)K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
             Compute $\omega(t) = K_\omega \theta_{Ref}$\\
             Compute left and right wheel speeds for robot\\
@@ -841,8 +841,8 @@ Today I worked on the CoppeliaSim model of the Budget Bot robot. I was able to g
             $k = k + 1$
         }
     }
-    \caption{Remote Tracking Algorithm}
-    \label{alg:remoteTracking}
+    \caption{Remote Following Algorithm}
+    \label{alg:remoteFollowing}
 \end{algorithm}
 
 \vspace*{12pt}
@@ -889,7 +889,7 @@ Today in the lab time Jason demonstrated his CoppeliaSim model and we were able 
 
 %-------------------------------------------
 
-\labday{Tuesday, November 10, 2020}
+\labday{Tuesday, November 17, 2020}
 \experiment{Lab Time}
 
 JB\\

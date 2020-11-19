@@ -49,6 +49,7 @@
 \usepackage{pgfgantt}
 \usepackage{todonotes}
 \usepackage{media9}
+\usepackage{fontawesome5}
 \usepackage{subfigure}
 \usepackage{booktabs,array}
 \usepackage{tabulary}
@@ -140,28 +141,32 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 % and table of contents.
 \section{Introduction}
 
-% \begin{frame}{Introduction}
-%   \begin{center}
-%     \includemedia[
-%       label=proposalVideo,
-%       width=\textwidth,
-%       height=0.38\textheight,
-%       activate=onclick,
-%       playbutton=fancy,
-%       addresource=figs/video/proposalVideo.mp4,
-%       flashvars={source=figs/video/proposalVideo.mp4}]
-%       {}{VPlayer.swf}
-
-%       \mediabutton[
-%         mediacommand=proposalVideo:playPause,
-%         overface=\color{blue}{\fbox{\strut \faPause\ \faPlay}},
-%         downface=\color{red}{\fbox{\strut \faPause\ \faPlay}}
-%       ]{\fbox{\faPause~\faPlay}}
-%       \mediabutton[
-%         mediacommand=proposalVideo:setSource
-%         [(figs/video/proposalVideo.mp4)]]{\fbox{Introduction Video}}
-%   \end{center}
-% \end{frame}
+\begin{frame}{Introduction}
+  \begin{center}
+    \href{videos/proposalVideo.mp4}{\includegraphics[width=0.8\textwidth]{figs/img/proposalVideoTitle}}
+  \end{center}
+  %%% Embedding the video with the includemedia command below would be nice, but I could not get it to work correctly - JB
+  % \begin{center}
+  %   \includemedia[
+  %     width=\textwidth,
+  %     height=0.7\textheight,
+  %     label=proposalVideo,
+  %     % activate=onclick,
+  %     % playbutton=fancy,
+  %     addresource=videos/proposalVideo.mp4,
+  %     flashvars={source=videos/proposalVideo.mp4}]
+  %     {}{VPlayer.swf}
+  %     \\
+  %     % \mediabutton[
+  %     %   mediacommand=proposalVideo:playPause,
+  %     %   overface=\color{blue}{\fbox{\strut \faPause\ \faPlay}},
+  %     %   downface=\color{red}{\fbox{\strut \faPause\ \faPlay}}
+  %     % ]{}
+  %     % \mediabutton[
+  %     %   mediacommand=proposalVideo:setSource
+  %     %   [(videos/proposalVideo.mp4)]]{\fbox{Introduction Video}}
+  % \end{center}
+\end{frame}
 
 \begin{frame}{Introduction}{}
   % applications of mobile robot navigation and problem description
