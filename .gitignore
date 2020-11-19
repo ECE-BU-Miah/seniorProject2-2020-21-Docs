@@ -31,6 +31,10 @@ proposalPres.pdf
 *.pyg
 *.syntex*
 
+# Dia tilde files #
+###################
+*.dia~
+
 # Compiled source #
 ###################
 *.com

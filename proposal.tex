@@ -30,6 +30,11 @@ format=default,justification=centerlast]{caption} % Figure caption text customiz
 \usepackage{setspace}
 \usepackage{multirow}
 
+\usepackage[ruled, vlined, linesnumbered]{algorithm2e} % For algorithms
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit}
+
 \usepackage{siunitx}
 \sisetup{unitsep=\cdot}
 
@@ -125,6 +130,38 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
     \caption{Mobile Robot block diagram}
 	\label{fig:mobile_block_diag}
 \end{figure}
+
+\subsection{Navigation Algorithm}
+We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A high-level flowchart of the algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
+
+\begin{figure}
+  \centering
+  \input{figs/dia/algorithmFlowchart.tex}
+  \caption{Flowchart of Navigation Algorithm}
+  \label{fig:navAlgoFlowchart}
+\end{figure}
+
+\begin{algorithm}[h!]
+  \SetAlgoLined
+  \KwIn{Signal Strengths from Remote}
+  \KwOut{Mobile Robot Trajectory}
+  \Begin
+  {
+      Initialize robot pose $q_0 = [x_0, y_0, \theta_0]^T$\\
+      Initialize parameters, sampling time $T > 0$, following distance $d_f$, $K_p$, $K_\omega$\\
+      \While{true}{
+        Estimate distance $d_{Ref}$ to remote using signal strength\\
+        Estimate angle $\theta_{Ref}$ to remote using signal strengths\\
+        Compute coordinates of target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
+        Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
+        Compute $\omega(t) = K_\omega \theta_{Ref}$\\
+        Compute left and right wheel speeds for robot\\
+        Apply wheel speeds to robot\\
+      }
+  }
+  \caption{Remote Following Algorithm}
+  \label{alg:navAlgo}
+\end{algorithm}
 
 % \subsection{Specifications}
 
