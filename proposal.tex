@@ -81,29 +81,36 @@ Caterpillar College of Engineering and Technology\\
 \tableofcontents
 \newpage
 
-\section{Introduction} %introduction (basically what was in the project description before)
+\section{Introduction}
+Robotic carts are a prevalent invention designed to aid the customer in a number of important indoor and outdoor tasks. There are systems currently on the market that perform these tasks in a variety of ways. For example, in a grocery store, a customer may require the need of more than one cart but cannot push or pull two carts simultaneously. One major drawback however is that people with disabilities cannot push one cart let alone have a second cart to carry more items. In this project, we are proposing a robotic cart that would primarily use analog signals with the use of cost-effective wireless communication to identify the customer and be able to track and follow the customer through the store. This implementation of a fully functional robotic cart will outreach the scope of the project but is the overall goal for this project in the coming years while encouraging further research into this field. Applications of this system include mail delivery carts, file transferring carts in offices, hospital carts to aid nurses and doctors by carrying medicine or surgery supplies, and use in construction sites to carry tools and other supplies across the job site.
 
-
-Robotic carts are a prevailing invention designed to aid the customer in a number of important indoor and outdoor tasks. There are systems currently on the market that perform these tasks in a variety of ways. For example, in a grocery store, a customer may require the need of more than one cart but cannot push or pull two carts simultaneously. One major drawback however is that people with disabilities cannot push one cart let alone have a second cart to carry more items. In this project, we are proposing a robotic cart that would primarily use analog signals with the use of cost-effective wireless communication to identify the customer and be able to track and follow the customer through the store. This implementation of a fully functional robotic cart will outreach the scope of the project but is the overall goal for this project in the coming years while encouraging further research into this field. Applications of this system include mail delivery carts, file transferring carts in offices, hospital carts to aid nurses and doctors by carrying medicine or surgery supplies, and use in construction sites to carry tools and other supplies across the job site.
-
-\section{Literature Review} %review of literature and prior work
-
-Abounding research in the field of robotic carts shows various ways in which to implement a system that will help consumers with carrying groceries through stores (see~\cite{Rawashdeh2017-Person},~\cite{islam_lam_fukuda_kobayashi_kuno_2019},~\cite{Sales2016-CompaRob}). Currently, the work being done focuses on a few different methods of having the robotic cart interface with the customer and follow them through the store. A mobile platform interface that implements ultrasound and radio transmissions technology is one such method that has been utilized to follow a customer through a store~\cite{Sales2016-CompaRob}. Another method that has been implemented is the use of a GRU (Gated Recurrent Unit) network to detect shopping habits of customers while also using a LiDAR sensor and camera to detect and map the customer using a two-dimensional skeleton and follow them through the store~\cite{islam_lam_fukuda_kobayashi_kuno_2019}. In the last method, the authors utilized an Arduino MEGA 2560, six ultrasonic sensors, two DC motors with PWM (Pulse Width Modulation), an Android Studio IDE device, and Bluetooth in order to detect the customer and follow them through the store~\cite{Rawashdeh2017-Person}. In our project we are implementing XBee S2C RF radios, which are inexpensive and easily configurable, as a remote that the robot will be able to track instead of using line of sight methods~\cite{Miah2018-Intelligent}. In addition to the XBee S2C RF radios we will equip the robot with a parabolic reflector, which improves Wi-Fi reception at various distances and angles, based on research done previously in this type of robot localization and mapping~\cite{Miah2018-Intelligent}~\cite{Li2013ANA}. This approach also requires understanding of multipath interference which is common in Wi-Fi based wireless positioning sensing systems. Some methods, seen in~\cite{xie_jiang_zhao_zhang_2019}, explains that using course estimation calculations such as received signal strength indicator (RSSI) and time difference of arrival (TDoA) is key to compensate for the multipath interference in received signals.~\cite{ladd_bekris_rudys_kavraki_wallach_2005} shows a different approach to the multipath issue by using an IEEE 802.11b wireless Ethernet device to measure RF signals. This device system was used because it is communicable between a mobile device and a localization based service with low complexity for the user. Also, in~\cite{lindhe_johansson_bicchi_2007} the research states several other ways to counteract the multipath fading with methods such as antenna diversity, frequency spreading, or adaptive antenna arrays. The method used in this paper was to sample the radio signal strength (RSS) at discrete points without too much deviation from the robot's desired position in an indoor environment. Lastly, in~\cite{Lindhe2009} the method that is utilized exploits multipath fading by measuring the signal-to-noise ratio (SNR) and adjusting the robot's motion to spend more time where the channel strength is greater.
+\section{Literature Review}
+Abundant research in the field of robotic carts shows various ways in which to implement a system that will help consumers with carrying groceries through stores (see~\cite{Rawashdeh2017-Person},~\cite{islam_lam_fukuda_kobayashi_kuno_2019},~\cite{Sales2016-CompaRob}). Currently, the work being done focuses on a few different methods of having the robotic cart interface with the customer and follow them through the store. A mobile platform interface that implements ultrasound and radio transmissions technology is one such method that has been utilized to follow a customer through a store~\cite{Sales2016-CompaRob}. Another method that has been implemented is the use of a GRU (Gated Recurrent Unit) network to detect shopping habits of customers while also using a LiDAR sensor and camera to detect and map the customer using a two-dimensional skeleton and follow them through the store~\cite{islam_lam_fukuda_kobayashi_kuno_2019}. In the last method, the authors utilized an Arduino MEGA 2560, six ultrasonic sensors, two DC motors with PWM (Pulse Width Modulation), an Android Studio IDE device, and Bluetooth in order to detect the customer and follow them through the store~\cite{Rawashdeh2017-Person}. In our project we are implementing XBee S2C RF radios, which are inexpensive and easily configurable, as a remote that the robot will be able to track instead of using line of sight methods~\cite{Miah2018-Intelligent}. In addition to the XBee S2C RF radios we will equip the robot with a parabolic reflector, which improves Wi-Fi reception at various distances and angles, based on research done previously in this type of robot localization and mapping~\cite{Miah2018-Intelligent}~\cite{Li2013ANA}. This approach also requires understanding of multipath interference which is common in Wi-Fi based wireless positioning sensing systems. Some methods, seen in~\cite{xie_jiang_zhao_zhang_2019}, explains that using course estimation calculations such as received signal strength indicator (RSSI) and time difference of arrival (TDoA) is key to compensate for the multipath interference in received signals.~\cite{ladd_bekris_rudys_kavraki_wallach_2005} shows a different approach to the multipath issue by using an IEEE 802.11b wireless Ethernet device to measure RF signals. This device system was used because it is communicable between a mobile device and a localization based service with low complexity for the user. Also, in~\cite{lindhe_johansson_bicchi_2007} the research states several other ways to counteract the multipath fading with methods such as antenna diversity, frequency spreading, or adaptive antenna arrays. The method used in this paper was to sample the radio signal strength (RSS) at discrete points without too much deviation from the robot's desired position in an indoor environment. Lastly, in~\cite{Lindhe2009} the method that is utilized exploits multipath fading by measuring the signal-to-noise ratio (SNR) and adjusting the robot's motion to spend more time where the channel strength is greater.
 
 \vspace*{12pt}
+\noindent
 In this project we aim to use the XBee S2C RF radios and a parabolic reflector combined into a rotating system similar to the one presented in~\cite{Miah2018-Intelligent} in order to have the robot track the customer through a store. The major challenge of this implementation will be estimating the distance between the robot and the remote in varying environments without using line of sight sensing.
 
+\section{System Requirements}
+There are three requirements for our system. The first requirement is that the cart should be able to follow the remote while maintaining a distance of 1 to 1.5 meters. This requirement comes from the intended usage of the project, which is a cart that follows the user. The cart must be able to follow the remote, but it also must be able to keep an appropriate distance so it does not run into the user or fall too far behind.
 
-% \section{Standards and Patents}
-% The standards that are applicable to our project include the IEEE 802.15.4 protocol and the ZigBee protocol. The IEEE 802.15.4 protocol\footnote{IEEE Standard for Low-Rate Wireless Networks, 2015} outlines the physical layer (PHY) and the medium access control layer (MAC) specifications for low-data-rate wireless communication in personal area networks (LR-WPAN). The PHY layer contains the radio frequency transceiver and its low-level controller. The MAC layer provides access to the physical channel for transfer and defines an IEEE address for the device. Its goal is to maintain a simple and flexible protocol while also being easy to install, having reliable data transfer, being low cost, and having reasonable battery life. The ceiling mounted beacons will use XBee modules to communicate wirelessly with the mobile robot and uses the 802.15.4 protocol by default. The 802.15.4 protocol allows for a star network topology which is made up of one established personal area network (PAN) coordinator and other functional devices. In our system, the XBee mounted on the mobile robot will act as a coordinator and the ceiling mounted XBee’s will be the other functional devices. During our testing, we have established basic peer-to-peer communication with this protocol.\\
+\vspace*{12pt}
+\noindent
+The second requirement for the system is that the cart should be able to travel at 1 m/s. If the cart can only travel slowly, it will not be as useful since the user will have to walk very slowly to allow the cart to keep up.
 
-% The other standard known as ZigBee\footnote{Zigbee Pro Stack User Guide, 2014}\footnote{XBee/XBee-Pro S2C ZigBee User Guide, 2016} is an open global standard for low-power, low-cost, low-data-rate, wireless networking based on the IEEE 802.15.4 standard. It maintains the specifications of the PHY layer and the MAC layer while defining the higher network layer and setting the framework for the application layer. The network layer takes care of network structure, routing, and security. The application layer has an application support sub-layer (APS) which defines various addressing objects and has other features for device specific applications. The ZigBee protocol allows for star, peer-to-peer, and mesh network topologies. We will still use the star network topology which is made up of a coordinator who creates a network with a channel and a unique PAN ID and end devices who will join this network with extra power saving features. The XBee mounted on the mobile robot will act as the coordinator and the ceiling mounted beacons will act as the end devices. The fully functional system will be implemented with a ZigBee network. It offers well defined packetized communication, power saving features which is important for the battery powered ceiling mounted beacons, and future applications which may require a higher level mesh network.\\
+\vspace*{12pt}
+\noindent
+The third requirement is that line-of-sight communication between the cart and the robot must not be required. In the case that an obstacle gets between the cart and the remote, the communication should be able to be maintained so that the cart still knows where the user is located.
 
-% There are several patents that outline designs that are comparable to our project. The first patent~\cite{biehl} describes systems and methods for localization of a mobile device using beacons. This design uses a computer, a location signal receiver and beacons to determine the location of the mobile device. The beacons transmit the location signal and  the computer determines the location from the received location signal strength and a unique key based on the particular transmitting beacon. This patent is relevant to our work as it uses received signal strength from beacons and individual beacon IDs for localization of a mobile device in an indoor environment, but the patent is more general to what the mobile device is and uses a different localization algorithm. The second patent~\cite{lin} outlines positioning of an indoor mobile robot, and mapping of its environment and the beacons it detects. The mobile robot performs several positioning modes depending on the number on beacons it detects in its line of sight. This patent is more applicable to our project than the last patent. It utilizes a simultaneous localization and mapping technique for a mobile robot and beacons. However, the patent's positioning method is different than ours. The third patent~\cite{edlund} describes a localization method for a mobile robot with a system of beacons. It uses the signal strength and angle of arrival of the signal to localize and determine a coarse correction. This design is very similar to our approach by uses signal strength and angle, and similar localization algorithm, but we will be rotating a antennae reflector instead of the entire robot. A similar patent~\cite{younis} to the previous explains an indoor localization method for a mobile device using directional reflectors. The mobile device transmits a signal and the signal is delayed and returned by reflectors in the environment. The location of the mobile device is then determined from the range by the amount of delay and the angle of arrival at the reflector. This patent is relatively similar to our project as it describes an indoor localization technique using range and angle for a mobile device.
+\section{System Architecture}
+The system for this project consists of two subsystems which are the Mobile Cart and the Remote Target. as seen in Figure \ref{fig:sys_block_diag}. The Mobile Cart system is a wheeled robot that sends and receives radio signals to follow the remote target. The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
 
-\section{Functional Requirements}
-\subsection{System Architecture}
-\hspace{\parindent} The system for this project consists of two subsystems which are the Mobile Cart and the Remote Target as seen in Figure \ref{fig:sys_block_diag}. The Mobile Cart system is a mobile wheeled robot that sends and receives radio signals to follow a target. The Remote Target acts as the target for the Mobile Cart in the system by sending radio signals back and forth with the cart.
+\subsection{System Block Diagram}
+The block diagram of the overall system is shown in \autoref{fig:sys_block_diag}. There are four inputs to the system. The system must have a power source, which will be a battery. There will be an on/off switch to allow the system to be powered down when not in use. The motion of the cart will be controlled by the motion of the remote. A stretch goal is to have mode selection buttons to allow the user to put the system into different operating modes.
+
+\vspace*{12pt}
+\noindent
+The main output of the system is the trajectory of the cart. As the user moves with the remote, the cart will move to follow the user. The other output of the system is status indication in the form of LED lights. These lights will be used to notify the user of the status of the system.
 
 \begin{figure}[!h]
     \centering
@@ -112,27 +119,58 @@ In this project we aim to use the XBee S2C RF radios and a parabolic reflector c
 	\label{fig:sys_block_diag}
 \end{figure}
 
+\subsection{Subsystem Block Diagrams}
+Both of the subsystems of the mobile cart system, being the Mobile Cart and Remote Target, act as their own enclosed systems. The two subsystems communicate with one another by relaying radio messages between them. The block diagram of the Remote Target subsystem is shown in \autoref{fig:remote_block_diag}. Of the two subsystems the Remote Target is the simplest since it only requires an XBee module attached to a 9 volt battery with a voltage regulation circuit.
+
 \vspace*{12pt}
-\subsection{Block Diagrams}
-\hspace{\parindent} Both subsystems of this project, being the Mobile Cart and Remote Target, act as their own enclosed systems, only relaying radio messages between them. For the Remote Target subsystem, Figure \ref{fig:remote_block_diag} contains the block diagram for it. Of the two subsystems the Remote Target is the simplest since it only is requires an XBee module attached to a 9 volt battery.
+\noindent
+The Mobile Cart subsystem block diagram is shown in \autoref{fig:mobile_block_diag}. The Mobile Cart has four inputs. The cart requires a power source, which will be a Li-Po battery. The power to the subsystem will be toggled by an on/off switch. The buttons for changing the operating mode of the cart will be on the cart if we have time to implement them. The final input to the mobile cart subsystem is the XBee network messages received from the remote target.
 
-\hspace{\parindent} The Mobile Cart section of the system is shown as a block diagram in Figure \ref{fig:remote_block_diag}. The Mobile Cart for inputs consists of Power coming from a Li-Po battery toggled by a On/Off switch, buttons for changing carts operating mode, and messages received from the remote target. The Mobile Cart works off of a central controller, which is the BeagleBone Blue, DC Motors for the driving of the cart as well as a stepper motor used for the radio sensor array, and a sensor array consisting of one omnidirectional transmitter and 4 directional receivers. The transmitters and receivers are all XBee modules connected to the central BeagleBone Blue which are used in tandem along with the stepper motor to check signal strength with the Remote Target.
+\vspace*{12pt}
+\noindent
+There are three outputs of the mobile cart subsystem. The first is the wheel velocities that move the cart. There will also be LEDs to indicate the status of the system to the user. Also, the cart will send radio messages to the remote target by means of an array of XBee radio modules.
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[scale=0.9]{figs/remote_target_block_diagram}
-    \caption{Remote Target block diagram}
-	\label{fig:remote_block_diag}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.9]{figs/remote_target_block_diagram}
+  \caption{Remote Target block diagram}
+  \label{fig:remote_block_diag}
 \end{figure}
-\begin{figure}[!h]
-    \centering
-    \includegraphics[scale=0.82]{figs/mobile_cart_block_diagram}
-    \caption{Mobile Robot block diagram}
-	\label{fig:mobile_block_diag}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.82]{figs/mobile_cart_block_diagram}
+  \caption{Mobile Robot block diagram}
+  \label{fig:mobile_block_diag}
 \end{figure}
+
+\subsection{System Operation}
+The control of the Mobile Cart will be handled by a central embedded computer, which will be a BeagleBone Blue. Two DC motors will be used to drive wheels to move the cart. Five XBee modules will be used to allow communication with the remote target. One of these radio sensors will be mounted on top of the cart to broadcast in all directions. The other four sensors will be placed inside parabolic reflectors at right angles to each other. This sensor array will be mounted on a stepper motor to allow rotation. 
+
+\vspace*{12pt}
+\noindent
+Two reflector designs will be evaluated in this project. The first, shown in \autoref{fig:parabolodialReflector}, is a paraboloidal reflector. This design maximizes the signal strength of signals that come head-on into the reflector. Since the remote will be carried by the user, it is likely that it will be positioned at a higher altitude than the reflector array. The paraboloidal reflector design may not be able to pick up the signals from the remote as well because of this. To solve this problem, we designed a combination parabolic/paraboloidal reflector, as shown in \autoref{fig:parabolicReflector}. The lower part of this reflector is paraboloidal in shape to limit the signals coming from below. The upper part of the reflector is strictly parabolic. This shape focuses the signals in the horizontal plane, but allows signals from above to still be picked up. We plan to construct both of these reflector types by 3d printing the frames, then lining them with reflective foil tape. Both models will then be tested to determine which design works better.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=4in]{figs/img/paraboloidalReflector}
+  \caption{Paraboloidal Reflector Model}
+  \label{fig:parabolodialReflector}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=4in]{figs/img/parabolicReflector}
+  \caption{Combined Parabolic/Paraboloidal Reflector}
+  \label{fig:parabolicReflector}
+\end{figure}
+
+\vspace*{12pt}
+\noindent
+The strength of the radio signals between the cart and remote will be used to estimate the position of the remote relative to the cart. By rotating the sensor array 90 degrees and measuring the signal strength of messages from the remote at several steps in the rotation, the bearing of the remote can be estimated as the direction in which the maximum signal strength is received. To estimate the distance between the cart and the remote, the signal strength will be measured and used to calculate the distance. The omnidirectional radio module on top will be responsible for coordinating the messages from the remote by sending the remote commands that tell the remote when to send signals.
 
 \subsection{Navigation Algorithm}
-We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A high-level flowchart of the algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a more detailed pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
+Once the bearing and distance of the remote are estimated, the cart must move to follow the remote. We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A high-level flowchart of the algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a more detailed pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
 
 \begin{figure}
   \centering
@@ -213,19 +251,19 @@ We will use a modified Point Navigation algorithm to navigate the robot to follo
     \ganttbar[progress = 100]{Research Multipath}{3}{12}\\
     \ganttbar[progress = 100]{Research Reflector}{3}{12}\\
 
-    \ganttgroup[progress = 50]{Simulation}{8}{10}\\
-    \ganttbar[progress = 50]{CoppeliaSim simulation}{8}{10}\\
+    \ganttgroup[progress = 80]{Simulation}{8}{10}\\
+    \ganttbar[progress = 80]{CoppeliaSim simulation}{8}{10}\\
     \ganttmilestone[progress = 0]{Simulation Complete}{10}\\
 
-    \ganttgroup[progress = 55]{Project Proposal}{11}{12}\\
-    \ganttbar[progress = 60]{Proposal Document}{11}{11}\\
-    \ganttbar[progress = 50]{Proposal Presentation}{12}{12}\\
+    \ganttgroup[progress = 90]{Project Proposal}{11}{12}\\
+    \ganttbar[progress = 90]{Proposal Document}{11}{11}\\
+    \ganttbar[progress = 90]{Proposal Presentation}{12}{12}\\
 
-    \ganttgroup[progress = 12.5]{XBee Setup}{13}{14}\\
-    \ganttbar[progress = 0]{Voltage Regulator Circuit}{13}{13}\\
-    \ganttbar[progress = 0]{Configuration with X-CTU}{14}{14}\\
-    \ganttbar[progress = 0]{Sensing RSSI}{14}{14}\\
-    \ganttbar[progress = 50]{UART Communication}{14}{14}\\
+    \ganttgroup[progress = 90]{XBee Setup}{13}{14}\\
+    \ganttbar[progress = 90]{Voltage Regulator Circuit}{13}{13}\\
+    \ganttbar[progress = 90]{Configuration with X-CTU}{14}{14}\\
+    \ganttbar[progress = 90]{Sensing RSSI}{14}{14}\\
+    \ganttbar[progress = 90]{UART Communication}{14}{14}\\
   \end{ganttchart}
 \caption{Gantt chart for Fall 2020}
 \label{fig:gantt1}
@@ -265,8 +303,8 @@ We will use a modified Point Navigation algorithm to navigate the robot to follo
     \ganttbar[progress = 0]{Mount Reflector}{3}{3}\\
     \ganttmilestone[progress = 0]{Assembly Complete}{3}\\
 
-    \ganttgroup[progress = 0]{Software}{4}{5}\\
-    \ganttbar[progress = 0]{XBee Library}{4}{4}\\
+    \ganttgroup[progress = 40]{Software}{4}{5}\\
+    \ganttbar[progress = 80]{XBee Library}{4}{4}\\
     \ganttbar[progress = 0]{Control Algorithm}{5}{5}\\
 
     \ganttgroup[progress = 0]{Angle Estimation}{6}{7}\\
