@@ -144,8 +144,76 @@ There are three outputs of the mobile cart subsystem. The first is the wheel vel
   \label{fig:mobile_block_diag}
 \end{figure}
 
-\subsection{System Operation}
-The control of the Mobile Cart will be handled by a central embedded computer, which will be a BeagleBone Blue. Two DC motors will be used to drive wheels to move the cart. Five XBee modules will be used to allow communication with the remote target. One of these radio sensors will be mounted on top of the cart to broadcast in all directions. The other four sensors will be placed inside parabolic reflectors at right angles to each other. This sensor array will be mounted on a stepper motor to allow rotation. 
+\subsection{System Components}
+There are several components that are required for the mobile cart system. Although some of these parts are available in the Bradley University laboratory, other parts must be purchased. The parts that exist in the lab are shown in \autoref{tab:Partslablist}. Also, \autoref{tab:Partslist} shows the list of parts that we must purchase. The parts lists shown are the parts needed to build two copies of the mobile cart system.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|c}
+      \toprule
+      \textbf{Quantity} & \textbf{Parts}\\
+      \toprule
+      2 & Budget Bot Chassis\\
+      4 & 10 uF Ceramic Capacitor\\
+      4 & LM1117 Regulator\\
+      2 & Battery Packs for Budget Bot\\
+      8 & 9V Batteries\\
+      4 & Solderable PCB Boards\\
+      3 & XBee USB Adapter\\
+      \bottomrule
+      %\multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+      %\bottomrule
+  \end{tabular}
+  \caption{Parts Available in Laboratory}
+  \label{tab:Partslablist}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c|c|c}
+    \toprule
+    \textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
+    \toprule
+    4 & Pololu 37D Metal Gaermotor 4751 & \$ 39.95\\
+    12 & XBee S2C Module & \$ 23.10\\
+    10 & XBee Adapter Board & \$ 4.99\\
+    2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\
+    1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
+    1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\
+    1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
+    \bottomrule
+    \multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+    \bottomrule
+  \end{tabular}
+  \caption{Purchased parts for the Robotic Cart Project}
+  \label{tab:Partslist}
+\end{table}
+
+\vspace*{12pt}
+\noindent
+The main components of the system are the Budget Bot Chassis (\autoref{fig:budgetBotChassis}), the BeagleBone Blue embedded computer (\autoref{fig:beagleboneBlue}), and the XBee S2C Modules (\autoref{fig:XBeeModule}). Another major component is the reflector array that will be used to directionalize the signals coming from the remote.
+
+\begin{figure}
+  \centering
+  \begin{minipage}[t]{0.32\textwidth}
+    \includegraphics[width=1\textwidth]{figs/img/budgetbot_chassis}
+    \captionsetup{width=\textwidth}
+    \caption{Budget Bot Chassis}
+    \label{fig:budgetBotChassis}
+  \end{minipage}%
+  \begin{minipage}[t]{0.32\textwidth}
+    \includegraphics[width=1\textwidth]{figs/img/beaglebone_blue}
+    \captionsetup{width=\textwidth}
+    \caption{BeagleBone Blue}
+    \label{fig:beagleboneBlue}
+  \end{minipage}
+  \begin{minipage}[t]{0.32\textwidth}
+    \includegraphics[width=1\textwidth]{figs/img/Xbee-S2C-Module}
+    \captionsetup{width=\textwidth}
+    \caption{XBee S2C Module}
+    \label{fig:XBeeModule}
+  \end{minipage}
+\end{figure}
 
 \vspace*{12pt}
 \noindent
@@ -164,6 +232,9 @@ Two reflector designs will be evaluated in this project. The first, shown in \au
   \caption{Combined Parabolic/Paraboloidal Reflector}
   \label{fig:parabolicReflector}
 \end{figure}
+
+\subsection{System Operation}
+The control of the Mobile Cart will be handled by a central embedded computer, which will be a BeagleBone Blue. Two DC motors will be used to drive wheels to move the cart. Five XBee modules will be used to allow communication with the remote target. One of these radio sensors will be mounted on top of the cart to broadcast in all directions. The other four sensors will be placed inside parabolic reflectors at right angles to each other. This sensor array will be mounted on a stepper motor to allow rotation. 
 
 \vspace*{12pt}
 \noindent
