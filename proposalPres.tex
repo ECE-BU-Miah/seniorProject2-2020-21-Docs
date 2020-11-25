@@ -126,7 +126,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 }
 
 % Delete this, if you do not want the table of contents to pop up at
-% the beginning of each subsection:
+% the beginning of each section:
 \AtBeginSection[]
 {
   \begin{frame}<beamer>{Outline}
@@ -332,18 +332,6 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \begin{frame}{Block Diagrams}
   \begin{block}{}
-    Mobile Cart Subsystem Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
-  \end{block}
-  \begin{figure}[b]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figs/mobile_cart_block_diagram}
-    \caption{Block Diagram of Mobile Cart Subsystem}
-    \label{fig:sysMobileBlockDiag}
-  \end{figure}
-\end{frame}
-
-\begin{frame}{Block Diagrams}
-  \begin{block}{}
     Remote Target Subsystem Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
   \end{block}
   \begin{figure}[b]
@@ -354,35 +342,22 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{figure}
 \end{frame}
 
+\begin{frame}{Block Diagrams}
+  \begin{block}{}
+    Mobile Cart Subsystem Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
+  \end{block}
+  \begin{figure}[b]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figs/mobile_cart_block_diagram}
+    \caption{Block Diagram of Mobile Cart Subsystem}
+    \label{fig:sysMobileBlockDiag}
+  \end{figure}
+\end{frame}
+
 %----------------------------------
 
 \subsection{System Components}
-
-\begin{frame}{Parts List}
-  \begin{table}[h!]
-    \centering
-    \begin{tabular}{c|c|c}
-      \toprule
-      \textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
-      \toprule
-      4 & Pololu 37D Metal Gaermotor 4751 & \$ 39.95\\
-      12 & XBee S2C Module & \$ 23.10\\
-      10 & XBee Adapter Board & \$ 4.99\\
-      2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\
-      1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
-      1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\
-      1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
-      \bottomrule
-      \multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
-      \bottomrule
-    \end{tabular}
-    \caption{Purchased parts for the Robotic Cart Project}
-    \label{tab:Partslist}
-  \end{table}
-\end{frame}
-
-\begin{frame}{Parts List}
-
+\begin{frame}{System Components}
   \begin{table}[h!]
       \centering
       \begin{tabular}{c|c}
@@ -403,7 +378,29 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       \caption{Parts Available in Laboratory}
       \label{tab:Partslablist}
   \end{table}
+\end{frame}
 
+\begin{frame}{System Components}
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c}
+      \toprule
+      \textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
+      \toprule
+      4 & Pololu 37D Metal Gaermotor 4751 & \$ 39.95\\
+      12 & XBee S2C Module & \$ 23.10\\
+      10 & XBee Adapter Board & \$ 4.99\\
+      2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\
+      1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
+      1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\
+      1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
+      \bottomrule
+      \multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+      \bottomrule
+    \end{tabular}
+    \caption{Purchased parts for the Robotic Cart Project}
+    \label{tab:Partslist}
+  \end{table}
 \end{frame}
 
 \begin{frame}{System Components}
@@ -459,6 +456,21 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
         \label{fig:parabolicReflector}
       \end{minipage}
     \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\subsection{System Operation}
+\begin{frame}{System Operation}
+  \begin{figure}
+    \centering
+    \begingroup
+    \tiny
+    \input{figs/dia/systemOperationFlowchartScaledDown.tex}
+    \endgroup
+    \caption{Flowchart of System Operation}
+    \label{fig:sysOpFlowchart}
+  \end{figure}
 \end{frame}
 
 %----------------------------------
