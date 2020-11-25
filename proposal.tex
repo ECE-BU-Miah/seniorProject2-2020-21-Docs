@@ -221,16 +221,20 @@ Two reflector designs will be evaluated in this project. The first, shown in \au
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=4in]{figs/img/paraboloidalReflector}
-  \caption{Paraboloidal Reflector Model}
-  \label{fig:parabolodialReflector}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=4in]{figs/img/parabolicReflector}
-  \caption{Combined Parabolic/Paraboloidal Reflector}
-  \label{fig:parabolicReflector}
+  \begin{minipage}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[height=2in]{figs/img/paraboloidalReflector}
+    \captionsetup{width=\textwidth, justification=raggedright}
+    \caption{Paraboloidal Reflector Model}
+    \label{fig:parabolodialReflector}
+  \end{minipage}
+  \begin{minipage}[t]{0.4\textwidth}
+    \centering
+    \includegraphics[height=2in]{figs/img/parabolicReflector}
+    \captionsetup{width=\textwidth, justification=raggedright}
+    \caption{Combined Parabolic/Paraboloidal Reflector}
+    \label{fig:parabolicReflector}
+  \end{minipage}
 \end{figure}
 
 \subsection{System Operation}
@@ -238,7 +242,14 @@ The control of the Mobile Cart will be handled by a central embedded computer, w
 
 \vspace*{12pt}
 \noindent
-The strength of the radio signals between the cart and remote will be used to estimate the position of the remote relative to the cart. By rotating the sensor array 90 degrees and measuring the signal strength of messages from the remote at several steps in the rotation, the bearing of the remote can be estimated as the direction in which the maximum signal strength is received. To estimate the distance between the cart and the remote, the signal strength will be measured and used to calculate the distance. The omnidirectional radio module on top will be responsible for coordinating the messages from the remote by sending the remote commands that tell the remote when to send signals.
+The strength of the radio signals between the cart and remote will be used to estimate the position of the remote relative to the cart. By rotating the sensor array 90 degrees and measuring the signal strength of messages from the remote at several steps in the rotation, the bearing of the remote can be estimated as the direction in which the maximum signal strength is received. To estimate the distance between the cart and the remote, the signal strength will be measured and used to calculate the distance. The omnidirectional radio module on top will be responsible for coordinating the messages from the remote by sending the remote commands that tell the remote when to send signals. A flowchart of the system operation is shown in \autoref{fig:sysOpFlowchart}.
+
+\begin{figure}
+  \centering
+  \input{figs/dia/systemOperationFlowchart.tex}
+  \caption{Flowchart of System Operation}
+  \label{fig:sysOpFlowchart}
+\end{figure}
 
 \subsection{Navigation Algorithm}
 Once the bearing and distance of the remote are estimated, the cart must move to follow the remote. We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A high-level flowchart of the algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a more detailed pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
