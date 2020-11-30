@@ -82,7 +82,7 @@
 \usepackage{lastpage} % Counts the number of pages of the document
 \usepackage{float}
 
-
+\usepackage[ruled, vlined, linesnumbered]{algorithm2e} % For algorithms
 
 
 \usepackage[dvipsnames]{xcolor}  % Allows the definition of hex colors
@@ -728,6 +728,11 @@ We would like to be able to reach a speed of at least 1 m/s, if possible. Then t
 $$\Omega_L = \left(\frac{1 [m/s]}{2\pi\frac{0.098425}{2} [m]}\right)\left(\frac{60 [s]}{1 [min]}\right) = 194 [RPM]$$
 We found the Pololu 4751 motor on Digikey (\href{https://www.digikey.com/en/products/detail/pololu-corporation/4751/10450205}{here}) which has a no-load speed of 540 RPM at 12V. Since our batteries are only 7.4V, the no-load speed would be approximately $\frac{7.4}{12}(540 [RPM]) = 333 [RPM]$. This gives us a good tolerance for the effects of loading. However, these motors are somewhat expensive at \$39.95 each. We decided to ask Dr. Miah for his opinion on this.
 
+\vspace*{12pt}
+KA\\
+In today's lab we researched a new robot chassis since we decided that the Junior Runt Rover robot model would not meet our requirements for this project. We continued to look at parts for the Budget Bot chassis and decided on better motors than what is already on the robot currently. After our initial update to the parts list we then delegated the project proposal content for the deadline on Tuesday, November 3. I decided to take the Title, Project Team, and Advisors, the Abstract, the Introduction, the Literature review, and the Bibliography/references.
+
+
 \experiment{Project Proposal Planning}
 
 JB\\
@@ -759,6 +764,13 @@ Kalli will work on items 1 - 4 and 11. Darrah will work on items 5 - 7, and Jaso
 \labday{Tuesday, November 3, 2020}
 \experiment{Lab Time}
 
+JB\\
+Today we mostly worked on finalizing the parts list since it is due to Mr. Mattus. We also discussed the the usage of multiple XBees on the cart to reduce the time required to get signal strength readings from the remote. We decided to use four XBee modules mounted inside parabolic reflectors at 90 degree increments. We also decided to use a fifth XBee on top of the reflectors to broadcast the signal strength query to the remote.
+
+\vspace*{12pt}
+KA\\
+In today's lab we reviewed the project proposal for the senior project meeting today. After we went over the paper we researched the best design which is to have four parabolic reflectors which would make it easier to pick up the stronger signal from the remote device and increase the XBee's resolution. We also finalized the parts list for our project and sent it to Mr. Mattus so that the parts could be ordered. I left the lab a few minutes early in order to pick up the Budget bot chassis from Dr. Miah and start working with the new model.
+
 \experiment{Meeting Minutes}
 Agenda: 
 \begin{itemize}
@@ -775,6 +787,133 @@ Agenda:
     \end{itemize}
     \item Go over proposal draft
 \end{itemize}
+
+JB\\
+In today's meeting, we decided that we will only build two robots in order to limit the cost of the project. We also decided to use parabolic reflectors similar to the one shown in \autoref{fig:reflectorExample}. We discussed the construction of such a reflector, and decided to design a parabolic frame about 15cm across. We will print this frame on a 3d printer, and line the inside with aluminum foil tape to make it reflective.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=4.5in]{figs/img/customizedRadioTransceiver}
+    \caption{Parabolic Reflector Example}
+    \label{fig:reflectorExample}
+\end{figure}
+
+%-------------------------------------------
+
+\labday{Thursday, November 5, 2020}
+\experiment{Lab Time}
+
+JB\\
+Today I worked on creating a CoppeliaSim model of the Budget Bot robot. I got the model created, and I am able to send commands from Matlab. However, at this point, commanding 0.25 m/s for 4 seconds results in the robot traveling about 1.25 m instead of just 1 m. I am not sure why it is doing this.
+
+\vspace*{12pt}
+KA\\
+Today I worked on putting together the project proposal presentation slides that are due on Tuesday, November 10. I got through the system requirements and then looked for images to put in this part. I will need input from Jason once his CoppeliaSim model is done so that I can add the model to the slides. I will continue to work on the slides and have them ready for review in the lab day on Tuesday, November 10. 
+
+%-------------------------------------------
+
+\labday{Tuesday, November 10, 2020}
+\experiment{Lab Time}
+
+JB\\
+Today I worked on the CoppeliaSim model of the Budget Bot robot. I was able to get the model to successfully complete the point navigation task for a static point. Then I worked on updating the simulation to have the model follow a moving target. I used \autoref{alg:navAlgo} to accomplish this.
+
+\begin{algorithm}[h!]
+    \SetAlgoLined
+    \KwIn{Signal Strengths from Remote}
+    \KwOut{Mobile Robot Trajectory}
+    \Begin
+    {
+        Initialize robot pose $q_0 = [x_0, y_0, \theta_0]^T$\\
+        Initialize parameters, sampling time $T > 0$, following distance $d_f$, $K_p$, $K_\omega$\\
+        \While{true}{
+          Estimate distance $d_{Ref}$ to remote using signal strength\\
+          Estimate angle $\theta_{Ref}$ to remote using signal strengths\\
+          Compute coordinates of target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
+          Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
+          Compute $\omega(t) = K_\omega \theta_{Ref}$\\
+          Compute left and right wheel speeds for robot\\
+          Apply wheel speeds to robot\\
+        }
+    }
+    \caption{Remote Following Algorithm}
+    \label{alg:navAlgo}
+  \end{algorithm}
+
+\vspace*{12pt}
+\vspace*{12pt}
+KA\\
+In today's lab I worked on touching up the project proposal slides with the revisions from Jason and Darrah. I needed to fix a few figures and had Jason help me with resizing the gantt chart for the project timeline. In the remaining lab time I helped Jason with some minor issues he had in his CoppeliaSim model and worked on implementing the model and code he created on my own computer.
+
+\experiment{Meeting Minutes}
+Agenda: 
+\begin{itemize}
+    \item Go over proposal
+    \item Discuss simulation
+\end{itemize}
+
+JB\\
+In today's meeting, we discussed the current status of the simulation. The robot was not following the remote correctly, but it was following somewhat. We determined that we should get the simulation to work in the ideal, noise-free scenario first. After that is working we will add noise. Dr. Miah also told us to create a video to show at the beginning of the presentation.
+
+%-------------------------------------------
+
+\labday{Thursday, November 12, 2020}
+\experiment{Lab Time}
+
+JB\\
+Today I worked on coming up with a way to simulate the angle estimation that we plan to use. We discussed methods of determining what the signal strength should be for the receivers in the reflectors based on the angle to the remote. We determined that we should use some form of the cosine of the angle between the receiver and the remote to determine what the signal strength should be. We also discussed the shape of the reflectors. Since the remote is likely to be higher than the receivers under normal usage, a strictly paraboloidal shape (see \autoref{fig:paraboloidalReflectors}) may not work correctly. We thought that a paraboloidal shape below the antenna and a parabolic shape above the antenna (see \autoref{fig:paraboloidalParabolicReflectors}) might work better. I worked on creating a 3d model of the reflectors to use in CoppeliaSim so we can see the rotation of the reflectors on the top of the robot.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=4.5in]{figs/img/paraboloidalReflector.png}
+    \caption{Paraboloidal Reflectors}
+    \label{fig:paraboloidalReflectors}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=4.5in]{figs/img/parabolicReflector.png}
+    \caption{Paraboloidal/Parabolic Reflectors}
+    \label{fig:paraboloidalParabolicReflectors}
+\end{figure}
+
+\vspace*{12pt}
+\vspace*{12pt}
+KA\\
+Today in the lab time Jason demonstrated his CoppeliaSim model and we were able to see that the robot tracks to the point while following the remote in a circular path with some added noise. After the demo of the CoppeliaSim model I decided to research some ways of modeling the parabolic reflector in Matlab and found this website as a reference: \href{https://www.mathworks.com/help/antenna/ug/pattern-analysis-of-the-symmetric-parabolic-reflector.html}{https://www.mathworks.com/help/antenna/ug/pattern-analysis-of-the-symmetric-parabolic-reflector.html}. After we discussed this code as a group we decided to try a different method of modeling the parabolic reflector since the code did not allow for us to change the parameters to what we needed for our project.
+
+%-------------------------------------------
+
+\labday{Tuesday, November 17, 2020}
+\experiment{Lab Time}
+
+JB\\
+In today's lab time, we worked on the proposal document and presentation. I worked on creating an introductory video for the start of the presentation.
+
+\experiment{Meeting Minutes}
+Agenda: Go over proposal
+
+JB\\
+In today's meeting, we discussed the proposal and proposal presentation. We found that there were two bibtex warnings when the proposal was compiled. Dr. Miah gave us the following recommendations for the document:
+\begin{itemize}
+    \item Add a few sentences before the first subsection in the Functional Requirements section
+    \item Include the list of parts
+    \item Add color to the block diagrams
+    \item Include a flowchart and pseudo-code of the algorithm
+    \item Include the images of the reflector models
+\end{itemize}
+
+In addition, Dr. Miah gave us the following recommendations for the presentation:
+\begin{itemize}
+    \item Use figures in most of the slides
+    \item Use less text, rather than more
+\end{itemize}
+
+\labday{Thursday, November 19, 2020}
+\experiment{Lab Time}
+
+JB\\
+In today's lab time, we worked on the proposal document and presentation.
 
 % \experiment{Quick Start}
 % GJ\\
