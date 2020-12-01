@@ -185,7 +185,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \pause
   \begin{block}{Proposed Solution}
     \begin{LARGE}
-      Utilize analog wireless signal strength to locate and then follow the user.
+      Utilize wireless signal strength to locate and then follow the user.
     \end{LARGE}
   \end{block}
 \end{frame}
@@ -578,15 +578,15 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
         \ganttbar[progress = 80]{CoppeliaSim simulation}{8}{10}\\
         \ganttmilestone[progress = 0]{Simulation Complete}{10}\\
 
-        \ganttgroup[progress = 90]{Project Proposal}{11}{12}\\
-        \ganttbar[progress = 90]{Proposal Document}{11}{11}\\
-        \ganttbar[progress = 90]{Proposal Presentation}{12}{12}\\
+        \ganttgroup[progress = 100]{Project Proposal}{11}{12}\\
+        \ganttbar[progress = 100]{Proposal Document}{11}{11}\\
+        \ganttbar[progress = 100]{Proposal Presentation}{12}{12}\\
 
-        \ganttgroup[progress = 90]{XBee Setup}{13}{14}\\
+        \ganttgroup[progress = 82.5]{XBee Setup}{13}{14}\\
         \ganttbar[progress = 90]{Voltage Regulator Circuit}{13}{13}\\
-        \ganttbar[progress = 90]{Configuration with X-CTU}{14}{14}\\
+        \ganttbar[progress = 80]{Configuration with X-CTU}{14}{14}\\
         \ganttbar[progress = 90]{Sensing RSSI}{14}{14}\\
-        \ganttbar[progress = 90]{UART Communication}{14}{14}\\
+        \ganttbar[progress = 70]{Serial Communication}{14}{14}\\
       \end{ganttchart}
     \caption{Gantt chart for Fall 2020}
     \label{fig:gantt1}
@@ -633,8 +633,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \ganttbar[progress = 0]{Mount Reflector}{4}{4}\\
     \ganttmilestone[progress = 0]{Assembly Complete}{4}\\
 
-    \ganttgroup[progress = 40]{Software}{5}{6}\\
-    \ganttbar[progress = 80]{XBee Library}{5}{5}\\
+    \ganttgroup[progress = 10]{Software}{5}{6}\\
+    \ganttbar[progress = 20]{XBee Library}{5}{5}\\
     \ganttbar[progress = 0]{Control Algorithm}{6}{6}\\
 
     \ganttgroup[progress = 0]{Angle Estimation}{7}{8}\\
@@ -665,30 +665,24 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\section{Anticipated Challenges}
-\begin{frame}{Anticipated Challenges}
-  \begin{block}{Challenges}
+\section{Concluding Remarks}
+\begin{frame}{Concluding Remarks}
+  \begin{block}{Project goals}
+    \begin{LARGE}
+      \begin{itemize}
+        \item Develop a robotic cart system utilizing wireless signal strength to locate and follow the user.
+        \begin{itemize}
+          \item Does not require line-of-sight
+          \item Low-cost design
+        \end{itemize}
+      \end{itemize}
+    \end{LARGE}
+  \end{block}
+  \begin{block}{Anticipated Challenges}
     \begin{itemize}
       \item Inaccurate distance measurements due to multipath effect from environment
       \item Achieving full 360\textdegree measurement in short enough time
     \end{itemize}
-  \end{block}
-\end{frame}
-
-%----------------------------------
-
-\section{Concluding Remarks}
-\begin{frame}{}
-  \begin{block}{Concluding Remarks}
-    \begin{LARGE}
-      \begin{itemize}
-        \item Proposed robotic cart system uses analog RF signal strength to locate and follow the user
-        \begin{itemize}
-          \item Does not require line-of-sight
-          \item Low-cost
-        \end{itemize}
-      \end{itemize}
-    \end{LARGE}
   \end{block}
 \end{frame}
 
