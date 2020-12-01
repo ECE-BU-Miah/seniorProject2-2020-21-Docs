@@ -495,13 +495,53 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\subsection{Navigation Algorithm}
+\subsection{Algorithms}
+\begin{frame}{Localization Algorithm}
+  \begin{figure}
+    \centering
+    \begingroup
+    \tiny
+    \input{figs/dia/localizationAlgoFlowchartScaledDown.tex}
+    \endgroup
+    \caption{Flowchart of Localization Algorithm}
+    \label{fig:navAlgo}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Localization Algorithm}
+  \centering
+  \scalebox{0.8}{
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \KwOut{Range $d_{ref}$ and Bearing $\theta_{ref}$ of remote}
+    Constants: step angle $\theta_{step}$\\
+    Static direction variable $dir = 1$
+    \Begin
+    {
+      \uIf{Reflectors not rotated 90\textdegree}
+      {
+        Send signal strength request to remote\\
+        Get signal strengths from receivers\\
+        Rotate reflectors through an angle of $dir*\theta_{step}$\\
+      }
+      \Else
+      {
+        $\theta_{ref} =$ direction of max signal strength\\
+        Compute $d_{ref}$ using signal strength\\
+        $dir = -dir$\\
+      }
+    }
+    \caption{Localization Algorithm}
+    \label{alg:locAlgo}
+  \end{algorithm}}
+\end{frame}
+
 \begin{frame}{Navigation Algorithm}
   \begin{figure}
     \centering
     \begingroup
     \tiny
-    \input{figs/dia/algorithmFlowchartScaledDown.tex}
+    \input{figs/dia/navigationAlgoFlowchartScaledDown.tex}
     \endgroup
     \caption{Flowchart of Navigation Algorithm}
     \label{fig:navAlgo}
@@ -513,21 +553,15 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \scalebox{0.8}{
   \begin{algorithm}[H]
     \SetAlgoLined
-    \KwIn{Signal Strengths from Remote}
+    \KwIn{Range $d_{Ref}$ and Bearing $\theta_{Ref}$ of Remote}
     \KwOut{Mobile Robot Trajectory}
+    Constants: following distance $d_f$ and proportional gains $K_p$ and $K_\omega$\\
     \Begin
     {
-      Initialize sampling time $T > 0$, following distance $d_f$, $K_p$, $K_\omega$\\
-      \While{true}
-      {
-        Estimate distance $d_{Ref}$ to remote using signal strength\\
-        Estimate angle $\theta_{Ref}$ to remote using signal strengths\\
-        Compute target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
-        Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
-        Compute $\omega(t) = K_\omega \theta_{Ref}$\\
-        Compute left and right wheel speeds for robot\\
-        Apply wheel speeds to robot\\
-      }
+      Compute target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
+      Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
+      Compute $\omega(t) = K_\omega \theta_{Ref}$\\
+      Apply wheel speeds to robot\\
     }
     \caption{Navigation Algorithm}
     \label{alg:navAlgo}

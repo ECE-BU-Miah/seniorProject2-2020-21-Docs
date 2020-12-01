@@ -262,7 +262,7 @@ will be mounted on a stepper motor to allow rotation.
 
 \vspace*{12pt}
 \noindent
-The strength of the radio signals between the cart and remote will be used to estimate the position of the remote relative to the cart. By rotating the sensor array 90 degrees and measuring the signal strength of messages from the remote at several steps in the rotation, the bearing of the remote can be estimated as the direction in which the maximum signal strength is received. To estimate the distance between the cart and the remote, the signal strength will be measured and used to calculate the distance. The omnidirectional radio module on top will be responsible for coordinating the messages from the remote by sending the remote commands that tell the remote when to send signals. A flowchart of the system operation is shown in \autoref{fig:sysOpFlowchart}.
+There are two main steps in the operation of the robotic cart system. The first step is localization of the remote in the robot's local coordinate frame. Once the location of the remote is known, the navigation step handles the control of the wheel velocities to move the cart to the desired location. A flowchart of the system operation is shown in \autoref{fig:sysOpFlowchart}.
 
 \begin{figure}
   \centering
@@ -271,33 +271,64 @@ The strength of the radio signals between the cart and remote will be used to es
   \label{fig:sysOpFlowchart}
 \end{figure}
 
-\subsection{Navigation Algorithm}
-Once the bearing and distance of the remote are estimated, the cart must move to follow the remote. We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A high-level flowchart of the algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a more detailed pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
+\subsection{Algorithms}
+As mentioned previously, there are two steps in the operation of the system. These steps are the localization of the remote and the navigation of the robot. This section describes the algorithms used for these tasks.
+
+\subsubsection{Localization Algorithm}
+The strength of the radio signals between the cart and remote will be used to estimate the position of the remote relative to the cart. By rotating the sensor array 90 degrees and measuring the signal strength of messages from the remote at several steps in the rotation, the bearing of the remote can be estimated as the direction in which the maximum signal strength is received. To estimate the distance between the cart and the remote, the signal strength will be measured and used to calculate the distance. The omnidirectional radio module on top will be responsible for coordinating the messages from the remote by sending the remote commands that tell the remote when to send signals. A flowchart of the localization algorithm is shown in \autoref{fig:locAlgoFlowchart}. Also, a pseudo-code version of the algorithm is shown in \autoref{alg:locAlgo}
 
 \begin{figure}
   \centering
-  \input{figs/dia/algorithmFlowchart.tex}
+  \input{figs/dia/localizationAlgoFlowchart.tex}
+  \caption{Flowchart of Localization Algorithm}
+  \label{fig:locAlgoFlowchart}
+\end{figure}
+
+\begin{algorithm}[h!]
+  \SetAlgoLined
+  \KwOut{Range $d_{ref}$ and Bearing $\theta_{ref}$ of remote}
+  Constants: step angle $\theta_{step}$\\
+  Static direction variable $dir = 1$
+  \Begin
+  {
+    \uIf{Reflectors not rotated 90\textdegree}
+    {
+      Send signal strength request to remote\\
+      Get signal strengths from receivers\\
+      Rotate reflectors through an angle of $dir*\theta_{step}$\\
+    }
+    \Else
+    {
+      $\theta_{ref} =$ direction of max signal strength\\
+      Compute $d_{ref}$ using signal strength\\
+      $dir = -dir$\\
+    }
+  }
+  \caption{Localization Algorithm}
+  \label{alg:locAlgo}
+\end{algorithm}
+
+\subsubsection{Navigation Algorithm}
+Once the bearing and distance of the remote are estimated, the cart must move to follow the remote. We will use a modified Point Navigation algorithm to navigate the robot to follow the remote. The robot will estimate the coordinates of the remote with respect to the robot's local reference frame. The robot will then apply actuation to move to the point that is a set following distance from the remote. A flowchart of the navigation algorithm is shown in \autoref{fig:navAlgoFlowchart}. Also, a pseudo-code version of the algorithm is shown in \autoref{alg:navAlgo}.
+
+\begin{figure}
+  \centering
+  \input{figs/dia/navigationAlgoFlowchart.tex}
   \caption{Flowchart of Navigation Algorithm}
   \label{fig:navAlgoFlowchart}
 \end{figure}
 
 \begin{algorithm}[h!]
   \SetAlgoLined
-  \KwIn{Signal Strengths from Remote}
+  \KwIn{Range $d_{ref}$ and Bearing $\theta_{ref}$ of Remote}
   \KwOut{Mobile Robot Trajectory}
+  Constants: following distance $d_f$ and proportional gains $K_p$ and $K_\omega$\\
   \Begin
   {
-    Initialize sampling time $T > 0$, following distance $d_f$, $K_p$, $K_\omega$\\
-    \While{true}
-    {
-      Estimate distance $d_{Ref}$ to remote using signal strength\\
-      Estimate angle $\theta_{Ref}$ to remote using signal strengths\\
-      Compute target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
-      Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
-      Compute $\omega(t) = K_\omega \theta_{Ref}$\\
-      Compute left and right wheel speeds for robot\\
-      Apply wheel speeds to robot\\
-    }
+    Compute target point with respect to robot's local frame as $x_{ref} = (d_{ref} - d_f)\cos \theta_{ref}$, $y_{ref} = (d_{ref} - d_f)\sin \theta_{ref}$\\
+    Compute linear speed $v(t) = sign(x_{ref})K_p\sqrt{x_{ref}^2 + y_{ref}^2}$\\
+    Compute $\omega(t) = K_\omega \theta_{ref}$\\
+    Apply wheel speeds to robot\\
   }
   \caption{Navigation Algorithm}
   \label{alg:navAlgo}
