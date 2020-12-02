@@ -54,7 +54,7 @@
 \usepackage{booktabs,array}
 \usepackage{tabulary}
 \usepackage{caption}
-\usepackage{subfigure}
+\usepackage{graphicx}
 \usepackage{siunitx}
 
 \usepackage[ruled, vlined, linesnumbered]{algorithm2e} % For algorithms
@@ -191,11 +191,12 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \end{frame}
 
 \begin{frame}{Introduction}{}
+%\documentclass{beamer}
   % applications of mobile robot navigation and problem description
   \begin{block}{Applications of Mobile Carts}
     \begin{itemize}
-      \item Mail delivery
-      \item Transferring files in offices
+      %\item Mail delivery
+      %\item Transferring files in offices
       \item Carrying medical supplies in Hospitals (Fig.\ref{fig:medCart})
       \item Carrying materials and tools in factories (Fig. \ref{fig:factCart})
       \item Shopping carts for ease of use and people with disabilities
@@ -205,17 +206,19 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       \centering
       \begin{minipage}[t]{0.5\textwidth}
         \centering
-        \includegraphics[height=3cm]{figs/img/MedicalRoboticCart}
-        \caption{Medical Mobile Robotic Cart}
+        \includegraphics[height=3.0cm]{figs/img/MedicalRoboticCart}
+        \caption{Medical Mobile Robotic Cart\footnote{\cite{kerr_2015}}}
         \label{fig:medCart}
       \end{minipage}
       \begin{minipage}[t]{0.4\textwidth}
         \centering
         \includegraphics[height=2.0cm]{figs/img/FactoryRoboticCart}
-        \caption{Factory Mobile Robotic Cart}
+        \caption{Factory Mobile Robotic Cart \footnote{A footnote}}
         \label{fig:factCart}
       \end{minipage}
-    \end{figure}
+      \end{figure}
+    %\footnotetext{\cite{kerr_2015}}
+    %\footnote{\ref{kerr_2015}}
 \end{frame}
 
 %----------------------------------
