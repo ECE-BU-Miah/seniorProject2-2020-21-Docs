@@ -54,7 +54,7 @@
 \usepackage{booktabs,array}
 \usepackage{tabulary}
 \usepackage{caption}
-\usepackage{subfigure}
+\usepackage{graphicx}
 \usepackage{siunitx}
 
 \usepackage[ruled, vlined, linesnumbered]{algorithm2e} % For algorithms
@@ -96,7 +96,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date[December~1,~2020]{Tuesday, December~1,~2020}
+\date[December~3,~2020]{Thursday, December~3,~2020}
 
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -191,12 +191,13 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \end{frame}
 
 \begin{frame}{Introduction}{}
+%\documentclass{beamer}
   % applications of mobile robot navigation and problem description
   \begin{block}{Applications of Mobile Carts}
     \begin{itemize}
-      \item Mail delivery
-      \item Transferring files in offices
-      \item Carrying medical supplies in Hospitals (Fig.\ref{fig:medCart})
+      %\item Mail delivery
+      %\item Transferring files in offices
+      \item Carrying medical supplies in hospitals (Fig.\ref{fig:medCart})
       \item Carrying materials and tools in factories (Fig. \ref{fig:factCart})
       \item Shopping carts for ease of use and people with disabilities
     \end{itemize}
@@ -205,17 +206,20 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       \centering
       \begin{minipage}[t]{0.5\textwidth}
         \centering
-        \includegraphics[height=3cm]{figs/img/MedicalRoboticCart}
-        \caption{Medical Mobile Robotic Cart}
+        \includegraphics[height=3.0cm]{figs/img/MedicalRoboticCart}
+        \caption{Medical Mobile Robotic Cart\textsuperscript{a}}
         \label{fig:medCart}
       \end{minipage}
       \begin{minipage}[t]{0.4\textwidth}
         \centering
         \includegraphics[height=2.0cm]{figs/img/FactoryRoboticCart}
-        \caption{Factory Mobile Robotic Cart}
+        \caption{Factory Mobile Robotic Cart\textsuperscript{b}}
         \label{fig:factCart}
       \end{minipage}
-    \end{figure}
+      \end{figure}
+    \begin{tiny}
+      \textsuperscript{a}https://www.cnet.com/news/robots-give-a-helping-hand-in-san-franciscos-newest-hospital/\\\textsuperscript{b}https://www.greencarcongress.com/2020/05/20200515-nvidia.html
+    \end{tiny}
 \end{frame}
 
 %----------------------------------
@@ -319,8 +323,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \begin{block}{Specifications}
     \begin{itemize}
       \item Cart should be able to follow the remote target
-      \item Cart should maintain a distance of 1 to 1.5 meters from the remote target.
-      \item Cart should be able to travel at minimum 1 m/s
+      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
+      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
       \item Cart should not require line-of-sight to follow remote
      \end{itemize}
   \end{block}
@@ -495,13 +499,53 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 %----------------------------------
 
-\subsection{Navigation Algorithm}
+\subsection{Algorithms}
+\begin{frame}{Localization Algorithm}
+  \begin{figure}
+    \centering
+    \begingroup
+    \tiny
+    \input{figs/dia/localizationAlgoFlowchartScaledDown.tex}
+    \endgroup
+    \caption{Flowchart of Localization Algorithm}
+    \label{fig:navAlgo}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Localization Algorithm}
+  \centering
+  \scalebox{0.8}{
+  \begin{algorithm}[H]
+    \SetAlgoLined
+    \KwOut{Range $d_{ref}$ and Bearing $\theta_{ref}$ of remote}
+    Constants: step angle $\theta_{step}$\\
+    Static direction variable $dir = 1$
+    \Begin
+    {
+      \uIf{Reflectors not rotated 90\textdegree}
+      {
+        Send signal strength request to remote\\
+        Get signal strengths from receivers\\
+        Rotate reflectors through an angle of $dir*\theta_{step}$\\
+      }
+      \Else
+      {
+        $\theta_{ref} =$ direction of max signal strength\\
+        Compute $d_{ref}$ using signal strength\\
+        $dir = -dir$\\
+      }
+    }
+    \caption{Localization Algorithm}
+    \label{alg:locAlgo}
+  \end{algorithm}}
+\end{frame}
+
 \begin{frame}{Navigation Algorithm}
   \begin{figure}
     \centering
     \begingroup
     \tiny
-    \input{figs/dia/algorithmFlowchartScaledDown.tex}
+    \input{figs/dia/navigationAlgoFlowchartScaledDown.tex}
     \endgroup
     \caption{Flowchart of Navigation Algorithm}
     \label{fig:navAlgo}
@@ -513,21 +557,15 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \scalebox{0.8}{
   \begin{algorithm}[H]
     \SetAlgoLined
-    \KwIn{Signal Strengths from Remote}
+    \KwIn{Range $d_{Ref}$ and Bearing $\theta_{Ref}$ of Remote}
     \KwOut{Mobile Robot Trajectory}
+    Constants: following distance $d_f$ and proportional gains $K_p$ and $K_\omega$\\
     \Begin
     {
-      Initialize sampling time $T > 0$, following distance $d_f$, $K_p$, $K_\omega$\\
-      \While{true}
-      {
-        Estimate distance $d_{Ref}$ to remote using signal strength\\
-        Estimate angle $\theta_{Ref}$ to remote using signal strengths\\
-        Compute target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
-        Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
-        Compute $\omega(t) = K_\omega \theta_{Ref}$\\
-        Compute left and right wheel speeds for robot\\
-        Apply wheel speeds to robot\\
-      }
+      Compute target point with respect to robot's local frame as $x_{Ref} = (d_{Ref} - d_f)\cos \theta_{Ref}$, $y_{Ref} = (d_{Ref} - d_f)\sin \theta_{Ref}$\\
+      Compute linear speed $v(t) = sign(x_{Ref})K_p\sqrt{x_{Ref}^2 + y_{Ref}^2}$\\
+      Compute $\omega(t) = K_\omega \theta_{Ref}$\\
+      Apply wheel speeds to robot\\
     }
     \caption{Navigation Algorithm}
     \label{alg:navAlgo}
@@ -635,7 +673,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
     \ganttgroup[progress = 10]{Software}{5}{6}\\
     \ganttbar[progress = 20]{XBee Library}{5}{5}\\
-    \ganttbar[progress = 0]{Control Algorithm}{6}{6}\\
+    \ganttbar[progress = 0]{Control Library}{6}{6}\\
 
     \ganttgroup[progress = 0]{Angle Estimation}{7}{8}\\
     \ganttbar[progress = 0]{Rotate XBee on Stepper Motor}{7}{7}\\
