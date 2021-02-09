@@ -1019,6 +1019,18 @@ We have also discovered that we really only have access to 3 UART ports and one 
 
 Finally, we decided to create a Code folder in the Git repository to contain and track all of our code files.
 
+\labday{Tuesday, February 9, 2021}
+\experiment{Lab Time}
+KA\\
+In today's lab time we worked on configuring multiple XBees to send and receive signals. We split up the work and I looked up the current output for the motor drivers and the current output for the GPIO ports on the BeagleBone Blue. I found three datasheets that I uploaded to the project google drive under the data sheets folder for future reference.
+
+\begin{itemize}
+    \item 4 motor ports - 1.2A average output with a 3.2A possible peak
+    \item GPIO ports - a source of 6mA, a sink of 8mA, and some pins are limited to 4mA
+    \item XBee modules (TH) - transmit current of 45mA and an idle/recieve current of 31mA
+\end{itemize}
+
+I also found a helpful resource from Matlab, (\href{https://www.mathworks.com/help/supportpkg/beagleboneio/examples/working-with-beaglebone-black-hardware.html}{link}), about the hardware of the BeagleBone Black which is similar to the BeagleBone Blue and listed the maximum permitted current draw from the 3.3V power source which is 50mA.
 
 %--------------------------------------------------------------------------------------------
 
