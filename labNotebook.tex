@@ -1041,6 +1041,56 @@ Today I first crimped some pins to the ends of one 6-pin and two 4-pin JST conne
 
 JB\\
 Today I wrote a piece of test code for the stepper motor to rotate back and forth 90\textdegree. This worked successfully. I created a code folder in the repository and placed stepTest.c inside.
+
+\labday{Thursday, February 11, 2021}
+\experiment{Lab Time}
+JB\\
+Today Kalli and I lined the inside of two of the new reflectors with foil tape. Then we connected wires to two XBee adapter boards for power and serial communcation. Then we mounted these adapter boards inside the reflectors and put XBees in them. After that I worked on writing a library for the stepper motor control.
+
+\vspace*{12pt}
+KA\\
+In the lab I helped Jason with applying the foil tape to the parabolic reflectors and assembled the XBees into the reflectors. After helping Jason I worked with Darrah on assembling the multiplexer substitute with transistors in order to start testing multiple XBees.
+
+\experiment{Meeting Agenda}
+JB\\
+\begin{itemize}
+    \item New reflector dish design
+    \item Transmitter XBee mounting
+    \item Current limits
+    \begin{itemize}
+        \item XBee power
+        \item Motor power
+    \end{itemize}
+\end{itemize}
+
+\experiment{Meeting Minutes}
+JB\\
+In today's meeting, we discussed the new reflector design. Dr. Shastry pointed out that we are not actually designing a dish antenna. Rather, we are just designing a reflector to enhance the signal received. The paraboloidal shape is just used to focus the signal on one point. We also discussed a ground plane beneath the transmitter XBee on top of the reflector array. Since the new XBee adapters we got from Mr. Mattus do not have mounting holes on them, it will be more difficult to connect the ground plane to the ground of the XBee. Dr. Shastry told us not to worry about that. Next we discussed the power requirements of the XBees. We had found that the power from the UART ports can only supply 50 mA, while each XBee requires 31 mA while idling and 45 mA when transmitting. We decided to try making a separate power circuit for the XBees by connecting a 3.3V regulator to the battery, putting a $10\mu F$ capacitor across the output, and powering the XBees from that. Finally, we discussed the current requirements of the DC motors. The motors have a stall current of around 4A, but under normal operation, the current is much less. The motor drivers on the BBBlue are rated for 1.2A average, with a peack of 3.2A. We decided to investigate the possibility of using external H-bridges, but also to just keep using the BBBlue ports to see if anything burns out.
+
+\labday{Thursday, February 18, 2021}
+\experiment{Lab Time}
+JB\\
+In the lab today, we finished putting foil tape on the remaining reflectors and the top plate. Then I assembled the reflector array and mounted it on the robot.
+
+\vspace*{12pt}
+KA\\
+Today I helped Jason put foil tape on the remaining two reflectors and add the XBees to them as well. I assisted Darrah with the multiplexer circuit since the last circuit needed to be redone. Darrah explained to me how the transistor circuit worked and when we got errors in the sent messages to the XBees we went through the circuit to find where the error was occurring.
+
+\experiment{Meeting Agenda}
+JB\\
+\begin{itemize}
+    \item Status update
+    \item Clarify motor power
+\end{itemize}
+
+\experiment{Meeting Minutes}
+JB\\
+In today's meeting, we discussed the current status of the project. We have the reflector array completed. At this point, we are waiting on the multiplexer chip to be able to complete the robot. We discussed this and decided to check with Mr. Mattus whether it has been ordered yet. If not, we will just order it ourselves and pay from our own pocket. We also clarified that we are going to try controlling the motors directly from the BBBlue's built-in H-bridges as well as trying with external H-bridges.
+
+\labday{Tuesday, February 23, 2021}
+\experiment{Lab Time}
+JB\\
+Today I got the new batteries and multiplexers from Mr. Mattus. I created a new wiring harness with a Deans connector to allow us to supply power to the XBees external to the BBBlue. After completing that, we tested the multiplexers to make sure they functioned as desired. We were able to send UART messages through the multiplexer and switch between different channels.
 %--------------------------------------------------------------------------------------------
 
 \end{addmargin}
