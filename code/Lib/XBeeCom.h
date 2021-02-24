@@ -10,8 +10,12 @@
 // Robot Control Library headers
 #include <rc/uart.h>
 
+// Cutom lIbrary headers
+#include "CoreLib.h"
+
 // Prototypes
 int XBee_InitUART(int bus);
+int XBee_CloseUART(int bus);
 int SendCommand(int bus, unsigned char* msg, int length);
 int ReadCommand(int bus, unsigned char* buf, int bufSize);
 unsigned char CalculateChecksum(unsigned char* msg, int length);
@@ -47,10 +51,11 @@ int SendCommand(int bus, unsigned char* msg, int length){
 
 #if DEBUG_XBEECOM
 	// Print out Command that was sent in hex
-	printf("\t[DEBUG] CMD: ");
-	for(uint16_t i=0; i < length; i++)
-		printf("0x%02X ",msg[i]);
-        printf("\n");
+        fprintHexBuffer(msg, length, "\t[DEBUG] CMD: ", "\n");
+	//printf("\t[DEBUG] CMD: ");
+	//for(uint16_t i=0; i < length; i++)
+	//	printf("0x%02X ",msg[i]);
+        //printf("\n");
 #endif
 
         return success;
@@ -67,7 +72,7 @@ int ReadCommand(int bus,  unsigned char* buf, int bufSize){
         int num_Bytes = rc_uart_read_bytes(bus, buf, bufSize);
 	if(num_Bytes == -1) { return -1; }
 
-         // Check for valid checksum
+         // Check that the response is not empty
         if(num_Bytes == 0){
 #if DEBUG_XBEECOM
                 printf("\t[DEBUG] Did not recive a response message.\n");
@@ -76,31 +81,25 @@ int ReadCommand(int bus,  unsigned char* buf, int bufSize){
         }
 
 #if DEBUG_XBEECOM
-        else {
-		printf("\t[DEBUG] Recived: %d Bytes\n",num_Bytes);
-		printf("\t[DEBUG] MSG: ");
-		for(int i=0; i < num_Bytes; i++)
-			printf("0x%02X ",buf[i]);
-		printf("\n");
-	}
+	printf("\t[DEBUG] Recived: %d Bytes\n",num_Bytes);
+        fprintHexBuffer(buf, num_Bytes, "\t[DEBUG] MSG: ", "\n");
+	//printf("\t[DEBUG] MSG: ");
+	//for(int i=0; i < num_Bytes; i++)
+	//	printf("0x%02X ",buf[i]);
+	//printf("\n");
 #endif
 
         // Check for valid checksum
-        if(!CheckChecksum(buf,num_Bytes)){
-                printf("\tInvalid Checksum :(\n");
-                return -1;
-        }
+        ASSERT(CheckChecksum(buf,num_Bytes), "\tInvalid Checksum :(\n");
 #if DEBUG_XBEECOM
-        else printf("\t[DEBUG] Valid Checksum!\n");
+        printf("\t[DEBUG] Valid Checksum!\n");
 #endif
 
         // Check if Error flag set in response
-        if(GetFrameState(buf,num_Bytes) > 0){
-                printf("\tCommand Errored out :(\n");
-                return -1;
-        }
+        unsigned char frameState = GetFrameState(buf,num_Bytes);
+        ASSERT(frameState == 0, "\tCommand Errored out :(\n");
 #if DEBUG_XBEECOM
-        else printf("\t[DEBUG] Command Ran Sucesfuly!\n");
+        printf("\t[DEBUG] Command Ran Sucesfuly!\n");
 #endif
 
         return num_Bytes;
@@ -131,10 +130,10 @@ bool CheckChecksum(unsigned char* msg, int length){
 // @return Frame State or 255 for failure
 unsigned char GetFrameState(unsigned char* msg, int length){
         unsigned char frameType = msg[3];        // Get Frame Type
-        if(frameType == 0x97) { return msg[17]; }
-        else if(frameType = 0x88) { return msg[7]; }
+        if(frameType == 0x97 && length > 17) { return msg[17]; }
+        else if(frameType == 0x88 && length > 7) { return msg[7]; }
         else {
-                printf("\tInvalied frame type 0x%02X  encountered.\n",frameType);
+                printf("\tInvalied frame type 0x%02X or formating encountered.\n",frameType);
                 return 255;
         }
 }

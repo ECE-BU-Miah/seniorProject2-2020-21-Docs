@@ -15,9 +15,8 @@
 // Robot Controll Library headers
 #include <rc/uart.h>
 
-#define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
-
-void msleep(int milliSeconds) { usleep(milliSeconds * 1000); }
+// Custom Library headers
+#include "CoreLib.h"
 
 int main(int argc, char* argv[]) {
 	// Initalize Storage Variables
@@ -53,7 +52,7 @@ int main(int argc, char* argv[]) {
 	ASSERT(success != -1, "\tERROR: Failed to Initalize UART Port %d.\n", bus)
 
 		// int rc_uart_write(int bus, uint8_t* data, size_t bytes);
-		success = rc_uart_write(bus, msg, 13);
+		success = rc_uart_write(bus, msg, 8);
 	ASSERT(success != -1, "\tERROR: Failed to write to  UART Port %d.\n", bus)
 
 		printf("\tBytes Sent: %d\n", success);

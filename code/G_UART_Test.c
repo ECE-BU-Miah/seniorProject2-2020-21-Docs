@@ -18,12 +18,9 @@
 #include <rc/gpio.h>
 
 // Custom headers
-#define DEBUG_XBEECOM 1
-#include "../Lib/ATCom.h"
-
-#define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
-
-void msleep(int milliSeconds) { usleep(milliSeconds*1000); }
+#include "CoreLib.h"
+#define DEBUG_XBEECOM 0
+#include "ATCom.h"
 
 int main(){
 	printf("\tStarting Gated UART Test...\n");
@@ -31,11 +28,11 @@ int main(){
 	// Initalize state variables
 	int bus_1 = 1;
 	int bus_2 = 2;
+	uint16_t remoteAddr = 0x1111;
 
 	// Initalize storage variables
 	int success;
 	uint8_t buff[255];
-
 	
 	// Initalize UART ports to XBees
 	success = XBee_InitUART(bus_1);
@@ -45,32 +42,41 @@ int main(){
 	ASSERT(success != -1, "\tERROR: Failed to Initalize UART Port %d.\n",bus_2);
 
 	// Send Remote DB command to XBee Cordinator 1
-	success = SendRemoteATCommand(bus_1, 0x1111, 0x6462);
+	printf("\tSending Remote AT Command...\n");
+	success = SendRemoteATCommand(bus_1, remoteAddr, 0x6462);
 	if(success == -1) {  printf("\tERROR: Failed to write command to UART Port %d.\n",bus_1); return -1; }
 	printf("\tBytes Sent: %d\n", success);
 
-	sleep(1);
+	msleep(100);
 
-	// Read back command from XBee Cordinaor 1
+	// Read back remote command from XBee Cordinaor 1
 	success = ReadCommand(bus_1, buff, 256);
 	if(success == -1) {  printf("\tERROR: Failed to read frame from UART Port %d.\n",bus_1); return -1; }
 
-	printf("\tBytes Recived: %d", success);
-	if(success > 0) printf("\n\t");
-	for(int i=0; i<success; i++)
-		printf("%X ",buff[i]);
-	printf("\n");
+	printf("\tBytes Recived to bus %d: %d", bus_1, success);
+	if(success > 0) fprintHexBuffer(buff, success, "\t\n", "\n");
 
-	// Read back command from XBee Cordinaor 2
-	success = ReadCommand(bus_1, buff, 256);
-	if(success == -1) {  printf("\tERROR: Failed to read frame from UART Port %d.\n",bus_1); return -1; }
+	// Read back remote command from XBee Cordinaor 2
+	success = ReadCommand(bus_2, buff, 256);
+	if(success == -1) {  printf("\tERROR: Failed to read frame from UART Port %d.\n",bus_2); return -1; }
 
-	printf("\tBytes Recived: %d", success);
-	if(success > 0) printf("\n\t");
-	for(int i=0; i<success; i++)
-		printf("%X ",buff[i]);
-	printf("\n");
+	printf("\tBytes Recived to bus %d: %d", bus_2, success);
+	if(success > 0) fprintHexBuffer(buff, success, "\t\n", "\n");
 
+	// Send Local AT Command to XBee Cordinator 2
+	printf("\tSending Local AT Command...\n");
+	success = SendLocalATCommand(bus_2, 0x6462);
+	if(success == -1) {  printf("\tERROR: Failed to write command to UART Port %d.\n",bus_2); return -1; }
+	printf("\tBytes Sent: %d\n", success);
+
+	msleep(100);
+
+	// Read back local command from XBee Cordinaor 2
+	success = ReadCommand(bus_2, buff, 256);
+	if(success == -1) {  printf("\tERROR: Failed to read frame from UART Port %d.\n",bus_2); return -1; }
+
+	printf("\tBytes Recived to bus %d: %d", bus_2, success);
+	if(success > 0) fprintHexBuffer(buff, success, "\t\n", "\n");
 
 	// Close UART ports to XBees
 	success = XBee_CloseUART(bus_1);

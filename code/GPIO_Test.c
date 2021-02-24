@@ -17,9 +17,8 @@
 // Robot Controll Library headers
 #include <rc/gpio.h>
 
-#define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
-
-void msleep(int milliSeconds) { usleep(milliSeconds*1000); }
+// Custom Library headers
+#include "CoreLib.h"
 
 int main(int argc, char* argv[]){
 	printf("\tStarting GPIO Test...\n");
