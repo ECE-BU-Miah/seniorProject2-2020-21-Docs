@@ -7,6 +7,7 @@
 #include <rc/motor.h>
 #include <rc/time.h>
 #include <rc/start_stop.h>
+#include "../../Lib/step.h" // Stepper motor library
 
 // Number of degrees per step on the stepper motor
 #define DEG_PER_STEP 1.8
@@ -14,8 +15,6 @@
 // Motor ports used on BBBlue
 #define M1 3
 #define M2 4
-
-void step(int direction, int numSteps);
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -58,15 +57,22 @@ int main()
 
     // Keep looping until state changes to EXITING
     rc_set_state(RUNNING);
+    
+    // Initialize the motor drivers
     rc_motor_init();
+
+    // Create and initialize a stepper motor on motor drivers 3 and 4
+    StepperMotor stepper;
+    stepper_init(&stepper, 3, 4);
+
     while(rc_get_state()!=EXITING){
         // Step 90 degrees
         while (position < 90)
         {
-            step(direction, stepSize);
+            step(&stepper, direction, stepSize);
             position += 1.8*stepSize;
         }
-        rc_usleep(500000);
+        // rc_usleep(500000);
         
         // Reverse direction and reset position
         direction *= -1;
@@ -76,47 +82,4 @@ int main()
     // Close file descriptors
     rc_remove_pid_file();    // remove pid file LAST
     return 0;
-}
-
-void step(int direction, int numSteps)
-{
-    static int state = 0;
-
-    for (int i = 0; i < numSteps; ++i)
-    {
-        // Handle directional control
-        if(direction > 0) {
-            state++;
-        } else if (direction < 0) {
-            state--;
-        }
-
-        // Handle state rollover
-        if(state >= 4) state = 0;
-        else if(state < 0) state = 3;
-
-        // Winding states
-        switch(state) {
-            case 0:
-            default:
-                rc_motor_set(M1,1);
-                rc_motor_set(M2,1);
-                break;
-            case 1:
-                rc_motor_set(M1,-1);
-                rc_motor_set(M2,1);
-                break;
-            case 2:
-                rc_motor_set(M1,-1);
-                rc_motor_set(M2,-1);
-                break;
-            case 3:
-                rc_motor_set(M1,1);
-                rc_motor_set(M2,-1);
-                break;
-        }
-
-        // Sleep to allow motor to turn
-        rc_usleep(12000);
-    }
 }

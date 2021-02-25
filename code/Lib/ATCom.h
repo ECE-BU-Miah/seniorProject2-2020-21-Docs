@@ -15,7 +15,8 @@
 int SendRemoteATCommand(int bus, uint16_t destAddr, uint16_t cmd);
 int SendLocalATCommand(int bus, uint16_t cmd);
 int StripATResponseData(unsigned char* msg, int length, unsigned char* buf, int bufSize);
-int ReadATResponseData(int bus, unsigned char* buf, int bufSize);
+int ReadRemoteATResponseData(int bus, unsigned char* buf, int bufSize);
+int ReadLocalATResponseData(int bus, unsigned char* buf, int bufSize);
 
 // Send a Remote AT Command to given local destination address
 // @param bus: UART bus address for the Beagle Bone Blue
@@ -98,14 +99,31 @@ int StripATResponseData(unsigned char* msg, int msgLength, unsigned char* buf, i
 // @param buf: unsigned char buffer to store recived data in
 // @param bufSize: size of the given buffer
 // @return Number of data bytes recived or -1 for failure
-int ReadATResponseData(int bus, unsigned char* buf, int bufSize){
+int ReadRemoteATResponseData(int bus, unsigned char* buf, int bufSize){
     // Setup variables
     int length = 0;
-    uint8_t msg[256];
+    uint8_t msg[20];
 
     // Read in Command Response
-    length = ReadCommand(bus, msg, 256);
-    if(length == -1) return -1;
+    length = ReadCommand(bus, msg, 20);
+    if(length < 0) return length;
+
+    return StripATResponseData(msg, length, buf, bufSize);
+}
+
+// Read Data from a AT Command Response over UART
+// @param bus: UART bus address for the Beagle Bone Blue
+// @param buf: unsigned char buffer to store recived data in
+// @param bufSize: size of the given buffer
+// @return Number of data bytes recived or -1 for failure
+int ReadLocalATResponseData(int bus, unsigned char* buf, int bufSize){
+    // Setup variables
+    int length = 0;
+    uint8_t msg[10];
+
+    // Read in Command Response
+    length = ReadCommand(bus, msg, 10);
+    if(length < 0) return length;
 
     return StripATResponseData(msg, length, buf, bufSize);
 }

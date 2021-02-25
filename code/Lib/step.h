@@ -1,6 +1,24 @@
-#include "step.h"
+#ifndef _STEP_H_
+#define _STEP_H_
+
 #include <rc/motor.h>
 #include <rc/time.h>
+
+// Number of degrees per step on the stepper motor
+#define DEG_PER_STEP 1.8
+
+typedef struct
+{
+    // Motor driver ports used for the stepper motor
+    int m1;
+    int m2;
+
+    // Direction of the motor
+    int direction;
+
+    // State of the windings
+    int state;
+} StepperMotor;
 
 // Function to initialize a stepper motor
 void stepper_init(StepperMotor* stepper, int m1, int m2)
@@ -21,21 +39,11 @@ void step(StepperMotor* stepper, int direction, int numSteps)
         // Handle directional control
         if(direction > 0)
         {
-            stepper->state++;
+            stepper->state = (stepper->state + 1)%4;
         }
         else if (direction < 0)
         {
-            stepper->state--;
-        }
-
-        // Handle state rollover
-        if(stepper->state >= 4)
-        {
-            stepper->state = 0;
-        }
-        else if(stepper->state < 0)
-        {
-            stepper->state = 3;
+            stepper->state = (stepper->state - 1)%4;
         }
 
         // Winding states
@@ -64,3 +72,5 @@ void step(StepperMotor* stepper, int direction, int numSteps)
         rc_usleep(12000);
     }
 }
+
+#endif

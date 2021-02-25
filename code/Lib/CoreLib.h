@@ -5,12 +5,16 @@
 /// ----- Headers----- ///
 
 // C Library headers
+#include <stdio.h>
 #include <unistd.h>
 
 /// ----- Defenitions----- ///
 
 // Define Assert statement
 #define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
+#define ASSERT_NOMSG(condition) if(!(condition)){return -1;}
+
+#define DEBUG_ASSERT(condition,ftext...) ASSERT_NOMSG(condition)
 
 /// ----- Prototypes ----- ///
 

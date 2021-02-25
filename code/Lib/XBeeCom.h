@@ -27,14 +27,14 @@ unsigned char GetFrameState(unsigned char* msg, int length);
 // @return 0 for success or -1 for failure
 int XBee_InitUART(int bus){
         // int rc_uart_init(int bus, int baudrate, float timeout, int canonical_en, int stop_bits, int parity_en);
-        return rc_uart_init(bus, 9600, 0.1f, 0, 1, 0);
+        return rc_uart_init(bus, 115200, 0.1f, 0, 1, 0);
 }
 
 // Close UART port to XBee
 // @peram bus: UART bus address for the Beagle Bone Blu
 // @return 0 for success or -1 for failure
 int XBee_CloseUART(int bus){
-        // int rc_uart_init(int bus, int baudrate, float timeout, int canonical_en, int stop_bits, int parity_en);
+        // int rc_uart_close(int bus);
         return  rc_uart_close(bus);
 }
 
@@ -52,10 +52,6 @@ int SendCommand(int bus, unsigned char* msg, int length){
 #if DEBUG_XBEECOM
 	// Print out Command that was sent in hex
         fprintHexBuffer(msg, length, "\t[DEBUG] CMD: ", "\n");
-	//printf("\t[DEBUG] CMD: ");
-	//for(uint16_t i=0; i < length; i++)
-	//	printf("0x%02X ",msg[i]);
-        //printf("\n");
 #endif
 
         return success;
@@ -70,27 +66,27 @@ int ReadCommand(int bus,  unsigned char* buf, int bufSize){
          // Read in response
          // int rc_uart_read_bytes(int bus, uint8_t* buf, size_t bytes);
         int num_Bytes = rc_uart_read_bytes(bus, buf, bufSize);
-	if(num_Bytes == -1) { return -1; }
+	if(num_Bytes == -1) { printf("\tRC Read Bytes Failed.\n"); return -1; }
 
          // Check that the response is not empty
         if(num_Bytes == 0){
 #if DEBUG_XBEECOM
                 printf("\t[DEBUG] Did not recive a response message.\n");
 #endif
-                return -1;
+                printf("\tDid not recive a response message. D:\n");
+                return -3;
         }
 
 #if DEBUG_XBEECOM
 	printf("\t[DEBUG] Recived: %d Bytes\n",num_Bytes);
         fprintHexBuffer(buf, num_Bytes, "\t[DEBUG] MSG: ", "\n");
-	//printf("\t[DEBUG] MSG: ");
-	//for(int i=0; i < num_Bytes; i++)
-	//	printf("0x%02X ",buf[i]);
-	//printf("\n");
 #endif
 
         // Check for valid checksum
-        ASSERT(CheckChecksum(buf,num_Bytes), "\tInvalid Checksum :(\n");
+        if(!CheckChecksum(buf,num_Bytes)) {
+                printf("\tInvalid Checksum :(\n");
+                return -2;
+        }
 #if DEBUG_XBEECOM
         printf("\t[DEBUG] Valid Checksum!\n");
 #endif
