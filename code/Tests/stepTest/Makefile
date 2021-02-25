@@ -3,20 +3,23 @@
 TARGET = stepTest
 
 # compiler and linker binaries
-CC		:= gcc
+CC			:= gcc
 LINKER		:= gcc
+
+# include directory
+IDIR        := ../../Lib
 
 # compiler and linker flags
 WFLAGS		:= -Wall -Wextra -Werror=float-equal -Wuninitialized -Wunused-variable -Wdouble-promotion
-CFLAGS		:= -g -c -Wall
+CFLAGS		:= -g -c -Wall -I$(IDIR)
 LDFLAGS		:= -pthread -lm -lrt -l:librobotcontrol.so.1
 
-SOURCES		:= $(wildcard *.c) $(wildcard ../step_lib/*.c)
-INCLUDES	:= $(wildcard *.h) $(wildcard ../step_lib/*.h)
+SOURCES		:= $(wildcard *.c)
+INCLUDES	:= $(wildcard *.h%,$(IDIR))
 OBJECTS		:= $(SOURCES:$%.c=$%.o)
 
 prefix		:= /usr/local
-RM		:= rm -f
+RM      	:= rm -f
 INSTALL		:= install -m 4755
 INSTALLDIR	:= install -d -m 755
 

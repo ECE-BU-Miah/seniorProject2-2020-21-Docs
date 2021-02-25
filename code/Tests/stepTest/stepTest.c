@@ -36,8 +36,8 @@ static void __signal_handler(__attribute__ ((unused)) int dummy)
 int main()
 {
     double position = 0;
-    int direction = 1;
-    int stepSize = 5;
+    int direction = -1;
+    int numSteps = 5;
     
     // make sure another instance isn't running
     // if return value is -3 then a background process is running with
@@ -69,10 +69,11 @@ int main()
         // Step 90 degrees
         while (position < 90)
         {
-            step(&stepper, direction, stepSize);
-            position += 1.8*stepSize;
+            fflush(stdout);
+            step(&stepper, direction, numSteps);
+            position += 1.8*numSteps;
         }
-        // rc_usleep(500000);
+        rc_usleep(500000);
         
         // Reverse direction and reset position
         direction *= -1;
@@ -80,6 +81,7 @@ int main()
     }
 
     // Close file descriptors
+    rc_motor_cleanup();
     rc_remove_pid_file();    // remove pid file LAST
     return 0;
 }

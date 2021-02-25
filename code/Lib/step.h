@@ -43,7 +43,8 @@ void step(StepperMotor* stepper, int direction, int numSteps)
         }
         else if (direction < 0)
         {
-            stepper->state = (stepper->state - 1)%4;
+            // Note: (state + 3)%4 is the same as decrementing state by 1 and wrapping at 0
+            stepper->state = (stepper->state + 3)%4;
         }
 
         // Winding states
