@@ -1135,6 +1135,8 @@ We did not have a formal meeting today. We just met in the lab and discussed the
 
 \labday{Tuesday, March 2, 2021}
 \experiment{Lab Time}
+JB\\
+In today's lab we wrote code to find the distance and angle of the remote. We are taking signal strength measurements every 9 degrees. Therefore, we are taking 10 measurements for each full 90\textdegree sweep of the reflector array. The average of the strengths received by the top XBee is used to calculate the distance. To calculate the angle, we are computing a value by adding the strength at each index of the strengths array and 0.5 times the strength on either side. Then the index where we got the maximum value is assumed to be the direction of the remote. We tested this code, and the distance measurement is somewhat reasonable. However, the angle measurement is not correct.
 
 \labday{Thursday, March 4, 2021}
 \experiment{Meeting Agenda}
