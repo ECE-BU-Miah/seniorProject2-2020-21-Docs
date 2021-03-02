@@ -8,10 +8,14 @@
 #include <stdio.h>
 #include <unistd.h>
 
+// Robot Control Library headers
+#include <rc/start_stop.h>
+
 /// ----- Defenitions----- ///
 
 // Define Assert statement
 #define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
+#define MAIN_ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); rc_set_state(EXITING);}
 #define ASSERT_NOMSG(condition) if(!(condition)){return -1;}
 
 #define DEBUG_ASSERT(condition,ftext...) ASSERT_NOMSG(condition)
