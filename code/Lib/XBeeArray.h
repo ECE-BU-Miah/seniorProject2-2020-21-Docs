@@ -75,6 +75,12 @@ int XBeeArray_GetStrengths(struct XBeeArray_Settings array, unsigned char streng
 
         // Read in Signel Stength for the remote from the top XBee
         result = ReadRemoteATResponseData(array.top_uart_bus, &(strengths[0]), 1);
+
+        if(result < 0)
+        {
+            msleep(100);
+            DEBUG_ASSERT(rc_uart_flush(array.side_uart_bus) == 0, "\t[DEBUG] failed to flush UART for bus %d.\n", array.side_uart_bus);
+        }
     }  while(result < 0 && readAttempts < 4);
     DEBUG_ASSERT(result >= 0, "\t[DEBUG] ERROR: Failed to read Remote AT command response data on UART Port %d.\n", array.top_uart_bus);
 
@@ -101,6 +107,12 @@ int XBeeArray_GetStrengths(struct XBeeArray_Settings array, unsigned char streng
 
             // Read in signal strength from side XBee 'i'
             result = ReadLocalATResponseData(array.side_uart_bus, &(strengths[i+1]), 1);
+
+            if(result < 0)
+            {
+                msleep(1);
+                DEBUG_ASSERT(rc_uart_flush(array.side_uart_bus) == 0, "\t[DEBUG] failed to flush UART for bus %d.\n", array.side_uart_bus);
+            }
         } while(result < 0 && readAttempts < 4);
         DEBUG_ASSERT(result >= 0, "\t[DEBUG] ERROR: Failed to read Local AT command response data on UART Port %d.\n", array.side_uart_bus);
     }

@@ -18,7 +18,7 @@
 
 // Custom headers
 #define DEBUG_XBEECOM 0
-#define XBEE_ARRAY_DEBUG 0
+#define XBEE_ARRAY_DEBUG 1
 #include "CoreLib.h"
 #include "ATCom.h"
 #include "XBeeArray.h"
@@ -64,9 +64,9 @@ int main(){
     int direction = 1; // Direction of stepper motor
     unsigned int current = 0; // Current measurement number
     struct XBeeArray_Settings array = {
-        5,1,   // Uart buses Top(1) and Side(5) 
-        3,1,  // GPIO 0 (Chip 1 Pin 25)
-        3,2,  // GPIO 1 (Chip 1 Pin 17)
+        5,1,   // Uart buses Top(5) and Side(1) 
+        3,1,  // GPIO 0 (Chip 3 Pin 1)
+        3,2,  // GPIO 1 (Chip 3 Pin 2)
         0x1111 // Target Remote XBee's 16-bit address
     };
 
@@ -171,20 +171,20 @@ int getAngle(unsigned char* directional_strengths, int num_strengths)
 {
     // Calculate a value based on the surrounding strengths as well as the current one
     double val = 0.5*directional_strengths[num_strengths-1] + directional_strengths[0] + 0.5*directional_strengths[1];
-    // Find the maximum value
-    double max = val;
-    int max_idx = 0;
+    // Find the minimum value
+    double min = val;
+    int min_idx = 0;
     for (int i = 1; i < num_strengths-1; ++i)
     {
         val = 0.5*directional_strengths[i-1] + directional_strengths[i] + 0.5*directional_strengths[i + 1];
-        if (val > max)
+        if (val < min)
         {
-            max = val;
-            max_idx = i;
+            min = val;
+            min_idx = i;
         }
     }
 
     // Convert the index to an angle in degrees
-    int angle = max_idx*9;
+    int angle = min_idx*9;
     return angle;
 }

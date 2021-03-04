@@ -85,7 +85,7 @@ int main(int argc, char* argv[]){
 		int segment = 0;
 		int direction = 1;
 		float angleOffset = 0;
-		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)-1) {
+		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)) {
 			// Add recored
 			double curAngle = fmod((init_angle + (double)angleOffset), 360.0);
 			result = AddRecored(fp, array, curAngle, init_distance, init_height);
@@ -96,6 +96,7 @@ int main(int argc, char* argv[]){
         	result = step(&sm, direction, 5);
 			MAIN_ASSERT(result != -1, " ")
 			angleOffset += (DEG_PER_MEASUREMENT * direction);
+            ++segment;
 		}
 	} else {
 		// Add record
@@ -126,25 +127,30 @@ int AddRecored(FILE* fp, struct XBeeArray_Settings array, double angle, double d
 	int result;
 	unsigned char strengths[5];
 	
-	// Get Stenght Values from the XBee Reflector Array
-	result = XBeeArray_GetStrengths(array, strengths);
-	ASSERT(result == 0, "\tERROR: Failed to Get Signal Strength values from the XBee Array.\n");
-	
 	// Write out header if the file is empty
 	if(ftell(fp) == 0) {
 		result = fprintf(fp, "angle,distance,height,top,side1,side2,side3,side4\n");
 		ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
 	}
 
-	// Write out the ange, distance, and height values to the file
-	result = fprintf(fp, "%1.1f,%1.1f,%1.1f\n",angle,distance,height);
-	ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
+    for (int m = 0; m < 100; ++m)
+    {
+        // Get Stenght Values from the XBee Reflector Array
+        result = XBeeArray_GetStrengths(array, strengths);
+        ASSERT(result == 0, "\tERROR: Failed to Get Signal Strength values from the XBee Array.\n");
+        
+        // Write out the ange, distance, and height values to the file
+        result = fprintf(fp, "%1.1f,%1.1f,%1.1f",angle,distance,height);
+        ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
 
-	// Write out strength values to the file
-	for(int i=0;i<5;i++) {
-		result = fprintf(fp, ",%d", strengths[i]);
-		ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
-	}
+        // Write out strength values to the file
+        for(int i=0;i<5;i++) {
+            result = fprintf(fp, ",%d", strengths[i]);
+            ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
+        }
+        result = fprintf(fp, "\n");
+        ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
+    }
 
 	return 0;
 }
@@ -178,7 +184,8 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				ASSERT(false,"ERROR: -a(Set Inital angle) should be in format of \"-a [int]\".\n")
+				printf("ERROR: -a(Set Inital angle) should be in format of \"-a [int]\".\n");
+                return -1;
 			case 'd': // Distance Set argument
 				if(argId < argc) {
 					float posDistance;
@@ -188,7 +195,8 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				ASSERT(false,"ERROR: -d(Set inital distance) should be in format of \"-d [int]\".\n")
+				printf("ERROR: -d(Set inital distance) should be in format of \"-d [int]\".\n");
+                return -1;
 			case 'h': // Distance Set argument
 				if(argId < argc) {
 					float posHeight;
@@ -198,9 +206,11 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				ASSERT(false,"ERROR: -h(Set inital height) should be in format of \"-h [int]\".\n")
+				printf("ERROR: -h(Set inital height) should be in format of \"-h [int]\".\n");
+                return -1;
 			case 's': // Distance Set argument
 				*useSweep = true;
+                break;
 			default: // Invalid argument
 				mainFailed = true; break;
 			}

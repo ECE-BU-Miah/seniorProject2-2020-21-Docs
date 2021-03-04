@@ -1136,15 +1136,27 @@ We did not have a formal meeting today. We just met in the lab and discussed the
 \labday{Tuesday, March 2, 2021}
 \experiment{Lab Time}
 JB\\
-In today's lab we wrote code to find the distance and angle of the remote. We are taking signal strength measurements every 9 degrees. Therefore, we are taking 10 measurements for each full 90\textdegree sweep of the reflector array. The average of the strengths received by the top XBee is used to calculate the distance. To calculate the angle, we are computing a value by adding the strength at each index of the strengths array and 0.5 times the strength on either side. Then the index where we got the maximum value is assumed to be the direction of the remote. We tested this code, and the distance measurement is somewhat reasonable. However, the angle measurement is not correct.
+In today's lab we wrote code to find the distance and angle of the remote. We are taking signal strength measurements every 9 degrees. Therefore, we are taking 10 measurements for each full 90\textdegree~sweep of the reflector array. The average of the strengths received by the top XBee is used to calculate the distance. To calculate the angle, we are computing a value by adding the strength at each index of the strengths array and 0.5 times the strength on either side. Then the index where we got the maximum value is assumed to be the direction of the remote. We tested this code, and the distance measurement is somewhat reasonable. However, the angle measurement is not correct.
 
 \labday{Thursday, March 4, 2021}
+\experiment{Angle Estimation}
+JB\\
+In today's lab, we worked on tuning the angle estimation. We sampled a bunch of signal strength data points to see how consistent our results were. They were not very consistent. However, we realized that in our previous code, we were finding the maximum of the values received. Since these values are actually path loss, we need to instead find the minimum. We updated the code to do that, and the angle estimation is giving somewhat ok results.
+
 \experiment{Meeting Agenda}
 KA\\
 \begin{itemize}
     \item Status update
     \item Student Scholarship Expo
 \end{itemize}
+
+\experiment{Meeting Minutes}
+JB\\
+In today's meeting, we discussed the current status of the project. We are able to get a somewhat ok estimate of the angle of the remote. However, the distance estimate spikes drastically if someone gets between the remote and the robot. We decided to do testing in free space with the remote at the same level as the robot. If we can get it working under those conditions, we will move on to making it more practical. We also decided to build another robot so that we can be testing multiple things at once.
+
+\experiment{Second Robot}
+JB\\
+After the regular lab time and meeting, Kalli and I worked on building a second robot. For now we are using the original reflector array that has the antennae in the wrong orientation. We still need to get a few pin headers from Mr. Mattus and print a new mount for the top XBee.
 %--------------------------------------------------------------------------------------------
 
 \end{addmargin}
