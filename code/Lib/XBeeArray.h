@@ -63,14 +63,20 @@ int XBeeArray_Close(struct XBeeArray_Settings array) {
 
 int XBeeArray_GetStrengths(struct XBeeArray_Settings array, unsigned char strengths[5]){
     int result;
+    int readAttempts = 0;
 
-    // Send Remote AT Command from the top XBee
-    result = SendRemoteATCommand(array.top_uart_bus, array.remoteAddr, 0x6462);
-    DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to write Remote AT command to UART Port %d.\n", array.top_uart_bus);
+    readAttempts = 0;
+    do {
+        readAttempts++;
+        
+        // Send Remote AT Command from the top XBee
+        result = SendRemoteATCommand(array.top_uart_bus, array.remoteAddr, 0x6462);
+        DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to write Remote AT command to UART Port %d.\n", array.top_uart_bus);
 
-    // Read in Signel Stength for the remote from the top XBee
-    result = ReadRemoteATResponseData(array.top_uart_bus, &(strengths[0]), 1);
-    DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to read Remote AT command response data on UART Port %d.\n", array.top_uart_bus);
+        // Read in Signel Stength for the remote from the top XBee
+        result = ReadRemoteATResponseData(array.top_uart_bus, &(strengths[0]), 1);
+    }  while(result < 0 && readAttempts < 4);
+    DEBUG_ASSERT(result >= 0, "\t[DEBUG] ERROR: Failed to read Remote AT command response data on UART Port %d.\n", array.top_uart_bus);
 
     // Flush Side UART in preperation for local AT commands
     msleep(1);
@@ -85,7 +91,7 @@ int XBeeArray_GetStrengths(struct XBeeArray_Settings array, unsigned char streng
         result = rc_gpio_set_value(array.io_chip_1, array.io_pin_1, (i>>1)&1);
 		DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to set pin value for GPIO %d_%d.\n", array.io_chip_1, array.io_pin_1);      
         
-        int readAttempts = 0;
+        readAttempts = 0;
         do {
             readAttempts++;
 
@@ -95,8 +101,8 @@ int XBeeArray_GetStrengths(struct XBeeArray_Settings array, unsigned char streng
 
             // Read in signal strength from side XBee 'i'
             result = ReadLocalATResponseData(array.side_uart_bus, &(strengths[i+1]), 1);
-            DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to read Local AT command response data on UART Port %d.\n", array.side_uart_bus);
         } while(result < 0 && readAttempts < 4);
+        DEBUG_ASSERT(result >= 0, "\t[DEBUG] ERROR: Failed to read Local AT command response data on UART Port %d.\n", array.side_uart_bus);
     }
 
     return 0;
