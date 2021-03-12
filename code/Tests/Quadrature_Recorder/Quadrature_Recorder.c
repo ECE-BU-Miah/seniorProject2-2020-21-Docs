@@ -15,6 +15,7 @@
 // Robot Control Headers
 #include <rc/button.h>
 #include <rc/motor.h>
+#include <rc/encoder_eqep.h>
 
 // Custom Headers
 #include "CoreLib.h"
@@ -26,7 +27,7 @@ static void __signal_handler(__attribute__ ((unused)) int dummy) {
 }
 
 // Prototypes
-int ProcessArguments(int argc, char* argv[],  int* _pwmFrequency, int* _motor1, int* _motor2, double* _duty);
+int ProcessArguments(int argc, char* argv[],  int* _pwmFrequency, double* _duty);
 int AddRecored(FILE* fp, int pwm, float duty, int steps1, int steps2 );
 int StripFloat(char* str, float* value);
 int StripInt(char* str, int* value);
@@ -41,6 +42,7 @@ int main(int argc, char* argv[]){
 	// Set up PID file for this program
 	if(rc_kill_existing_process(2.0)<-2) return -1;
     rc_make_pid_file();
+	rc_set_state(RUNNING);
 
 	// Initalize state variables
 	int _pwmFrequency = RC_MOTOR_DEFAULT_PWM_FREQ;
@@ -62,7 +64,7 @@ int main(int argc, char* argv[]){
 
 	// Initalize Encoders
 	printf("\tInitalizeing Quadrature Encoders...\n");
-	result = rc_encoder_init();
+	result = rc_encoder_eqep_init();
 	MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
 
 	// Open output file in Append mode
@@ -70,7 +72,6 @@ int main(int argc, char* argv[]){
 	MAIN_ASSERT(fp != NULL, "\tERROR: Failed to open file.\n");
 	
 	// Main Program loop
-	rc_set_state(RUNNING);
 	const int _numSteps = 10;
 	int steps1[_numSteps];
 	int steps2[_numSteps];
@@ -82,16 +83,16 @@ int main(int argc, char* argv[]){
 		// Run through moment sequence
 		for(int i = 0; i < _numSteps; i++) {
 			// Clear Encoder steps
-			MAIN_ASSERT(rc_encoder_write(_encoder1, 0) != -1, "\tERROR: Failed to write to encoder 1.\n");
-			MAIN_ASSERT(rc_encoder_write(_encoder2, 0) != -1, "\tERROR: Failed to write to encoder 2.\n");
+			MAIN_ASSERT(rc_encoder_eqep_write(_encoder1, 0) != -1, "\tERROR: Failed to write to encoder 1.\n");
+			MAIN_ASSERT(rc_encoder_eqep_write(_encoder2, 0) != -1, "\tERROR: Failed to write to encoder 2.\n");
 
 			// Wait for 1 decisecond for robot to move
 			msleep(100);
 
 			// Read in step counds from 1 decisecond of movement
-			steps1[i] = rc_encoder_read(_encoder1);
+			steps1[i] = rc_encoder_eqep_read(_encoder1);
 			MAIN_ASSERT(steps1[i] != -1, "\tERROR: Failed to read from encoder 1.\n");
-			steps2[i] = rc_encoder_read(_encoder2);
+			steps2[i] = rc_encoder_eqep_read(_encoder2);
 			MAIN_ASSERT(steps2[i] != -1, "\tERROR: Failed to read from encoder 2.\n");
 
 			if(rc_get_state() == EXITING) break;
@@ -112,7 +113,7 @@ int main(int argc, char* argv[]){
 
 	// Close Quadrature Encoders
 	printf("\tCloseing XBee Reflector Array...\n");
-	result = rc_encoder_cleanup();
+	result = rc_encoder_eqep_cleanup();
 	MAIN_ASSERT(result == 0, "\tERROR: Failed to Close Quadrature Encoders.\n");
 
 	// Close the motors
@@ -141,7 +142,7 @@ int AddRecored(FILE* fp, int pwm, float duty, int steps1, int steps2) {
 	return 0;
 }
 
-int ProcessArguments(int argc, char* argv[],  int* _pwmFrequency, double* _duty); {
+int ProcessArguments(int argc, char* argv[],  int* _pwmFrequency, double* _duty) {
 	// Check for Help menue argument
 	if(argc > 1 && !strcmp(argv[1],"-help")){
 		printf("\t--- [ Help ] ---\n");
