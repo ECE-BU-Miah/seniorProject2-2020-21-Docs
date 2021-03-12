@@ -1,5 +1,5 @@
 /* 
-*    
+*    Main Program
 */
 
 // C Library headers
@@ -16,6 +16,7 @@
 #include <rc/gpio.h>
 #include <rc/start_stop.h>
 #include <rc/motor.h>
+#include <rc/encoder_eqep.h>
 
 // Custom headers
 #define DEBUG_XBEECOM 0
@@ -30,10 +31,13 @@
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
 #define MOVING_AVG_SIZE 1 // Size of the moving average window
 
-#define DUTY_MAX 0.25
-
 #define MOTOR_LEFT 1
 #define MOTOR_RIGHT 2
+
+// Encoder defines
+#define ENCODER_LEFT MOTOR_LEFT
+#define ENCODER_RIGHT MOTOR_RIGHT
+#define COUNTS_PER_REV 1200
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -49,6 +53,7 @@ int getAngle(unsigned char* directional_strengths, int num_strengths);
 double avg_dbl(double* array, int size);
 double avg_int(int* array, int size);
 int sign(double x);
+double absVal(double x);
 double wrapToPi(double theta);
 double wrapTo180(double theta);
 
@@ -98,9 +103,9 @@ int main(){
     double distance[MOVING_AVG_SIZE] = {0, }; // Distances to remote in m
     int angle[MOVING_AVG_SIZE] = {0, }; // Angles to remote in radians
     unsigned int curMsmt = 0; // Next location to store the distance and angle in the moving average arrays
-    double avg_dist = 0; // Average of distance array in meters
-    double avg_ang = 0; // Average of angle array in degrees
-    double avg_ang_rad = 0; // Average of angle array in radians
+    double targetDistance = 0; // Average of distance array in meters
+    double targetAngle = 0; // Average of angle array in degrees
+    double targetAngle_rad = 0; // Average of angle array in radians
     double targetX = 0; // Estimated X coordinate of remote w.r.t. robot's local frame
     // double targetY = 0; // Estimated Y coordinate of remote w.r.t. robot's local frame
     double v = 0; // Desired linear velocity
@@ -109,6 +114,9 @@ int main(){
     double omegaL = 0; // Left wheel angular velocity
     double dutyR = 0; // Right wheel duty cycle
     double dutyL = 0; // Left wheel duty cycle
+    int leftEncVal = 0; // Value from left encoder
+    int rightEncVal = 0; // Value from right encoder
+    double theta = 0; // Angle (in rad) of robot with respect to where it was when the last target point was computed
 
     // Initalize XBee Reflector Array
     printf("\tInitializing XBee Reflector Array...\n");
@@ -119,6 +127,10 @@ int main(){
     StepperMotor sm;
     printf("\tInitializing Stepper Motor...\n");
     MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+
+    // Initalize Encoders
+    printf("\tInitalizing Quadrature Encoders...\n");
+    MAIN_ASSERT(rc_encoder_eqep_init() == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
 
     // Keep looping until state changes to EXITING
     rc_set_state(RUNNING);
@@ -165,6 +177,26 @@ int main(){
     **************************************************************************/
     while(rc_get_state() != EXITING)
     {
+        // Determine the angle of the robot relative to where it was when the last measurement was completed
+        leftEncVal = rc_encoder_eqep_read(ENCODER_LEFT);
+        rightEncVal = rc_encoder_eqep_read(ENCODER_RIGHT);
+        theta = (leftEncVal - rightEncVal)*2*M_PI*R/(1200*L);
+        printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta*180/M_PI);
+        if (absVal(theta - targetAngle_rad) < 0.1)
+        {
+            // Recalculate the motor speeds to just go straight
+            omegaR = v/R; // right wheel angular speed [rad/s]
+            omegaL = v/R; // left wheel angular speed [rad/s]
+
+            // Convert angular wheel speeds to duty cycles
+            dutyR = omegaR*0.05/omegaMax;
+            dutyL = -omegaL*0.05/omegaMax;
+
+            // Set the motor speeds
+            rc_motor_set(MOTOR_RIGHT, dutyR);
+            rc_motor_set(MOTOR_LEFT, dutyL);
+        }
+
         // Move the stepper motor
         step(&sm, direction, STEPS_PER_MEASUREMENT);
 
@@ -185,19 +217,19 @@ int main(){
             curMsmt = (curMsmt + 1) % MOVING_AVG_SIZE;
 
             // Calculate the coordinates of the remote
-            avg_dist = avg_dbl(distance, MOVING_AVG_SIZE);
-            // printf("Distance to remote: %.4f\n", avg_dist);
-            avg_ang = avg_int(angle, MOVING_AVG_SIZE);
-            printf("Angle to remote: %.0f\n", avg_ang);
-            avg_ang_rad = avg_ang*M_PI/180;
-            targetX = avg_dist*cos(avg_ang_rad);
-            // targetY = avg_dist*sin(avg_ang);
+            targetDistance = avg_dbl(distance, MOVING_AVG_SIZE);
+            // printf("Distance to remote: %.4f\n", targetDistance);
+            targetAngle = avg_int(angle, MOVING_AVG_SIZE);
+            // printf("Angle to remote: %.0f\n", targetAngle);
+            targetAngle_rad = targetAngle*M_PI/180;
+            targetX = targetDistance*cos(targetAngle_rad);
+            // targetY = targetDistance*sin(targetAngle);
 
             // Calculate motor control signals
-            v = sign(targetX)*Kp*avg_dist;
-            v = (abs(v) > vMax ? sign(v)*vMax : v); // Saturate velocity
-            omega = Kw*avg_ang_rad;
-            omega = (abs(omega) > omegaMax ? sign(omega)*omegaMax : omega); // Saturate velocity
+            v = sign(targetX)*Kp*targetDistance;
+            v = (absVal(v) > vMax ? sign(v)*vMax : v); // Saturate velocity
+            omega = Kw*targetAngle_rad;
+            omega = (absVal(omega) > omegaMax ? sign(omega)*omegaMax : omega); // Saturate velocity
 
             omegaR = (v - omega*L/2)/R; // right wheel angular speed [rad/s]
             omegaL = (v + omega*L/2)/R; // left wheel angular speed [rad/s]
@@ -205,14 +237,16 @@ int main(){
             // Convert angular wheel speeds to duty cycles
             dutyR = omegaR*0.05/omegaMax;
             dutyL = -omegaL*0.05/omegaMax;
-            // dutyR = (abs(dutyR) > DUTY_MAX ? sign(dutyR)*DUTY_MAX : dutyR);
-            // dutyL = (abs(dutyL) > DUTY_MAX ? sign(dutyL)*DUTY_MAX : dutyL);
 
-            // printf("dutyR: %f\ndutyL: %f\n", dutyR, dutyL);
+            printf("dutyR: %f\ndutyL: %f\n", dutyR, dutyL);
 
             // Set the motor speeds
-            rc_motor_set(MOTOR_LEFT, dutyL);
             rc_motor_set(MOTOR_RIGHT, dutyR);
+            rc_motor_set(MOTOR_LEFT, dutyL);
+
+            // Reset the encoder positions to 0
+            rc_encoder_eqep_write(ENCODER_LEFT, 0);
+            rc_encoder_eqep_write(ENCODER_RIGHT, 0);
 
             // Change direction
             direction *= -1;
@@ -231,6 +265,10 @@ int main(){
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
     MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+
+    // Close the encoders
+    printf("\tClosing Encoders...\n");
+    MAIN_ASSERT(rc_encoder_eqep_cleanup() != -1, "\tERROR: Failed to close Encoders\n");
 
     rc_remove_pid_file();    // remove pid file LAST
 
@@ -291,6 +329,7 @@ int getAngle(unsigned char* directional_strengths, int num_strengths)
     return wrapTo180(angle);
 }
 
+// Returns average of a double array
 double avg_dbl(double* array, int size)
 {
     double sum = 0;
@@ -301,6 +340,7 @@ double avg_dbl(double* array, int size)
     return sum/size;
 }
 
+// Returns average of an integer array
 double avg_int(int* array, int size)
 {
     int sum = 0;
@@ -311,11 +351,19 @@ double avg_int(int* array, int size)
     return (double)sum/size;
 }
 
+// Sign function: returns 1 if x is positive, -1 if x is negative, and 0 if x is 0
 int sign(double x)
 {
     return (x > 0) - (x < 0);
 }
 
+// Absolute value function (I was getting warnings with abs() for some reason)
+double absVal(double x)
+{
+    return sign(x)*x;
+}
+
+// Wraps theta between -pi and pi
 double wrapToPi(double theta)
 {
     while(theta > M_PI)
@@ -329,6 +377,7 @@ double wrapToPi(double theta)
     return theta;
 }
 
+// Wraps theta between -180 and 180
 double wrapTo180(double theta)
 {
     while(theta > 180)

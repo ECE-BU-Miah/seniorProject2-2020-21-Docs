@@ -1162,6 +1162,33 @@ After the regular lab time and meeting, Kalli and I worked on building a second 
 \experiment{Lab Time}
 JB\\
 Today we replaced the BBBlues with different ones from Dr. Miah. The reason for this was that the one we have been using is my cousin's, and I did not want to burn it up using the motors with it. Also, the other BBBlue we had did not work to charge the LiPo batteries. We got new BBBlues from Dr. Miah and got them set up and updated. I also worked on the code to follow with a fixed speed. However, when I went to try to run this code, I was getting errors that there was no response from the remote. I spent some time trying to figure out why the transmitter was not able to get a response from the remote, but I did not figure it out.
+
+\labday{Thursday, March 11, 2021}
+\experiment{Lab Time}
+JB\\
+Today in the lab, I figured out that the communication problem I was running into on Tuesday was caused because I was using the wrong UART port. I corrected that and was able to get readings again. We got a program running that kind of works to follow the remote at a fixed linear velocity. The robot does a lot of rotating and reversing, but in time, it moves toward the remote. This is a huge step of progress.
+
+\experiment{Meeting Agenda}
+JB\\
+\begin{itemize}
+    \item Status update
+    \item Project title for Student Scholarship Expo
+\end{itemize}
+
+\experiment{Meeting Minutes}
+JB\\
+In today's meeting, we demonstrated our progress to Dr. Miah. He was definitely pleased to see that we are actually getting some promising results. We discussed using a form of odometric localization to smooth out the motion of the robot. We also decided that the project title should be ``Smart Robotic Cart: A Prototype.''
+
+\experiment{Post-Lab Work}
+JB\\
+After the regular lab time today, I worked on adding odometric angle estimation to try to prevent the robot from over-rotating before the next measurement is complete. I used the encoders on the motors to estimate the change in angle. The formula I used was the following:
+$$\Delta \theta = \frac{1}{L}(\Delta d_L - \Delta d_R)$$
+where $L$ is the distance between the wheels, and $\Delta d_L$ and $\Delta d_R$ are the distances traveled by the left and right wheels, respectively. The distance traveled by a wheel can be computed using the following formula:
+$$\Delta d = 2\pi R\frac{p}{P_{pr}}$$
+where $R$ is the radius of the wheel, $p$ is the number of encoder pulses, and $P_{pr}$ is the number of encoder pulses per revolution.
+
+\vspace{12pt}
+After implementing this, the robot seemed to follow slightly better than before, but it was still not great.
 %--------------------------------------------------------------------------------------------
 
 \end{addmargin}
