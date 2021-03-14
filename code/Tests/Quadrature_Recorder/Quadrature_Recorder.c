@@ -13,7 +13,6 @@
 #include <math.h>
 
 // Robot Control Headers
-#include <rc/button.h>
 #include <rc/motor.h>
 #include <rc/encoder_eqep.h>
 
@@ -34,7 +33,7 @@ int StripInt(char* str, int* value);
 
 // Main
 int main(int argc, char* argv[]){
-	printf("\tStarting Array Value Recorder...\n");
+	printf("\tStarting Quadrature Value Recorder...\n");
 
 	// set signal handler so the loop can exit cleanly
     signal(SIGINT, __signal_handler);
@@ -57,24 +56,30 @@ int main(int argc, char* argv[]){
 	// Read in peramiters
 	result = ProcessArguments(argc, argv, &_pwmFrequency, &_duty);
 	MAIN_ASSERT(result != -1, "\tERROR: Failed to Read in Arguments.\n");
+	if(result == 1) return 1;
 
     // Initialize Motors
-    printf("\tInitializing Stepper Motor...\n");
+    printf("\tInitializing Motor...\n");
     MAIN_ASSERT(rc_motor_init_freq(_pwmFrequency) != -1, "\tERROR: Failed to initialize Motors.\n");
 
 	// Initalize Encoders
 	printf("\tInitalizeing Quadrature Encoders...\n");
-	result = rc_encoder_eqep_init();
-	MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
+	MAIN_ASSERT(rc_encoder_eqep_init() == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
 
 	// Open output file in Append mode
+	printf("\tOpening file to write out to...\n");
 	fp = fopen("Quadratur_PWM.csv", "a");
 	MAIN_ASSERT(fp != NULL, "\tERROR: Failed to open file.\n");
 	
+	// Lock steper motors beforehand for safty
+	MAIN_ASSERT(rc_motor_set(3, 1) != -1, "\tERROR: Failed to Set Motor 1.\n");
+	MAIN_ASSERT(rc_motor_set(4, 1) != -1, "\tERROR: Failed to Set Motor 1.\n");
+
 	// Main Program loop
 	const int _numSteps = 10;
 	int steps1[_numSteps];
 	int steps2[_numSteps];
+	printf("\tSrarting record...\n");
 	while(rc_get_state() != EXITING) {
 		// Set Motor Duty Cycles
 		MAIN_ASSERT(rc_motor_set(_motor1, _duty) != -1, "\tERROR: Failed to Set Motor 1.\n");
@@ -87,7 +92,7 @@ int main(int argc, char* argv[]){
 			MAIN_ASSERT(rc_encoder_eqep_write(_encoder2, 0) != -1, "\tERROR: Failed to write to encoder 2.\n");
 
 			// Wait for 1 decisecond for robot to move
-			msleep(100);
+			msleep(500);
 
 			// Read in step counds from 1 decisecond of movement
 			steps1[i] = rc_encoder_eqep_read(_encoder1);
@@ -105,7 +110,14 @@ int main(int argc, char* argv[]){
 			MAIN_ASSERT(result != -1, "\tERROR: Failed to add record.\n");
 			if(rc_get_state() == EXITING) break;
 		}
+
+		rc_set_state(EXITING);
 	}
+
+	// Safty delay for system to stabalize
+	MAIN_ASSERT(rc_motor_set(_motor1, 0) != -1, "\tERROR: Failed to Set Motor 1.\n");
+	MAIN_ASSERT(rc_motor_set(_motor2, 0) != -1, "\tERROR: Failed to Set Motor 1.\n");
+	msleep(1000);
 
 	// Close output file
 	result = fclose(fp);
@@ -136,7 +148,7 @@ int AddRecored(FILE* fp, int pwm, float duty, int steps1, int steps2) {
 	}
 
     // Write out the ange, distance, and height values to the file
-    result = fprintf(fp, "%d,%1.1f,%d,%d\n",pwm,duty,steps1,steps2);
+    result = fprintf(fp, "%d,%1.1f,%d,%d\n",pwm,(double)duty,steps1,steps2);
     ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
 
 	return 0;
@@ -147,8 +159,8 @@ int ProcessArguments(int argc, char* argv[],  int* _pwmFrequency, double* _duty)
 	if(argc > 1 && !strcmp(argv[1],"-help")){
 		printf("\t--- [ Help ] ---\n");
 		printf("\t> Set PWM Frequency{Hz} : -f [int]\n");
-		printf("\t>         Set duty Cycle : -d [float]\n");
-		return 0;
+		printf("\t>        Set duty Cycle : -d [float]\n");
+		return 1;
 	}
 	
 	// Check for value set operators
