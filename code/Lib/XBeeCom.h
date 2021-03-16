@@ -47,10 +47,10 @@ int SendCommand(int bus, unsigned char* msg, int length){
         // Send Command
         // int rc_uart_write(int bus, uint8_t* data, size_t bytes);
         int success = rc_uart_write(bus, msg , length);
-	if(success == -1) return -1;
+        if(success == -1) return -1;
 
 #if DEBUG_XBEECOM
-	// Print out Command that was sent in hex
+        // Print out Command that was sent in hex
         fprintHexBuffer(msg, length, "\t[DEBUG] CMD: ", "\n");
 #endif
 
@@ -66,7 +66,7 @@ int ReadCommand(int bus,  unsigned char* buf, int bufSize){
          // Read in response
          // int rc_uart_read_bytes(int bus, uint8_t* buf, size_t bytes);
         int num_Bytes = rc_uart_read_bytes(bus, buf, bufSize);
-	if(num_Bytes == -1) { printf("\tRC Read Bytes Failed.\n"); return -1; }
+        if(num_Bytes == -1) { printf("\tRC Read Bytes Failed.\n"); return -1; }
 
          // Check that the response is not empty
         if(num_Bytes == 0){
@@ -78,7 +78,7 @@ int ReadCommand(int bus,  unsigned char* buf, int bufSize){
         }
 
 #if DEBUG_XBEECOM
-	printf("\t[DEBUG] Recived: %d Bytes\n",num_Bytes);
+        printf("\t[DEBUG] Recived: %d Bytes\n",num_Bytes);
         fprintHexBuffer(buf, num_Bytes, "\t[DEBUG] MSG: ", "\n");
 #endif
 

@@ -78,9 +78,9 @@ int main() {
     rc_set_state(RUNNING);
 
     // Initalize property variables
-    static const double Kv = 1; // Linear speed proportional gain
-    static const double Kw = 1; // Angular speed proportional gain
-    static const double vMax = 0.1; // Maximum linear speed [m/s]
+    static const double Kv = 2; // Linear speed proportional gain
+    static const double Kw = 2; // Angular speed proportional gain
+    static const double vMax = 0.3; // Maximum linear speed [m/s]
     static const double wMax = M_PI/4; // Maximum angular speed [rad/s]
     struct XBeeArray_Settings array = {
         5,1,   // Uart buses Top(5) and Side(1) 
@@ -104,7 +104,8 @@ int main() {
     printf("\tInitializing Stepper Motor...\n");
     MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
 
-    // Populate Inital Distance and Anlge data
+    // Populate Inital Distance and Angle data
+    printf("\tPopulating the initial distances and angles...\n");
     do {
         // Get Mesurement data
         result = getMeasurement(array, &distanceData, &angleData);
@@ -123,7 +124,7 @@ int main() {
         double distance = updateDistance(&distanceData);
         double angle = updateAngle(&angleData);
         
-        printf("Angle to remote: %.0f\n", angle);
+        //printf("Angle to remote: %.0f\n", angle);
 
         // Calculate velocities
         double v = (Kv * distance) * cos(angle);
@@ -214,19 +215,20 @@ double updateAngle(AngleData* aData) {
 
     // Calculate estimate angle
     int sensorNum = minIndex-strIOffset;
-    double angle = ((sensorNum+1)%4) - 1) * 90; // map to [0,90,180,-90]
+    double angle = (((sensorNum+1)%4) - 1) * 90; // map to [0,90,180,-90]
     if (sensorNum == 2 && aData->angles[aData->curIndex-1] < 0) { // Handle -180
         angle = -angle;
     }
+    // printf("Sensor: %d, angle: %.0f\n", sensorNum, angle);
 
     // Update Detected Angle Log
     aData->angles[aData->curIndex] = angle;
 
-    // Determin target angle based on Log
+    // Determine target angle based on Log
     double mulFactor = 1;
     double sum = 0;
     double sumDiv = 0;
-    for(int i = 0; i < length; --i){
+    for(int i = 0; i < length; ++i){
         int index = mod_i(aData->curIndex - i, length);
         sum += aData->angles[index] * mulFactor;
         sumDiv += mulFactor;
@@ -255,6 +257,8 @@ int setWheelVelocitys(double v, double w) {
     dutyR = clamp(dutyR, -dutyMax, dutyMax);
     dutyL = clamp(dutyL, -dutyMax, dutyMax);
 
+    printf("dutyR: %f, dutyL: %f\n", dutyR, dutyL);
+
     // Set the motor speeds
     ASSERT(rc_motor_set(motorL, -dutyL) != -1, "\tERROR: Failed to set motor duty.\n");
     ASSERT(rc_motor_set(motorR,  dutyR) != -1, "\tERROR: Failed to set motor duty.\n");
@@ -264,7 +268,7 @@ int setWheelVelocitys(double v, double w) {
 }
 
 void emergencyStop() {
-    printf("\tEmergenty Stop Cleanup Triggered..."); 
+    printf("\tEmergency Stop Cleanup Triggered..."); 
     fflush(stdout);
 
     // Set state to exiting for rc library
@@ -272,6 +276,9 @@ void emergencyStop() {
 
     // Close the stepper motor explicetley to prevent data leak
     stepper_cleanup();
+    
+    // remove pid file LAST
+    rc_remove_pid_file();
 
     printf("Done\n");
 }

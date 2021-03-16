@@ -21,6 +21,12 @@ typedef struct
     int state;
 } StepperMotor;
 
+// Function Prototypes
+int stepper_init(StepperMotor* stepper, int m1, int m2);
+int step(StepperMotor* stepper, int direction, int numSteps);
+int set_state(StepperMotor* stepper);
+int stepper_cleanup();
+
 // Function to initialize a stepper motor
 int stepper_init(StepperMotor* stepper, int m1, int m2)
 {
@@ -33,6 +39,7 @@ int stepper_init(StepperMotor* stepper, int m1, int m2)
 
     // Set the current state
     stepper->state = 0;
+    set_state(stepper);
 
     return 0;
 }
@@ -53,30 +60,38 @@ int step(StepperMotor* stepper, int direction, int numSteps)
             stepper->state = (stepper->state + 3)%4;
         }
 
-        // Winding states
-        switch(stepper->state)
-        {
-            case 0:
-            default:
-                ASSERT(rc_motor_set(stepper->m1, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
-                ASSERT(rc_motor_set(stepper->m2, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
-                break;
-            case 1:
-                ASSERT(rc_motor_set(stepper->m1, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
-                ASSERT(rc_motor_set(stepper->m2, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
-                break;
-            case 2:
-                ASSERT(rc_motor_set(stepper->m1, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
-                ASSERT(rc_motor_set(stepper->m2, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
-                break;
-            case 3:
-                ASSERT(rc_motor_set(stepper->m1, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
-                ASSERT(rc_motor_set(stepper->m2, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
-                break;
-        }
+        // Set the state of the motor windings
+        set_state(stepper);
 
         // Sleep to allow motor to turn
         rc_usleep(20000);
+    }
+
+    return 0;
+}
+
+int set_state(StepperMotor* stepper)
+{
+    // Winding states
+    switch(stepper->state)
+    {
+        case 0:
+        default:
+            ASSERT(rc_motor_set(stepper->m1, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
+            ASSERT(rc_motor_set(stepper->m2, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
+            break;
+        case 1:
+            ASSERT(rc_motor_set(stepper->m1, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
+            ASSERT(rc_motor_set(stepper->m2, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
+            break;
+        case 2:
+            ASSERT(rc_motor_set(stepper->m1, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
+            ASSERT(rc_motor_set(stepper->m2, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
+            break;
+        case 3:
+            ASSERT(rc_motor_set(stepper->m1, 1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m1);
+            ASSERT(rc_motor_set(stepper->m2, -1) != -1, "\tERROR: Failed to set motor %d\n", stepper->m2);
+            break;
     }
 
     return 0;
