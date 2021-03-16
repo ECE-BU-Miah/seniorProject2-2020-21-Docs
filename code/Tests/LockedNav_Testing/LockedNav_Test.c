@@ -78,10 +78,10 @@ int main() {
     rc_set_state(RUNNING);
 
     // Initalize property variables
-    const double Kv = 1; // Linear speed proportional gain
-    const double Kw = 1; // Angular speed proportional gain
-    const double vMax = 0.1; // Maximum linear speed [m/s]
-    const double wMax = M_PI/4; // Maximum angular speed [rad/s]
+    static const double Kv = 1; // Linear speed proportional gain
+    static const double Kw = 1; // Angular speed proportional gain
+    static const double vMax = 0.1; // Maximum linear speed [m/s]
+    static const double wMax = M_PI/4; // Maximum angular speed [rad/s]
     struct XBeeArray_Settings array = {
         5,1,   // Uart buses Top(5) and Side(1) 
         3,1,   // GPIO 0 (Chip 3 Pin 1)
@@ -126,8 +126,8 @@ int main() {
         printf("Angle to remote: %.0f\n", angle);
 
         // Calculate velocities
-        double v = (Kv * distance) * clamp(cos(angle), -0.3, 1);
-        v = clamp(v, -vMax, vMax);
+        double v = (Kv * distance) * cos(angle);
+        v = clamp(v, -vMax/2, vMax);
         double w = (Kw * angle);
         w = clamp(w, -wMax, wMax);
 
@@ -213,12 +213,16 @@ double updateAngle(AngleData* aData) {
     }
 
     // Calculate estimate angle
-    double angle = (minIndex-strIOffset) * 90;
+    int sensorNum = minIndex-strIOffset;
+    double angle = ((sensorNum+1)%4) - 1) * 90; // map to [0,90,180,-90]
+    if (sensorNum == 2 && aData->angles[aData->curIndex-1] < 0) { // Handle -180
+        angle = -angle;
+    }
 
-    // Update Angle Log
+    // Update Detected Angle Log
     aData->angles[aData->curIndex] = angle;
 
-    // Determin current angle based on Log
+    // Determin target angle based on Log
     double mulFactor = 1;
     double sum = 0;
     double sumDiv = 0;

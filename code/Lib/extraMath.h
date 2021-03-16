@@ -39,57 +39,57 @@ EXTRA_MATH_FUNC_HEAD double mod(double x, double a) {
 }
 
 // Sign of input Integer
-// @peram x: Value to get sign of
+// @param x: Value to get sign of
 EXTRA_MATH_FUNC_HEAD int sign_i(int x) {
     return (x < 0) ? -1 : ((x > 0) ? 1 : 0);
 }
 
 // Sign of input Double
-// @peram x: Value to get sign of
+// @param x: Value to get sign of
 EXTRA_MATH_FUNC_HEAD double sign(double x) {
     return (x < 0) ? -1 : ((x > 0) ? 1 : 0);
 }
 
 // Returns min of two integers
-// @peram x1: first number
-// @peram x2: Second number
+// @param x1: first number
+// @param x2: Second number
 EXTRA_MATH_FUNC_HEAD int min_i(int x1, int x2) {
     return (x1 < x2) ? x1 : x2;
 }
 
 // Returns min of two doubles
-// @peram x1: first number
-// @peram x2: Second number
+// @param x1: first number
+// @param x2: Second number
 EXTRA_MATH_FUNC_HEAD double min(double x1, double x2) {
     return (x1 < x2) ? x1 : x2;
 }
 
 // Returns max of two integers
-// @peram x1: first number
-// @peram x2: Second number
+// @param x1: first number
+// @param x2: Second number
 EXTRA_MATH_FUNC_HEAD int max_i(int x1, int x2) {
     return (x1 > x2) ? x1 : x2;
 }
 
 // Returns max of two doubles
-// @peram x1: first number
-// @peram x2: Second number
+// @param x1: first number
+// @param x2: Second number
 EXTRA_MATH_FUNC_HEAD double max(double x1, double x2) {
     return (x1 > x2) ? x1 : x2;
 }
 
 // Clamp a ingeger value to a range
-// @peram x: Value to clamp
-// @peram min: Minimum value of range
-// @peram max: Maximum value of range
+// @param x: Value to clamp
+// @param min: Minimum value of range
+// @param max: Maximum value of range
 EXTRA_MATH_FUNC_HEAD int clamp_i(int x, int min, int max) {
     return (x < min) ? min : ((x > max) ? max : x);
 }
 
 // Clamp a double value to a range
-// @peram x: Value to clamp
-// @peram min: Minimum value of range
-// @peram max: Maximum value of range
+// @param x: Value to clamp
+// @param min: Minimum value of range
+// @param max: Maximum value of range
 EXTRA_MATH_FUNC_HEAD double clamp(double x, double min, double max) {
     return (x < min) ? min : ((x > max) ? max : x);
 }
