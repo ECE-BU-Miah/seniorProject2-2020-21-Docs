@@ -1138,10 +1138,18 @@ We did not have a formal meeting today. We just met in the lab and discussed the
 JB\\
 In today's lab we wrote code to find the distance and angle of the remote. We are taking signal strength measurements every 9 degrees. Therefore, we are taking 10 measurements for each full 90\textdegree~sweep of the reflector array. The average of the strengths received by the top XBee is used to calculate the distance. To calculate the angle, we are computing a value by adding the strength at each index of the strengths array and 0.5 times the strength on either side. Then the index where we got the maximum value is assumed to be the direction of the remote. We tested this code, and the distance measurement is somewhat reasonable. However, the angle measurement is not correct.
 
+\vspace*{12pt}
+KA\\
+In today's lab we worked on collecting signal strength data from the XBee's when rotating the reflector array. We ran the code to test this function and changed a few variables to see what worked best in received signal strength.
+
 \labday{Thursday, March 4, 2021}
 \experiment{Angle Estimation}
 JB\\
 In today's lab, we worked on tuning the angle estimation. We sampled a bunch of signal strength data points to see how consistent our results were. They were not very consistent. However, we realized that in our previous code, we were finding the maximum of the values received. Since these values are actually path loss, we need to instead find the minimum. We updated the code to do that, and the angle estimation is giving somewhat ok results.
+
+\vspace*{12pt}
+KA\\
+In today's lab we worked on angle estimation and taking samples of signal strength data in order to get a rough estimate of the angle the remote was at. This was a work in progress but towards the end of the lab session we were able to get some promising results from the code. After the lab session Jason and I stayed behind to work on putting together the second robot in order to use it for multiple code fixes rather than all three of us trying to work on code on a single BeagleBone Blue.
 
 \experiment{Meeting Agenda}
 KA\\
@@ -1163,10 +1171,18 @@ After the regular lab time and meeting, Kalli and I worked on building a second 
 JB\\
 Today we replaced the BBBlues with different ones from Dr. Miah. The reason for this was that the one we have been using is my cousin's, and I did not want to burn it up using the motors with it. Also, the other BBBlue we had did not work to charge the LiPo batteries. We got new BBBlues from Dr. Miah and got them set up and updated. I also worked on the code to follow with a fixed speed. However, when I went to try to run this code, I was getting errors that there was no response from the remote. I spent some time trying to figure out why the transmitter was not able to get a response from the remote, but I did not figure it out.
 
+\vspace*{12pt}
+KA\\
+In today's lab I helped Jason finish the set-up of the second robot and got replacement BeagleBone Blues from Dr. Miah. I flashed the second robot's BeagleBone Blue and worked on getting it connected to BUsecure by creating a file for the enterprise login. This process took a while since the BeagleBone Blue did not accept the first login attempt. Once Jason gave me his login the file worked and I was then able to start the updates.
+
 \labday{Thursday, March 11, 2021}
 \experiment{Lab Time}
 JB\\
 Today in the lab, I figured out that the communication problem I was running into on Tuesday was caused because I was using the wrong UART port. I corrected that and was able to get readings again. We got a program running that kind of works to follow the remote at a fixed linear velocity. The robot does a lot of rotating and reversing, but in time, it moves toward the remote. This is a huge step of progress.
+
+\vspace*{12pt}
+KA\\
+In today's lab I worked on uploading the code files in Github to the second robot so that it could be used to test a new code that Darrah uploaded called Quadrature Recorder that would utilize the encoders on the robot. We ran into a few issues with the code so Darrah and I made a few updates and we were able to see a reading of the encoders when we manually moved the robot back and forth. We then helped Jason with the main robot and saw that we got the robot to kind of follow the remote with a few minor trajectory problems.
 
 \experiment{Meeting Agenda}
 JB\\
@@ -1189,6 +1205,11 @@ where $R$ is the radius of the wheel, $p$ is the number of encoder pulses, and $
 
 \vspace{12pt}
 After implementing this, the robot seemed to follow slightly better than before, but it was still not great.
+
+\labday{Friday, March 12, 2021}
+\experiment{Lab Work for Perspective Students Demo}
+KA\\
+Today Darrah and I met in the lab to record a video of the robot with the new code Jason had created on Thursday. We ran into a lot of issues with the XBees and after calling Jason and trying different debugging methods we could not understand why the top XBee would not communicate with the rest of the XBees. We used the UART tester code that Darrah created to see where our issue was coming from. After repeated trials with no response we changed the baud rate to 115200. After we change this we were able to get a response again. We then ran the code Jason updated and it suddenly worked again even though changing the baud rate in UART tester should not affect the main program. We ended up using the older code that was working during the lab day on Thursday since we did not have time to work on debugging the new code. We were able to get the same results as last time so we recorded the video Dr. Miah asked for.
 %--------------------------------------------------------------------------------------------
 
 \end{addmargin}
