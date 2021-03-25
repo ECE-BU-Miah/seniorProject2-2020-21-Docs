@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 	printf("\tStarting UART Test on bus %d...\n", bus);
 
 	// int rc_uart_init(int bus, int baudrate, float timeout, int canonical_en, int stop_bits, int parity_en);
-	success = rc_uart_init(bus, 9600, 0.1f, 0, 1, 0);
+	success = rc_uart_init(bus, 115200, 0.1f, 0, 1, 0);
 	ASSERT(success != -1, "\tERROR: Failed to Initalize UART Port %d.\n", bus)
 
 		// int rc_uart_write(int bus, uint8_t* data, size_t bytes);
