@@ -11,11 +11,14 @@
 #define ENCODER_RIGHT 2
 #define COUNTS_PER_REV 1200
 
-double odometry_getAngle();
-double odometry_getDistance();
+double odometry_getAngle(double R, double L);
+double odometry_getDistance(double R);
 int odometry_setZeroRef();
 
-double odometry_getAngle()
+// Estimates the rotation angle of the robot relative to the last time the zero reference was set
+// @param R: Radius of the wheels
+// @param L: Distance between wheels
+double odometry_getAngle(double R, double L)
 {
     int leftEncVal = -rc_encoder_eqep_read(ENCODER_LEFT);
     int rightEncVal = rc_encoder_eqep_read(ENCODER_RIGHT);
@@ -25,7 +28,9 @@ double odometry_getAngle()
     return theta;
 }
 
-double odometry_getDistance()
+// Estimates the distance the robot has traveled since the last time the zero reference was set
+// @param R: Radius of the wheels
+double odometry_getDistance(double R)
 {
     int leftEncVal = -rc_encoder_eqep_read(ENCODER_LEFT);
     int rightEncVal = rc_encoder_eqep_read(ENCODER_RIGHT);
@@ -34,6 +39,7 @@ double odometry_getDistance()
     return distance;
 }
 
+// Sets the zero reference for getAngle and getDistance
 int odometry_setZeroRef()
 {
     ASSERT(rc_encoder_eqep_write(ENCODER_LEFT, 0) == 0, "\tERROR: Failed to reset left encoder\n");

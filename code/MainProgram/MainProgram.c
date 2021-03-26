@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
 #include <math.h>
@@ -38,9 +39,6 @@
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
 #define MOVING_AVG_SIZE 2 // Size of the moving average window
 
-#define MOTOR_LEFT 1
-#define MOTOR_RIGHT 2
-
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
 {
@@ -59,12 +57,10 @@ static void __on_pause_press(void)
 int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths);
 double getDistance(unsigned char* distance_strengths, int num_strengths);
 int getAngle(int* directional_strengths, int num_strengths);
-int set_robot_speeds(double v, double omega);
-double avg_dbl(double* array, int size);
-double avg_int(int* array, int size);
-double absVal(double x);
-double wrapToPi(double theta);
-double wrapTo180(double theta);
+
+// Global control parameters
+const double Kp = 1; // Linear speed proportional gain
+const double Kw = 4; // Angular speed proportional gain
 
 int main(){
     printf("\tStarting Main Program...\n");
@@ -112,12 +108,8 @@ int main(){
     int position = 0; // Angular position of reflector array (degrees)
     int direction = 1; // Direction of stepper motor
     unsigned int curStep = 0; // Current step number
-    struct XBeeArray_Settings array = {
-        5,1,   // Uart buses Top(5) and Side(1) 
-        3,1,   // GPIO 0 (Chip 3 Pin 1)
-        3,2,   // GPIO 1 (Chip 3 Pin 2)
-        0x1111 // Target Remote XBee's 16-bit address
-    };
+
+    Robot_t robot;
 
     // Initalize storage variables
     int result;
@@ -136,32 +128,18 @@ int main(){
     double omega = 0; // Desired angular velocity
     double theta = 0; // Angle (in rad) of robot with respect to where it was when the last target point was computed
 
-    // Initalize XBee Reflector Array
-    printf("\tInitializing XBee Reflector Array...\n");
-    result = XBeeArray_Init(array);
-    MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize XBee Array.\n");
-
-    // Initialize Stepper Motor
-    StepperMotor sm;
-    printf("\tInitializing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
-
-    // Initalize Encoders
-    printf("\tInitalizing Quadrature Encoders...\n");
-    MAIN_ASSERT(rc_encoder_eqep_init() == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
-
-    // Zero the stepper motor by rotating 90 degrees counterclockwise
-    // The frame will stop the motor from moving past 0 degrees
-    step(&sm, -1, 50);
+    // Initialize Robot
+    printf("\tInitializing Robot...\n");
+    robot_init(&robot);
 
     // Fill out the measurement arrays
-    result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+    result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     int num_sweeps = 0;
     while (num_sweeps < MOVING_AVG_SIZE)
     {
         // Move the stepper motor
-        step(&sm, direction, STEPS_PER_MEASUREMENT);
+        step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;
@@ -186,7 +164,7 @@ int main(){
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
         if(rc_get_state() == EXITING) break;
     }
@@ -198,7 +176,7 @@ int main(){
     while(rc_get_state() != EXITING)
     {
         // Move the stepper motor
-        step(&sm, direction, STEPS_PER_MEASUREMENT);
+        step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;
@@ -217,11 +195,11 @@ int main(){
             curMsmt = (curMsmt + 1) % MOVING_AVG_SIZE;
 
             // Find the target distance to the remote
-            targetDistance = avg_dbl(distance, MOVING_AVG_SIZE);
+            targetDistance = avg(distance, MOVING_AVG_SIZE);
             // printf("Distance to remote: %.4f\n", targetDistance);
             
             // Find the target angle
-            targetAngle = avg_int(angle, MOVING_AVG_SIZE);
+            targetAngle = avg_i(angle, MOVING_AVG_SIZE);
             // printf("Angle to remote: %.0f\n", targetAngle);
             //Saturate the target angle to 15 degrees to avoid turning too fast
             targetAngle = clamp(targetAngle, -15, 15);
@@ -233,46 +211,33 @@ int main(){
 
             // Calculate motor control signals
             v = sign(targetX)*Kp*targetDistance;
-            v = (absVal(v) > vMax ? sign(v)*vMax : v); // Saturate velocity
+            v = clamp(v, -robot.vMax, robot.vMax); // Saturate velocity
             omega = Kw*targetAngle_rad;
-            omega = (absVal(omega) > omegaMax ? sign(omega)*omegaMax : omega); // Saturate velocity
+            omega = clamp(omega, -robot.omegaMax, robot.omegaMax); // Saturate velocity
 
             // Reset the encoder positions to 0
             odometry_setZeroRef();
 
             // Pause measurements until robot is turned to target angle
-            MAIN_ASSERT(set_robot_speeds(v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
-            while (absVal(theta - targetAngle) > 4 && rc_get_state() != EXITING)
+            MAIN_ASSERT(robot_setSpeeds(&robot, v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
+            while (abs(theta - targetAngle) > 4 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
-                theta = odometry_getAngle();
+                theta = odometry_getAngle(robot.R, robot.L);
                 printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta*180/M_PI);
             }
 
             //Just go straight now
-            MAIN_ASSERT(set_robot_speeds(v, 0) == 0, "\tERROR: Failed to set motor speeds\n");
+            MAIN_ASSERT(robot_setSpeeds(&robot, v, 0) == 0, "\tERROR: Failed to set motor speeds\n");
 
             // Change direction
             direction *= -1;
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     }
-
-    // Close XBee Reflector Array
-    printf("\tClosing XBee Reflector Array...\n");
-    result = XBeeArray_Close(array);
-    MAIN_ASSERT(result == 0, "\tERROR: Failed to close XBee Array.\n");
-
-    // Close the stepper motor
-    printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
-
-    // Close the encoders
-    printf("\tClosing Encoders...\n");
-    MAIN_ASSERT(rc_encoder_eqep_cleanup() != -1, "\tERROR: Failed to close Encoders\n");
 
     rc_remove_pid_file();    // remove pid file LAST
 
@@ -334,77 +299,4 @@ int getAngle(int* directional_strengths, int num_strengths)
     // Convert the index to an angle in radians
     int angle = min_idx*9;
     return wrapTo180(angle);
-}
-
-int set_robot_speeds(double v, double omega)
-{
-    double omegaR = (v - omega*L/2)/R; // right wheel angular speed [rad/s]
-    double omegaL = (v + omega*L/2)/R; // left wheel angular speed [rad/s]
-
-    // Convert angular wheel speeds to duty cycles
-    double dutyR = omegaR*0.05/omegaMax; // Right wheel duty cycle
-    double dutyL = -omegaL*0.05/omegaMax; // Left wheel duty cycle
-
-#if !MOTORS_OFF
-    ASSERT(rc_motor_set(MOTOR_RIGHT, dutyR) != -1, "\tERROR: Failed to set right motor\n");
-    ASSERT(rc_motor_set(MOTOR_LEFT, dutyL) != -1, "\tERROR: Failed to set left motor\n");
-#endif
-
-    return 0;
-}
-
-// Returns average of a double array
-double avg_dbl(double* array, int size)
-{
-    double sum = 0;
-    for (int i = 0; i < size; ++i)
-    {
-        sum += array[i];
-    }
-    return sum/size;
-}
-
-// Returns average of an integer array
-double avg_int(int* array, int size)
-{
-    int sum = 0;
-    for (int i = 0; i < size; ++i)
-    {
-        sum += array[i];
-    }
-    return (double)sum/size;
-}
-
-// Absolute value function (I was getting warnings with abs() for some reason)
-double absVal(double x)
-{
-    return sign(x)*x;
-}
-
-// Wraps theta between -pi and pi
-double wrapToPi(double theta)
-{
-    while(theta > M_PI)
-    {
-        theta -= 2*M_PI;
-    }
-    while(theta < -M_PI)
-    {
-        theta += 2*M_PI;
-    }
-    return theta;
-}
-
-// Wraps theta between -180 and 180
-double wrapTo180(double theta)
-{
-    while(theta > 180)
-    {
-        theta -= 360;
-    }
-    while(theta < -180)
-    {
-        theta += 360;
-    }
-    return theta;
 }

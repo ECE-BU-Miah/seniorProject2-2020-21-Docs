@@ -24,6 +24,12 @@ EXTRA_MATH_FUNC_HEAD double max(double x1, double x2);
 EXTRA_MATH_FUNC_HEAD int clamp_i(int x, int min, int max);
 EXTRA_MATH_FUNC_HEAD double clamp(double x, double min, double max);
 
+EXTRA_MATH_FUNC_HEAD double avg_i(int* array, int size);
+EXTRA_MATH_FUNC_HEAD double avg(double* array, int size);
+
+EXTRA_MATH_FUNC_HEAD double wrapToPi(double theta);
+EXTRA_MATH_FUNC_HEAD double wrapTo180(double theta);
+
 // Modulo for Intagers
 // @param x: First operand value of modulo operator
 // @param a: Second operand value of modulo operator
@@ -92,6 +98,60 @@ EXTRA_MATH_FUNC_HEAD int clamp_i(int x, int min, int max) {
 // @param max: Maximum value of range
 EXTRA_MATH_FUNC_HEAD double clamp(double x, double min, double max) {
     return (x < min) ? min : ((x > max) ? max : x);
+}
+
+// Returns average of an array of integers
+// @param x1: Array of integers
+// @param x2: Size of array
+EXTRA_MATH_FUNC_HEAD double avg_i(int* array, int size) {
+    int sum = 0;
+    for (int i = 0; i < size; ++i)
+    {
+        sum += array[i];
+    }
+    return (double)sum/size;
+}
+
+// Returns average of an array of doubles
+// @param x1: Array of doubles
+// @param x2: Size of array
+EXTRA_MATH_FUNC_HEAD double avg(double* array, int size) {
+    double sum = 0;
+    for (int i = 0; i < size; ++i)
+    {
+        sum += array[i];
+    }
+    return sum/size;
+}
+
+// Wraps theta between -pi and pi
+// @param theta: Angle to wrap (in radians)
+EXTRA_MATH_FUNC_HEAD double wrapToPi(double theta)
+{
+    while(theta > M_PI)
+    {
+        theta -= 2*M_PI;
+    }
+    while(theta < -M_PI)
+    {
+        theta += 2*M_PI;
+    }
+    return theta;
+}
+
+// Wraps theta between -180 and 180
+// @param theta: Angle to wrap (in degrees)
+EXTRA_MATH_FUNC_HEAD double wrapTo180(double theta)
+{
+    while(theta > 180)
+    {
+        theta -= 360;
+    }
+    while(theta < -180)
+    {
+        theta += 360;
+    }
+    return theta;
 }
 
 #undef EXTRA_MATH_FUNC_HEAD
