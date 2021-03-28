@@ -12,9 +12,9 @@
 #include <stdint.h>
 
 // Custom headers
-#include "CoreLib.h"
+#include "core.h"
 #define DEBUG_XBEECOM 0
-#include "ATCom.h"
+#include "atCom.h"
 
 int LocalATCom_Test(int bus);
 int RemoteATCom_Test(int bus, uint16_t destAddr);

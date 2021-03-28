@@ -12,8 +12,8 @@
 #include <rc/gpio.h>
 
 // Custom headers
-#include "CoreLib.h"
-#include "ATCom.h"
+#include "core.h"
+#include "atCom.h"
 
 #if XBEE_ARRAY_DEBUG
     #undef DEBUG_ASSERT

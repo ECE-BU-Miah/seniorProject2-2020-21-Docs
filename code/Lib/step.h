@@ -3,7 +3,7 @@
 
 #include <rc/motor.h>
 #include <rc/time.h>
-#include "CoreLib.h"
+#include "core.h"
 
 // Number of degrees per step on the stepper motor
 #define DEG_PER_STEP 1.8

@@ -19,16 +19,16 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
-#include "CoreLib.h"
+#include "core.h"
 #include "extraMath.h"
-#include "XBeeArray.h"
+#include "xbeeArray.h"
 #include "step.h"
 
-// Uhhh some base stuff that probably should be moved to CoreLib.h
+// Uhhh some base stuff that probably should be moved to core.h
 #define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
 typedef unsigned char ubyte;
 
-// Change to Main Assert functionality -- Probably should also be changed in CoreLib.h
+// Change to Main Assert functionality -- Probably should also be changed in core.h
 #undef MAIN_ASSERT
 void emergencyStop();
 #define MAIN_ASSERT_LAMBDA emergencyStop() // Lambda def is for includer script to set

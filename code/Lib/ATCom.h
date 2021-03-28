@@ -8,8 +8,8 @@
 #include <stdint.h>
 
 // Custom headers
-#include "CoreLib.h"
-#include "XBeeCom.h"
+#include "core.h"
+#include "xbeeCom.h"
 
 // Prototypes
 int SendRemoteATCommand(int bus, uint16_t destAddr, uint16_t cmd);

@@ -8,7 +8,7 @@
 #include <rc/button.h>
 
 #include "extraMath.h"
-#include "CoreLib.h"
+#include "core.h"
 #include "odometry.h"
 #include "robot.h"
 

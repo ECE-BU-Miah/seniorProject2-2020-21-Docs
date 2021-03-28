@@ -11,7 +11,7 @@
 #include <rc/uart.h>
 
 // Cutom lIbrary headers
-#include "CoreLib.h"
+#include "core.h"
 
 // Prototypes
 int XBee_InitUART(int bus);

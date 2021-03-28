@@ -20,9 +20,9 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
-#include "CoreLib.h"
-#include "ATCom.h"
-#include "XBeeArray.h"
+#include "core.h"
+#include "atCom.h"
+#include "xbeeArray.h"
 #include "step.h"
 
 #define STEPS_PER_MEASUREMENT 5

@@ -17,7 +17,7 @@
 #include <rc/encoder_eqep.h>
 
 // Custom Headers
-#include "CoreLib.h"
+#include "core.h"
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy) {

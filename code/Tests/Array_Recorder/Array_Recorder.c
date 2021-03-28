@@ -15,7 +15,7 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
-#include "XBeeArray.h"
+#include "xbeeArray.h"
 #include "step.h"
 
 #define STEPS_PER_MEASUREMENT 5

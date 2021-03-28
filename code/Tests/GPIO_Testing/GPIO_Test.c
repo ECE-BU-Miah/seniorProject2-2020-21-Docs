@@ -18,7 +18,7 @@
 #include <rc/gpio.h>
 
 // Custom Library headers
-#include "CoreLib.h"
+#include "core.h"
 
 int main(int argc, char* argv[]){
 	printf("\tStarting GPIO Test...\n");

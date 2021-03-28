@@ -25,10 +25,10 @@
 #include <rc/button.h>
 
 // Custom headers
-#include "CoreLib.h"
+#include "core.h"
 #include "robot.h"
-#include "ATCom.h"
-#include "XBeeArray.h"
+#include "atCom.h"
+#include "xbeeArray.h"
 #include "step.h"
 #include "extraMath.h"
 #include "odometry.h"

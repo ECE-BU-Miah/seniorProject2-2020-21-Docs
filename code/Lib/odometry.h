@@ -3,7 +3,7 @@
 
 #include <rc/encoder_eqep.h>
 
-#include "CoreLib.h"
+#include "core.h"
 #include "robot.h"
 
 // Encoder defines
