@@ -7,7 +7,7 @@ CC			:= gcc
 LINKER		:= gcc
 
 # include directory
-IDIR        := ../Lib
+IDIR        := ../lib
 
 # compiler and linker flags
 WFLAGS		:= -Wall -Wextra -Werror=float-equal -Wuninitialized -Wunused-variable -Wdouble-promotion

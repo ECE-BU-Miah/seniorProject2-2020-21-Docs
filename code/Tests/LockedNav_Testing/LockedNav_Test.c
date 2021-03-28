@@ -19,20 +19,12 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
+void emergencyStop();
+#define MAIN_ASSERT_LAMBDA emergencyStop() // Lambda def is for includer script to set
 #include "core.h"
 #include "extraMath.h"
 #include "xbeeArray.h"
-#include "step.h"
-
-// Uhhh some base stuff that probably should be moved to core.h
-#define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
-typedef unsigned char ubyte;
-
-// Change to Main Assert functionality -- Probably should also be changed in core.h
-#undef MAIN_ASSERT
-void emergencyStop();
-#define MAIN_ASSERT_LAMBDA emergencyStop() // Lambda def is for includer script to set
-#define MAIN_ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); MAIN_ASSERT_LAMBDA; return -1;}
+#include "setpMotor.h"
 
 // Set up Data Storage Structes
 #define DATA_BUFFER_SIZE 5
@@ -56,7 +48,7 @@ static void __signal_handler(__attribute__ ((unused)) int dummy) {
 }
 
 // function prototypes
-int getMeasurement(struct XBeeArray_Settings xbeeArray, DistanceData* dData, AngleData* aData);
+int getMeasurement(xbeeArray_settings* xbeeArray, DistanceData* dData, AngleData* aData);
 double updateDistance(DistanceData* dData);
 double updateAngle(AngleData* aData);
 int setWheelVelocitys(double v, double w);
@@ -82,7 +74,7 @@ int main() {
     static const double Kw = 2; // Angular speed proportional gain
     static const double vMax = 0.3; // Maximum linear speed [m/s]
     static const double wMax = M_PI/4; // Maximum angular speed [rad/s]
-    struct XBeeArray_Settings array = {
+    xbeeArray_settings array = {
         5,1,   // Uart buses Top(5) and Side(1) 
         3,1,   // GPIO 0 (Chip 3 Pin 1)
         3,2,   // GPIO 1 (Chip 3 Pin 2)
@@ -96,19 +88,19 @@ int main() {
 
     // Initalize XBee Reflector Array
     printf("\tInitializing XBee Reflector Array...\n");
-    result = XBeeArray_Init(array);
+    result = xbeeArray_Init(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
-    StepperMotor sm;
+    stepMotor_motor sm;
     printf("\tInitializing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+    MAIN_ASSERT(stepMotor_Init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
 
     // Populate Inital Distance and Angle data
     printf("\tPopulating the initial distances and angles...\n");
     do {
         // Get Mesurement data
-        result = getMeasurement(array, &distanceData, &angleData);
+        result = getMeasurement(&array, &distanceData, &angleData);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
 
         // Process Mesurement data
@@ -137,18 +129,18 @@ int main() {
         MAIN_ASSERT(result == 0, "\tERROR: Failed to set Wheel velocitys.\n");
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(array, &distanceData, &angleData);
+        result = getMeasurement(&array, &distanceData, &angleData);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     }
 
     // Close XBee Reflector Array
     printf("\tClosing XBee Reflector Array...\n");
-    result = XBeeArray_Close(array);
+    result = xbeeArray_Close(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     // remove pid file LAST
     rc_remove_pid_file();
@@ -157,12 +149,12 @@ int main() {
     return result;
 }
 
-int getMeasurement(struct XBeeArray_Settings xbeeArray, DistanceData* dData, AngleData* aData) {
+int getMeasurement(xbeeArray_settings* xbeeArray, DistanceData* dData, AngleData* aData) {
     // Initalize storage variables
-    unsigned char strengths[5];
+    ubyte strengths[5];
 
     // Get Strength Values from the XBee Reflector Array
-    int result = XBeeArray_GetStrengths(xbeeArray, strengths);
+    int result = xbeeArray_GetStrengths(xbeeArray, strengths);
     ASSERT(result == 0, "\tERROR: Failed to get signal strength values from the XBee Array.\n");
 
     // Update Current Indexes
@@ -275,7 +267,7 @@ void emergencyStop() {
     rc_set_state(EXITING);
 
     // Close the stepper motor explicetley to prevent data leak
-    stepper_cleanup();
+    stepMotor_Cleanup();
     
     // remove pid file LAST
     rc_remove_pid_file();

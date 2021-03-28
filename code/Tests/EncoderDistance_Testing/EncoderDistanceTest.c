@@ -10,7 +10,7 @@
 #include "extraMath.h"
 #include "core.h"
 #include "odometry.h"
-#include "robot.h"
+#include "../constants/robotSettings.h"
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -22,7 +22,7 @@ static void __signal_handler(__attribute__ ((unused)) int dummy)
 // Function to print distance on pause press
 static void __on_pause_press(void)
 {
-    double distance = odometry_getDistance();
+    double distance = odometry_GetDistance();
     printf("Distance: %f [m]\n", distance);
     return;
 }
@@ -30,7 +30,7 @@ static void __on_pause_press(void)
 // Function to reset encoders on mode press
 static void __on_mode_press(void)
 {
-    odometry_setZeroRef();
+    odometry_SetZeroRef();
     return;
 }
 
@@ -77,7 +77,7 @@ int main()
     printf("\tInitalizing Quadrature Encoders...\n");
     MAIN_ASSERT(rc_encoder_eqep_init() == 0, "\tERROR: Failed to Initialize  Quadrature Encoders.\n");
 
-    odometry_setZeroRef();
+    odometry_SetZeroRef();
 
     while(rc_get_state() != EXITING)
     {}

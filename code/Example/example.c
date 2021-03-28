@@ -5,7 +5,7 @@
 /// --- Includes --- ///
 // Paths can be rgular global headers,
 // dependent of project sorce folder, or
-// dependent of the Include directory (default is "../Lib/")
+// dependent of the Include directory (default is "../lib/")
 #include <stdio.h>
 
 int main() {

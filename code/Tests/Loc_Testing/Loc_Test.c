@@ -23,10 +23,10 @@
 #include "core.h"
 #include "atCom.h"
 #include "xbeeArray.h"
-#include "step.h"
+#include "setpMotor.h"
 
 #define STEPS_PER_MEASUREMENT 5
-#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*DEG_PER_STEP)
+#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
 #define MOVING_AVG_SIZE 1 // Size of the moving average window
 
@@ -43,9 +43,9 @@ static void __signal_handler(__attribute__ ((unused)) int dummy)
 }
 
 // Local functions
-int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, unsigned char* directional_strengths);
-double getDistance(unsigned char* distance_strengths, int num_strengths);
-int getAngle(unsigned char* directional_strengths, int num_strengths);
+int getMeasurement(xbeeArray_settings* arrayP, unsigned int curStep, ubyte* strengths, ubyte* distance_strengths, ubyte* directional_strengths);
+double getDistance(ubyte* distance_strengths, int num_strengths);
+int getAngle(ubyte* directional_strengths, int num_strengths);
 double avg_dbl(double* array, int size);
 double avg_int(int* array, int size);
 int sign(double x);
@@ -83,7 +83,7 @@ int main(){
     int position = 0; // Angular position of reflector array (degrees)
     int direction = 1; // Direction of stepper motor
     unsigned int curStep = 0; // Current step number
-    struct XBeeArray_Settings array = {
+    xbeeArray_settings array = {
         5,1,   // Uart buses Top(5) and Side(1) 
         3,1,   // GPIO 0 (Chip 3 Pin 1)
         3,2,   // GPIO 1 (Chip 3 Pin 2)
@@ -92,9 +92,9 @@ int main(){
 
     // Initalize storage variables
     int result;
-    unsigned char strengths[5]; // Temporary storage during measurement
-    unsigned char distance_strengths[NUM_MEASUREMENTS]; // Strengths from transmitter
-    unsigned char directional_strengths[4*NUM_MEASUREMENTS]; // Strengths from side XBees
+    ubyte strengths[5]; // Temporary storage during measurement
+    ubyte distance_strengths[NUM_MEASUREMENTS]; // Strengths from transmitter
+    ubyte directional_strengths[4*NUM_MEASUREMENTS]; // Strengths from side XBees
     double distance[MOVING_AVG_SIZE] = {0, }; // Distances to remote in m
     int angle[MOVING_AVG_SIZE] = {0, }; // Angles to remote in radians
     unsigned int curMsmt = 0; // Next location to store the distance and angle in the moving average arrays
@@ -112,25 +112,25 @@ int main(){
 
     // Initalize XBee Reflector Array
     printf("\tInitializing XBee Reflector Array...\n");
-    result = XBeeArray_Init(array);
+    result = xbeeArray_Init(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
-    StepperMotor sm;
+    stepMotor_motor sm;
     printf("\tInitializing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+    MAIN_ASSERT(stepMotor_Init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
 
     // Keep looping until state changes to EXITING
     rc_set_state(RUNNING);
 
     // Fill out the measurement arrays
-    result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+    result = getMeasurement(&array, curStep, strengths, distance_strengths, directional_strengths);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     int num_sweeps = 0;
     while (num_sweeps < MOVING_AVG_SIZE)
     {
         // Move the stepper motor
-        step(&sm, direction, STEPS_PER_MEASUREMENT);
+        stepMotor_Step(&sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;
@@ -155,7 +155,7 @@ int main(){
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(&array, curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     }
 
@@ -166,7 +166,7 @@ int main(){
     while(rc_get_state() != EXITING)
     {
         // Move the stepper motor
-        step(&sm, direction, STEPS_PER_MEASUREMENT);
+        stepMotor_Step(&sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;
@@ -219,18 +219,18 @@ int main(){
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(&array, curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     }
 
     // Close XBee Reflector Array
     printf("\tClosing XBee Reflector Array...\n");
-    result = XBeeArray_Close(array);
+    result = xbeeArray_Close(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     rc_remove_pid_file();    // remove pid file LAST
 
@@ -238,10 +238,10 @@ int main(){
     return result;
 }
 
-int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, unsigned char* directional_strengths)
+int getMeasurement(xbeeArray_settings* arrayP, unsigned int curStep, ubyte* strengths, ubyte* distance_strengths, ubyte* directional_strengths)
 {
     // Get Strength Values from the XBee Reflector Array
-    int result = XBeeArray_GetStrengths(array, strengths);
+    int result = xbeeArray_GetStrengths(arrayP, strengths);
     ASSERT(result == 0, "\tERROR: Failed to get signal strength values from the XBee Array.\n");
 
     // Store the strengths in the proper locations
@@ -254,7 +254,7 @@ int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsign
     return result;
 }
 
-double getDistance(unsigned char* distance_strengths, int num_strengths)
+double getDistance(ubyte* distance_strengths, int num_strengths)
 {
     // Find the average path loss in dBm
     int sum = 0;
@@ -269,7 +269,7 @@ double getDistance(unsigned char* distance_strengths, int num_strengths)
     return distance;
 }
 
-int getAngle(unsigned char* directional_strengths, int num_strengths)
+int getAngle(ubyte* directional_strengths, int num_strengths)
 {
     // Calculate a value based on the surrounding strengths as well as the current one
     double val = 0.5*directional_strengths[num_strengths-1] + directional_strengths[0] + 0.5*directional_strengths[1];
