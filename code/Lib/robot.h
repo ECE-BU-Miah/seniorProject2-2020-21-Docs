@@ -40,7 +40,7 @@ typedef struct
     int right_motor;
 
     // Array of XBees
-    struct XBeeArray_Settings array;
+    XBeeArray_Settings array;
 
     // Stepper motor
     StepperMotor sm;
@@ -59,10 +59,10 @@ int robot_init(Robot_t* robot)
     robot->L = 0.21668;
     robot->R = 0.0492125;
     robot->vMax = 0.12;
-    robot->omegaMax = M_PI/6;
+    robot->omegaMax = M_PI/4;
     robot->left_motor = 1;
     robot->right_motor = 2;
-    robot->array = {
+    robot->array = (XBeeArray_Settings){
         5,1,   // Uart buses Top(5) and Side(1) 
         3,1,   // GPIO 0 (Chip 3 Pin 1)
         3,2,   // GPIO 1 (Chip 3 Pin 2)
@@ -71,7 +71,7 @@ int robot_init(Robot_t* robot)
 
     // Initalize XBee Reflector Array
     printf("\tInitializing XBee Reflector Array...\n");
-    ASSERT(XBeeArray_Init(robot->array) == 0, "\tERROR: Failed to Initialize XBee Array.\n");
+    ASSERT(XBeeArray_Init(&(robot->array)) == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
     printf("\tInitializing Stepper Motor...\n");
@@ -94,7 +94,7 @@ int robot_close(Robot_t* robot)
 {
     // Close XBee Reflector Array
     printf("\tClosing XBee Reflector Array...\n");
-    MAIN_ASSERT(XBeeArray_Close(robot->array) == 0, "\tERROR: Failed to close XBee Array.\n");
+    MAIN_ASSERT(XBeeArray_Close(&(robot->array)) == 0, "\tERROR: Failed to close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");

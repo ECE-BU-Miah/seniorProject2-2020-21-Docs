@@ -42,25 +42,26 @@
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
 {
-        rc_set_state(EXITING);
-        return;
+    rc_set_state(EXITING);
+    return;
 }
 
 // Function to stop program on pause press
 static void __on_pause_press(void)
 {
-        rc_set_state(EXITING);
-        return;
+    rc_set_state(EXITING);
+    return;
 }
 
 // Local functions
-int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths);
+int getMeasurement(XBeeArray_Settings* array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths);
 double getDistance(unsigned char* distance_strengths, int num_strengths);
 int getAngle(int* directional_strengths, int num_strengths);
 
 // Global control parameters
 const double Kp = 1; // Linear speed proportional gain
 const double Kw = 4; // Angular speed proportional gain
+const int maxTargetAngle = 30; // Maximum angle change for a single measurement
 
 int main(){
     printf("\tStarting Main Program...\n");
@@ -126,14 +127,14 @@ int main(){
     // double targetY = 0; // Estimated Y coordinate of remote w.r.t. robot's local frame
     double v = 0; // Desired linear velocity
     double omega = 0; // Desired angular velocity
-    double theta = 0; // Angle (in rad) of robot with respect to where it was when the last target point was computed
+    double theta = 0; // Angle (in degrees) of robot with respect to where it was when the last target point was computed
 
     // Initialize Robot
     printf("\tInitializing Robot...\n");
     robot_init(&robot);
 
     // Fill out the measurement arrays
-    result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
+    result = getMeasurement(&(robot.array), curStep, strengths, distance_strengths, directional_strengths);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     int num_sweeps = 0;
     while (num_sweeps < MOVING_AVG_SIZE)
@@ -151,8 +152,8 @@ int main(){
         if ((position >= (90 - DEG_PER_MEASUREMENT)) || (position <= 0))
         {
             // Calculate the distance to the remote
-            distance[curMsmt] = getDistance(distance_strengths, sizeof(distance_strengths));
-            angle[curMsmt] = getAngle(directional_strengths, sizeof(directional_strengths));
+            distance[curMsmt] = getDistance(distance_strengths, sizeof(distance_strengths)/sizeof(distance_strengths[0]));
+            angle[curMsmt] = getAngle(directional_strengths, sizeof(directional_strengths)/sizeof(directional_strengths[0]));
             
             // Update the current measurement pointer
             curMsmt = (curMsmt + 1) % MOVING_AVG_SIZE;
@@ -164,7 +165,7 @@ int main(){
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(&(robot.array), curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
         if(rc_get_state() == EXITING) break;
     }
@@ -188,8 +189,9 @@ int main(){
         if ((position >= (90 - DEG_PER_MEASUREMENT)) || (position <= 0))
         {
             // Calculate the distance to the remote
-            distance[curMsmt] = getDistance(distance_strengths, sizeof(distance_strengths));
-            angle[curMsmt] = getAngle(directional_strengths, sizeof(directional_strengths));
+            distance[curMsmt] = getDistance(distance_strengths, sizeof(distance_strengths)/sizeof(distance_strengths[0]));
+            angle[curMsmt] = getAngle(directional_strengths, sizeof(directional_strengths)/sizeof(directional_strengths[0]));
+            // printf("%d, %d\n", angle[0], angle[1]);
             
             // Update the current measurement pointer
             curMsmt = (curMsmt + 1) % MOVING_AVG_SIZE;
@@ -201,8 +203,8 @@ int main(){
             // Find the target angle
             targetAngle = avg_i(angle, MOVING_AVG_SIZE);
             // printf("Angle to remote: %.0f\n", targetAngle);
-            //Saturate the target angle to 15 degrees to avoid turning too fast
-            targetAngle = clamp(targetAngle, -15, 15);
+            //Saturate the target angle to avoid turning too fast
+            targetAngle = clamp(targetAngle, -maxTargetAngle, maxTargetAngle);
             
             // Convert target angle to radians
             targetAngle_rad = targetAngle*M_PI/180;
@@ -217,15 +219,18 @@ int main(){
 
             // Reset the encoder positions to 0
             odometry_setZeroRef();
+            theta = 0;
 
             // Pause measurements until robot is turned to target angle
             MAIN_ASSERT(robot_setSpeeds(&robot, v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
-            while (abs(theta - targetAngle) > 4 && rc_get_state() != EXITING)
+#if !MOTORS_OFF // Odometry only works if the motors move
+            while (abs(theta - targetAngle) > 2 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
                 theta = odometry_getAngle(robot.R, robot.L);
-                printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta*180/M_PI);
+                // printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta);
             }
+#endif
 
             //Just go straight now
             MAIN_ASSERT(robot_setSpeeds(&robot, v, 0) == 0, "\tERROR: Failed to set motor speeds\n");
@@ -235,7 +240,7 @@ int main(){
         }
 
         // Get Strength Values from the XBee Reflector Array
-        result = getMeasurement(robot.array, curStep, strengths, distance_strengths, directional_strengths);
+        result = getMeasurement(&(robot.array), curStep, strengths, distance_strengths, directional_strengths);
         MAIN_ASSERT(result == 0, "\tERROR: Failed to get measurement.\n");
     }
 
@@ -245,7 +250,7 @@ int main(){
     return result;
 }
 
-int getMeasurement(struct XBeeArray_Settings array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths)
+int getMeasurement(XBeeArray_Settings* array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths)
 {
     // Offset values for the side XBees
     static int offset[4] = {29, 31, 34, 32};

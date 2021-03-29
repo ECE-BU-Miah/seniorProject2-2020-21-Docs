@@ -15,7 +15,7 @@ double odometry_getAngle(double R, double L);
 double odometry_getDistance(double R);
 int odometry_setZeroRef();
 
-// Estimates the rotation angle of the robot relative to the last time the zero reference was set
+// Estimates the rotation angle (in degrees) of the robot relative to the last time the zero reference was set
 // @param R: Radius of the wheels
 // @param L: Distance between wheels
 double odometry_getAngle(double R, double L)
