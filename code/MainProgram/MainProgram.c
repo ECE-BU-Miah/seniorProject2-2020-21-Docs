@@ -26,16 +26,16 @@
 #include <rc/button.h>
 
 // Custom headers
-#include "CoreLib.h"
-#include "robot.h"
-#include "ATCom.h"
-#include "XBeeArray.h"
-#include "step.h"
+#include "core.h"
+#include "../constants/robotSettings.h"
+#include "atCom.h"
+#include "xbeeArray.h"
+#include "setpMotor.h"
 #include "extraMath.h"
 #include "odometry.h"
 
 #define STEPS_PER_MEASUREMENT 5
-#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*DEG_PER_STEP)
+#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
 #define MOVING_AVG_SIZE 2 // Size of the moving average window
 
@@ -54,14 +54,20 @@ static void __on_pause_press(void)
 }
 
 // Local functions
-int getMeasurement(XBeeArray_Settings* array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths);
-double getDistance(unsigned char* distance_strengths, int num_strengths);
+int getMeasurement(xbeeArray_settings* arrayP, unsigned int curStep, ubyte* strengths, ubyte* distance_strengths, int* directional_strengths);
+double getDistance(ubyte* distance_strengths, int num_strengths);
 int getAngle(int* directional_strengths, int num_strengths);
 
 // Global control parameters
 const double Kp = 1; // Linear speed proportional gain
 const double Kw = 4; // Angular speed proportional gain
 const int maxTargetAngle = 30; // Maximum angle change for a single measurement
+
+// Global Constants
+const double Kp = 1; // Linear speed proportional gain
+const double Kw = 4; // Angular speed proportional gain
+const double vMax = 0.12; // Maximum linear speed [m/s]
+const double omegaMax = M_PI/6; // Maximum angular speed [rad/s]
 
 int main(){
     printf("\tStarting Main Program...\n");
@@ -114,8 +120,8 @@ int main(){
 
     // Initalize storage variables
     int result;
-    unsigned char strengths[5]; // Temporary storage during measurement
-    unsigned char distance_strengths[NUM_MEASUREMENTS]; // Strengths from transmitter
+    ubyte strengths[5]; // Temporary storage during measurement
+    ubyte distance_strengths[NUM_MEASUREMENTS]; // Strengths from transmitter
     int directional_strengths[4*NUM_MEASUREMENTS]; // Strengths from side XBees
     double distance[MOVING_AVG_SIZE] = {0, }; // Distances to remote in m
     int angle[MOVING_AVG_SIZE] = {0, }; // Angles to remote in radians
@@ -218,7 +224,7 @@ int main(){
             omega = clamp(omega, -robot.omegaMax, robot.omegaMax); // Saturate velocity
 
             // Reset the encoder positions to 0
-            odometry_setZeroRef();
+            odometry_SetZeroRef();
             theta = 0;
 
             // Pause measurements until robot is turned to target angle
@@ -250,13 +256,13 @@ int main(){
     return result;
 }
 
-int getMeasurement(XBeeArray_Settings* array, unsigned int curStep, unsigned char* strengths, unsigned char* distance_strengths, int* directional_strengths)
+int getMeasurement(xbeeArray_settings* arrayP, unsigned int curStep, ubyte* strengths, ubyte* distance_strengths, int* directional_strengths)
 {
     // Offset values for the side XBees
     static int offset[4] = {29, 31, 34, 32};
 
     // Get Strength Values from the XBee Reflector Array
-    int result = XBeeArray_GetStrengths(array, strengths);
+    int result = xbeeArray_GetStrengths(arrayP, strengths);
     ASSERT(result == 0, "\tERROR: Failed to get signal strength values from the XBee Array.\n");
 
     // Store the strengths in the proper locations
@@ -269,7 +275,7 @@ int getMeasurement(XBeeArray_Settings* array, unsigned int curStep, unsigned cha
     return result;
 }
 
-double getDistance(unsigned char* distance_strengths, int num_strengths)
+double getDistance(ubyte* distance_strengths, int num_strengths)
 {
     // Find the average path loss in dBm
     int sum = 0;

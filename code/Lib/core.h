@@ -15,10 +15,21 @@
 
 // Define Assert statement
 #define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
-#define MAIN_ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); rc_set_state(EXITING);}
 #define ASSERT_NOMSG(condition) if(!(condition)){return -1;}
 
-#define DEBUG_ASSERT(condition,ftext...) ASSERT_NOMSG(condition)
+// Define Main Assert statement
+#ifndef CORE_MAIN_ASSERT_LAMBDA
+	#define CORE_MAIN_ASSERT_LAMBDA
+#endif
+#define MAIN_ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); CORE_MAIN_ASSERT_LAMBDA; return -1;}
+#undef CORE_MAIN_ASSERT_LAMBDA
+
+// Array size statement
+#define ARRSIZE(x) (sizeof(x)/sizeof(x[0]))
+
+/// ----- Type Definitions ----- ///
+
+typedef unsigned char ubyte;
 
 /// ----- Prototypes ----- ///
 
@@ -37,7 +48,7 @@ void msleep(int milliSeconds) { usleep((milliSeconds)*1000); }
 // @param bufSize: sice of given buffer 'buf' in bytes
 void printHexBuffer(void* buf, int bufSize){
 	for(int i=0; i<bufSize; i++)
-		printf("%02X ", ((unsigned char*)buf)[i]);
+		printf("%02X ", ((ubyte*)buf)[i]);
 }
 
 // Print out byte array in hexidecimal with endcaps
@@ -48,7 +59,7 @@ void printHexBuffer(void* buf, int bufSize){
 void fprintHexBuffer(void* buf, int bufSize, char* header, char* footer){
 	printf(header);
 	for(int i=0; i<bufSize; i++)
-		printf("%02X ", ((unsigned char*)buf)[i]);
+		printf("%02X ", ((ubyte*)buf)[i]);
 	printf(footer);
 }
 

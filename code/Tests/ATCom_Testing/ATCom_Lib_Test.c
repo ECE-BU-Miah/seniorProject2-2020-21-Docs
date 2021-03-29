@@ -12,9 +12,9 @@
 #include <stdint.h>
 
 // Custom headers
-#include "CoreLib.h"
+#include "core.h"
 #define DEBUG_XBEECOM 0
-#include "ATCom.h"
+#include "atCom.h"
 
 int LocalATCom_Test(int bus);
 int RemoteATCom_Test(int bus, uint16_t destAddr);
@@ -30,7 +30,7 @@ int main(){
 	int success;
 	
 	// Initalize UART ports to XBees
-	success = XBee_InitUART(bus);
+	success = xbeeCom_InitUART(bus);
 	ASSERT(success != -1, "\tERROR: Failed to Initalize UART Port %d.\n", bus);
 
 	// Test Local DB AT Command
@@ -40,7 +40,7 @@ int main(){
 	RemoteATCom_Test(bus, remoteAddr);
 
 	// Close UART ports to XBees
-	success = XBee_CloseUART(bus);
+	success = xbeeCom_CloseUART(bus);
 	ASSERT(success != -1, "\tERROR: Failed to Close UART Port %d.\n", bus);
 
 	return 0;
@@ -54,14 +54,14 @@ int LocalATCom_Test(int bus) {
 
 	// Send local DB command to XBee Cordinator 1
 	printf("\tSending Local AT Command...\n");
-	success = SendLocalATCommand(bus, 0x6462);
+	success = atCom_SendLocal(bus, 0x6462);
 	ASSERT(success != -1, "\tERROR: Failed to write command to UART Port %d.\n", bus);
 	printf("\tBytes Sent: %d\n", success);
 
 	msleep(100); // Safety Delay (Non-Esential)
 
 	// Read back local command from XBee Cordinaor 1
-	success = ReadCommand(bus, buff, 256);
+	success = xbeeCom_ReadCommand(bus, buff, 256);
 	ASSERT(success != -1, "\tERROR: Failed to read frame from UART Port %d.\n", bus);
 	int msgLength = success;
 
@@ -69,7 +69,7 @@ int LocalATCom_Test(int bus) {
 	if(msgLength > 0) fprintHexBuffer(buff, msgLength, "\t", "\n");
 
 	// Strip response Data (ex)DB -> Decible Strength)
-	success = StripATResponseData(buff, msgLength, &strength, 1);
+	success = atCom_StripResponseData(buff, msgLength, &strength, 1);
 	ASSERT(success != -1, "\tERROR: Failed to strip response data from given msg.\n");
 	printf("\tResponse Data is 0x%02X\n", strength);
 
@@ -84,14 +84,14 @@ int RemoteATCom_Test(int bus, uint16_t destAddr) {
 
 	// Send remote DB command to XBee Cordinator 1
 	printf("\tSending Remote AT Command...\n");
-	success = SendRemoteATCommand(bus, destAddr, 0x6462);
+	success = atCom_SendRemote(bus, destAddr, 0x6462);
 	ASSERT(success != -1, "\tERROR: Failed to write command to UART Port %d.\n", bus);
 	printf("\tBytes Sent: %d\n", success);
 
 	msleep(100); // Safety Delay (Non-Esential)
 
 	// Read back remote command from XBee Cordinaor 1
-	success = ReadCommand(bus, buff, 256);
+	success = xbeeCom_ReadCommand(bus, buff, 256);
 	ASSERT(success != -1, "\tERROR: Failed to read frame from UART Port %d.\n", bus);
 	int msgLength = success;
 
@@ -99,7 +99,7 @@ int RemoteATCom_Test(int bus, uint16_t destAddr) {
 	if(msgLength > 0) fprintHexBuffer(buff, msgLength, "\t", "\n");
 
 	// Strip response Data (ex)DB -> Decible Strength)
-	success = StripATResponseData(buff, msgLength, &strength, 1);
+	success = atCom_StripResponseData(buff, msgLength, &strength, 1);
 	ASSERT(success != -1, "\tERROR: Failed to strip response data from given msg.\n");
 	printf("\tResponse Data is 0x%02X\n", strength);
 

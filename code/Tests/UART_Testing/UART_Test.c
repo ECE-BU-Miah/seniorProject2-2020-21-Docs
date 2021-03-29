@@ -16,7 +16,7 @@
 #include <rc/uart.h>
 
 // Custom Library headers
-#include "CoreLib.h"
+#include "core.h"
 
 int main(int argc, char* argv[]) {
 	// Initalize Storage Variables

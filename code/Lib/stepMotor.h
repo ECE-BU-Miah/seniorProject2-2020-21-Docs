@@ -1,14 +1,14 @@
-#ifndef _STEP_H_
-#define _STEP_H_
+#ifndef STEP_MOTOR_H
+#define STEP_MOTOR_H
 
 #include <rc/motor.h>
 #include <rc/time.h>
-#include "CoreLib.h"
+#include "core.h"
 
 // Number of degrees per step on the stepper motor
-#define DEG_PER_STEP 1.8
+#define STEP_MOTOR_DEG_PER_STEP 1.8
 
-typedef struct
+typedef struct stepMotor_motor
 {
     // Motor driver ports used for the stepper motor
     int m1;
@@ -19,16 +19,16 @@ typedef struct
 
     // State of the windings
     int state;
-} StepperMotor;
+} stepMotor_motor;
 
 // Function Prototypes
-int stepper_init(StepperMotor* stepper, int m1, int m2);
-int step(StepperMotor* stepper, int direction, int numSteps);
-int set_state(StepperMotor* stepper);
-int stepper_cleanup();
+int stepMotor_Init(stepMotor_motor* stepper, int m1, int m2);
+int stepMotor_Step(stepMotor_motor* stepper, int direction, int numSteps);
+int stepMotor_SetState(stepMotor_motor* stepper);
+int stepMotor_Cleanup();
 
 // Function to initialize a stepper motor
-int stepper_init(StepperMotor* stepper, int m1, int m2)
+int stepMotor_Init(stepMotor_motor* stepper, int m1, int m2)
 {
     // Initialize the motor drivers
     ASSERT(rc_motor_init() != -1, "\tERROR: Failed to initialize motors\n");
@@ -39,13 +39,13 @@ int stepper_init(StepperMotor* stepper, int m1, int m2)
 
     // Set the current state
     stepper->state = 0;
-    set_state(stepper);
+    stepMotor_SetState(stepper);
 
     return 0;
 }
 
 // Function to step the motor a specified number of steps
-int step(StepperMotor* stepper, int direction, int numSteps)
+int stepMotor_Step(stepMotor_motor* stepper, int direction, int numSteps)
 {
     for (int i = 0; i < numSteps; ++i)
     {
@@ -61,7 +61,7 @@ int step(StepperMotor* stepper, int direction, int numSteps)
         }
 
         // Set the state of the motor windings
-        set_state(stepper);
+        stepMotor_SetState(stepper);
 
         // Sleep to allow motor to turn
         rc_usleep(20000);
@@ -70,7 +70,7 @@ int step(StepperMotor* stepper, int direction, int numSteps)
     return 0;
 }
 
-int set_state(StepperMotor* stepper)
+int stepMotor_SetState(stepMotor_motor* stepper)
 {
     // Winding states
     switch(stepper->state)
@@ -97,7 +97,7 @@ int set_state(StepperMotor* stepper)
     return 0;
 }
 
-int stepper_cleanup()
+int stepMotor_Cleanup()
 {
     return rc_motor_cleanup();
 }

@@ -7,10 +7,10 @@
 #include <rc/motor.h>
 #include <rc/time.h>
 #include <rc/start_stop.h>
-#include "../../Lib/step.h" // Stepper motor library
+#include "../../lib/setpMotor.h" // Stepper motor library
 
 // Number of degrees per step on the stepper motor
-#define DEG_PER_STEP 1.8
+#define STEP_MOTOR_DEG_PER_STEP 1.8
 
 // Motor ports used on BBBlue
 #define M1 3
@@ -62,15 +62,15 @@ int main()
     rc_motor_init();
 
     // Create and initialize a stepper motor on motor drivers 3 and 4
-    StepperMotor stepper;
-    stepper_init(&stepper, 3, 4);
+    stepMotor_motor stepper;
+    stepMotor_Init(&stepper, 3, 4);
 
     while(rc_get_state()!=EXITING){
         // Step 90 degrees
         while (position < 90)
         {
             fflush(stdout);
-            step(&stepper, direction, numSteps);
+            stepMotor_Step(&stepper, direction, numSteps);
             position += 1.8*numSteps;
         }
         rc_usleep(500000);

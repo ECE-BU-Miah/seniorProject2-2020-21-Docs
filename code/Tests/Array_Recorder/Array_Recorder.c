@@ -15,11 +15,11 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
-#include "XBeeArray.h"
-#include "step.h"
+#include "xbeeArray.h"
+#include "setpMotor.h"
 
 #define STEPS_PER_MEASUREMENT 5
-#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*DEG_PER_STEP)
+#define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
 
 // interrupt handler to catch ctrl-c
@@ -30,7 +30,7 @@ static void __signal_handler(__attribute__ ((unused)) int dummy) {
 
 // Prototypes
 int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep);
-int AddRecored(FILE* fp, struct XBeeArray_Settings array, double angle, double distance, double height);
+int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height);
 int StripFloat(char* str, float* value);
 
 // Main
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]){
 	double init_angle = 0; //atof(argv[1]);
 	double init_distance = 1; //atof(argv[2]);
 	double init_height = 0;
-	struct XBeeArray_Settings array = {
+	xbeeArray_settings array = {
 		5,1,   // Uart buses Top(1) and Side(5) 
 		3,1,  // GPIO 0 (Chip 1 Pin 25)
 		3,2,  // GPIO 1 (Chip 1 Pin 17)
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]){
 
 	// Initalize storage variables
 	int result;
-	StepperMotor sm;
+	stepMotor_motor sm;
 	FILE* fp;
 
 	// Read in peramiters
@@ -67,12 +67,12 @@ int main(int argc, char* argv[]){
 
 	// Initalize XBee Reflector Array
 	printf("\tInitalizeing XBee Reflector Array...\n");
-	result = XBeeArray_Init(array);
+	result = xbeeArray_Init(&array);
 	MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
     printf("\tInitializing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+    MAIN_ASSERT(stepMotor_Init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
 
 	// Open output file in Append mode
 	fp = fopen("Strengths.csv", "a");
@@ -88,19 +88,19 @@ int main(int argc, char* argv[]){
 		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)) {
 			// Add recored
 			double curAngle = fmod((init_angle + (double)angleOffset), 360.0);
-			result = AddRecored(fp, array, curAngle, init_distance, init_height);
+			result = AddRecored(fp, &array, curAngle, init_distance, init_height);
 			MAIN_ASSERT(result != -1, " ");
 
 			// Move the stepper motor
 			direction = (segment < NUM_MEASUREMENTS) ? 1: -1;
-        	result = step(&sm, direction, 5);
+        	result = stepMotor_Step(&sm, direction, 5);
 			MAIN_ASSERT(result != -1, " ")
 			angleOffset += (DEG_PER_MEASUREMENT * direction);
             ++segment;
 		}
 	} else {
 		// Add record
-		result = AddRecored(fp, array, init_angle, init_distance, init_height);
+		result = AddRecored(fp, &array, init_angle, init_distance, init_height);
 		MAIN_ASSERT(result != -1, " ");
 	}
 
@@ -110,22 +110,22 @@ int main(int argc, char* argv[]){
 
 	// Close XBee Reflector Array
 	printf("\tCloseing XBee Reflector Array...\n");
-	result = XBeeArray_Close(array);
+	result = xbeeArray_Close(&array);
 	MAIN_ASSERT(result == 0, "\tERROR: Failed to Close XBee Array.\n");
 
 	// Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     rc_remove_pid_file();    // remove pid file LAST
 
 	return result;
 }
 
-int AddRecored(FILE* fp, struct XBeeArray_Settings array, double angle, double distance, double height) {
+int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height) {
 	// Initalize storage variables
 	int result;
-	unsigned char strengths[5];
+	ubyte strengths[5];
 	
 	// Write out header if the file is empty
 	if(ftell(fp) == 0) {
@@ -136,7 +136,7 @@ int AddRecored(FILE* fp, struct XBeeArray_Settings array, double angle, double d
     for (int m = 0; m < 100; ++m)
     {
         // Get Stenght Values from the XBee Reflector Array
-        result = XBeeArray_GetStrengths(array, strengths);
+        result = xbeeArray_GetStrengths(arrayP, strengths);
         ASSERT(result == 0, "\tERROR: Failed to Get Signal Strength values from the XBee Array.\n");
         
         // Write out the ange, distance, and height values to the file

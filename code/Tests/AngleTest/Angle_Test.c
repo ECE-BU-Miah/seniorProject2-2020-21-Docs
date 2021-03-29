@@ -15,8 +15,8 @@
 // Custom headers
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
-#include "XBeeArray.h"
-#include "step.h"
+#include "xbeeArray.h"
+#include "setpMotor.h"
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy) {
@@ -39,7 +39,7 @@ int main(){
     rc_make_pid_file();
 
     // Initalize state variables
-    struct XBeeArray_Settings array = {
+    xbeeArray_settings array = {
         5,1,   // Uart buses Top(1) and Side(5) 
         3,1,  // GPIO 0 (Chip 1 Pin 25)
         3,2,  // GPIO 1 (Chip 1 Pin 17)
@@ -48,24 +48,24 @@ int main(){
 
     // Initalize storage variables
     int result;
-    unsigned char strengths[5];
-    StepperMotor sm;
+    ubyte strengths[5];
+    stepMotor_motor sm;
 
     // Initalize XBee Reflector Array
     printf("\tInitalizeing XBee Reflector Array...\n");
-    result = XBeeArray_Init(array);
+    result = xbeeArray_Init(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
     printf("\tInitializing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+    MAIN_ASSERT(stepMotor_Init(&sm, 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
     
     // Main Program loop
     rc_set_state(RUNNING);
     while(rc_get_state() == RUNNING)
     {
         // Get Strength Values from the XBee Reflector Array
-        result = XBeeArray_GetStrengths(array, strengths);
+        result = xbeeArray_GetStrengths(&array, strengths);
         ASSERT(result == 0, "\tERROR: Failed to Get Signal Strength values from the XBee Array.\n");
 
         for (int i = 1; i < 5; ++i)
@@ -78,12 +78,12 @@ int main(){
     
     // Close XBee Reflector Array
     printf("\tCloseing XBee Reflector Array...\n");
-    result = XBeeArray_Close(array);
+    result = xbeeArray_Close(&array);
     MAIN_ASSERT(result == 0, "\tERROR: Failed to Close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     rc_remove_pid_file();    // remove pid file LAST
 
