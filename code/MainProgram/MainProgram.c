@@ -27,10 +27,10 @@
 
 // Custom headers
 #include "core.h"
-#include "../constants/robotSettings.h"
+#include "robot.h"
 #include "atCom.h"
 #include "xbeeArray.h"
-#include "setpMotor.h"
+#include "stepMotor.h"
 #include "extraMath.h"
 #include "odometry.h"
 
@@ -62,12 +62,6 @@ int getAngle(int* directional_strengths, int num_strengths);
 const double Kp = 1; // Linear speed proportional gain
 const double Kw = 4; // Angular speed proportional gain
 const int maxTargetAngle = 30; // Maximum angle change for a single measurement
-
-// Global Constants
-const double Kp = 1; // Linear speed proportional gain
-const double Kw = 4; // Angular speed proportional gain
-const double vMax = 0.12; // Maximum linear speed [m/s]
-const double omegaMax = M_PI/6; // Maximum angular speed [rad/s]
 
 int main(){
     printf("\tStarting Main Program...\n");
@@ -146,7 +140,7 @@ int main(){
     while (num_sweeps < MOVING_AVG_SIZE)
     {
         // Move the stepper motor
-        step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
+        stepMotor_Step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;
@@ -183,7 +177,7 @@ int main(){
     while(rc_get_state() != EXITING)
     {
         // Move the stepper motor
-        step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
+        stepMotor_Step(&robot.sm, direction, STEPS_PER_MEASUREMENT);
 
         // Update current step number
         curStep += direction;

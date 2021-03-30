@@ -1,30 +1,14 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-// C Library headers
-// #include <stdio.h>
-// #include <string.h>
-// #include <stdbool.h>
-// #include <stdint.h>
-// #include <stdlib.h>
-// #include <unistd.h>
-// #include <signal.h>
-// #include <math.h>
-
 // Robot Control Library headers
-// #include <rc/uart.h>
-// #include <rc/gpio.h>
 #include <rc/motor.h>
 #include <rc/encoder_eqep.h>
-// #include <rc/button.h>
 
 // Custom headers
-#include "CoreLib.h"
-// #include "ATCom.h"
-#include "XBeeArray.h"
-#include "step.h"
-// #include "extraMath.h"
-// #include "odometry.h"
+#include "core.h"
+#include "xbeeArray.h"
+#include "stepMotor.h"
 
 typedef struct
 {
@@ -40,10 +24,10 @@ typedef struct
     int right_motor;
 
     // Array of XBees
-    XBeeArray_Settings array;
+    xbeeArray_settings array;
 
     // Stepper motor
-    StepperMotor sm;
+    stepMotor_motor sm;
 
 } Robot_t;
 
@@ -62,7 +46,7 @@ int robot_init(Robot_t* robot)
     robot->omegaMax = M_PI/4;
     robot->left_motor = 1;
     robot->right_motor = 2;
-    robot->array = (XBeeArray_Settings){
+    robot->array = (xbeeArray_settings){
         5,1,   // Uart buses Top(5) and Side(1) 
         3,1,   // GPIO 0 (Chip 3 Pin 1)
         3,2,   // GPIO 1 (Chip 3 Pin 2)
@@ -71,11 +55,11 @@ int robot_init(Robot_t* robot)
 
     // Initalize XBee Reflector Array
     printf("\tInitializing XBee Reflector Array...\n");
-    ASSERT(XBeeArray_Init(&(robot->array)) == 0, "\tERROR: Failed to Initialize XBee Array.\n");
+    ASSERT(xbeeArray_Init(&(robot->array)) == 0, "\tERROR: Failed to Initialize XBee Array.\n");
 
     // Initialize Stepper Motor
     printf("\tInitializing Stepper Motor...\n");
-    ASSERT(stepper_init(&(robot->sm), 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
+    ASSERT(stepMotor_Init(&(robot->sm), 3, 4) != -1, "\tERROR: Failed to initialize Stepper Motor.\n");
 
     // Initalize Encoders
     printf("\tInitalizing Quadrature Encoders...\n");
@@ -83,7 +67,7 @@ int robot_init(Robot_t* robot)
 
     // Zero the stepper motor by rotating 90 degrees counterclockwise
     // The frame will stop the motor from moving past 0 degrees
-    step(&(robot->sm), -1, 50);
+    stepMotor_Step(&(robot->sm), -1, 50);
 
     return 0;
 }
@@ -94,11 +78,11 @@ int robot_close(Robot_t* robot)
 {
     // Close XBee Reflector Array
     printf("\tClosing XBee Reflector Array...\n");
-    MAIN_ASSERT(XBeeArray_Close(&(robot->array)) == 0, "\tERROR: Failed to close XBee Array.\n");
+    MAIN_ASSERT(xbeeArray_Close(&(robot->array)) == 0, "\tERROR: Failed to close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepper_cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     // Close the encoders
     printf("\tClosing Encoders...\n");

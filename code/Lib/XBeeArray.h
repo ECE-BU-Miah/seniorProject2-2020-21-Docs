@@ -42,10 +42,10 @@ int xbeeArray_Init(xbeeArray_settings* array) {
     XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize side UART on bus %d\n", (*array).side_uart_bus);
 
     // Initalize GPIO pins
-	result = rc_gpio_init((*array).io_chip_0, (*array).io_pin_0, GPIOHANDLE_REQUEST_OUTPUT);
-	XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize output gpio %d_%d.\n", (*array).io_chip_0, (*array).io_pin_0);
+    result = rc_gpio_init((*array).io_chip_0, (*array).io_pin_0, GPIOHANDLE_REQUEST_OUTPUT);
+    XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize output gpio %d_%d.\n", (*array).io_chip_0, (*array).io_pin_0);
     result = rc_gpio_init((*array).io_chip_1, (*array).io_pin_1, GPIOHANDLE_REQUEST_OUTPUT);
-	XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize output gpio %d_%d.\n", (*array).io_chip_1, (*array).io_pin_1);
+    XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize output gpio %d_%d.\n", (*array).io_chip_1, (*array).io_pin_1);
 
     return 0;
 }
@@ -94,9 +94,9 @@ int xbeeArray_GetStrengths(xbeeArray_settings* array, ubyte strengths[5]){
     for(int i=0; i<4; i++) {
         // Set Multiplexer chanel to 'i'
         result = rc_gpio_set_value((*array).io_chip_0, (*array).io_pin_0, (i)&1);
-		XBEE_ARRAY_DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to set pin value for GPIO %d_%d.\n", (*array).io_chip_0, (*array).io_pin_0);
+        XBEE_ARRAY_DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to set pin value for GPIO %d_%d.\n", (*array).io_chip_0, (*array).io_pin_0);
         result = rc_gpio_set_value((*array).io_chip_1, (*array).io_pin_1, (i>>1)&1);
-		XBEE_ARRAY_DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to set pin value for GPIO %d_%d.\n", (*array).io_chip_1, (*array).io_pin_1);      
+        XBEE_ARRAY_DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to set pin value for GPIO %d_%d.\n", (*array).io_chip_1, (*array).io_pin_1);      
         
         readAttempts = 0;
         do {
@@ -120,3 +120,5 @@ int xbeeArray_GetStrengths(xbeeArray_settings* array, ubyte strengths[5]){
 
     return 0;
 }
+
+#endif

@@ -8,7 +8,7 @@
 // Number of degrees per step on the stepper motor
 #define STEP_MOTOR_DEG_PER_STEP 1.8
 
-typedef struct stepMotor_motor
+typedef struct
 {
     // Motor driver ports used for the stepper motor
     int m1;

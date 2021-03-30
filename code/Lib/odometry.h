@@ -4,7 +4,6 @@
 #include <rc/encoder_eqep.h>
 
 #include "core.h"
-#include "../constants/robotSettings.h"
 
 // Encoder defines
 #define ODOMETRY_ENCODER_LEFT 1
@@ -15,7 +14,6 @@ double odometry_GetAngle();
 double odometry_GetDistance();
 int odometry_SetZeroRef();
 
-double odometry_GetAngle()
 // @param R: Radius of the wheels
 // @param L: Distance between wheels
 double odometry_getAngle(double R, double L)
@@ -28,7 +26,6 @@ double odometry_getAngle(double R, double L)
     return theta;
 }
 
-double odometry_GetDistance()
 // @param R: Radius of the wheels
 double odometry_getDistance(double R)
 {
