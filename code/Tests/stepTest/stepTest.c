@@ -7,7 +7,7 @@
 #include <rc/motor.h>
 #include <rc/time.h>
 #include <rc/start_stop.h>
-#include "../../lib/setpMotor.h" // Stepper motor library
+#include "../../lib/stepMotor.h" // Stepper motor library
 
 // Number of degrees per step on the stepper motor
 #define STEP_MOTOR_DEG_PER_STEP 1.8

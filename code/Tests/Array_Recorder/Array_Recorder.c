@@ -16,7 +16,7 @@
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
 #include "xbeeArray.h"
-#include "setpMotor.h"
+#include "stepMotor.h"
 
 #define STEPS_PER_MEASUREMENT 5
 #define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)

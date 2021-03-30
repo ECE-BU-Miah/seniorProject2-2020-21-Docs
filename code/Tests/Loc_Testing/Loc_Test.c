@@ -23,7 +23,7 @@
 #include "core.h"
 #include "atCom.h"
 #include "xbeeArray.h"
-#include "setpMotor.h"
+#include "stepMotor.h"
 
 #define STEPS_PER_MEASUREMENT 5
 #define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)

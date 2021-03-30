@@ -16,7 +16,7 @@
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
 #include "xbeeArray.h"
-#include "setpMotor.h"
+#include "stepMotor.h"
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy) {

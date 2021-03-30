@@ -24,7 +24,7 @@ void emergencyStop();
 #include "core.h"
 #include "extraMath.h"
 #include "xbeeArray.h"
-#include "setpMotor.h"
+#include "stepMotor.h"
 
 // Set up Data Storage Structes
 #define DATA_BUFFER_SIZE 5
