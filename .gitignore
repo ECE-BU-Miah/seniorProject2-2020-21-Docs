@@ -1,3 +1,9 @@
+# Rules to ignore files without extensions except for Makefiles
+*
+!*/
+!*.*
+!Makefile
+
 # TeX auxiliary files #
 #######################
 # Ignore the output pdfs
