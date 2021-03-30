@@ -10,7 +10,9 @@
 #include "extraMath.h"
 #include "core.h"
 #include "odometry.h"
-#include "../constants/robotSettings.h"
+
+double L = 0.202406;
+double R = 0.0492125;
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -22,7 +24,7 @@ static void __signal_handler(__attribute__ ((unused)) int dummy)
 // Function to print angle on pause press
 static void __on_pause_press(void)
 {
-    double angle = odometry_GetAngle();
+    double angle = odometry_GetAngle(R, L);
     printf("Angle: %f degrees\n", angle);
     return;
 }

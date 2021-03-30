@@ -16,7 +16,7 @@ int odometry_SetZeroRef();
 
 // @param R: Radius of the wheels
 // @param L: Distance between wheels
-double odometry_getAngle(double R, double L)
+double odometry_GetAngle(double R, double L)
 {
     int leftEncVal = -rc_encoder_eqep_read(ODOMETRY_ENCODER_LEFT);
     int rightEncVal = rc_encoder_eqep_read(ODOMETRY_ENCODER_RIGHT);
@@ -27,7 +27,7 @@ double odometry_getAngle(double R, double L)
 }
 
 // @param R: Radius of the wheels
-double odometry_getDistance(double R)
+double odometry_GetDistance(double R)
 {
     int leftEncVal = -rc_encoder_eqep_read(ODOMETRY_ENCODER_LEFT);
     int rightEncVal = rc_encoder_eqep_read(ODOMETRY_ENCODER_RIGHT);

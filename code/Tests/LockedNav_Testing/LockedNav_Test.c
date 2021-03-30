@@ -53,9 +53,6 @@ double updateDistance(DistanceData* dData);
 double updateAngle(AngleData* aData);
 int setWheelVelocitys(double v, double w);
 
-static inline double wrapToPi(double theta) { return mod(theta, M_PI); }
-static inline double wrapTo180(double theta) { return mod(theta, 180.0); }
-
 int main() {
     printf("\tStarting Locked Navigation Test...\n");
 

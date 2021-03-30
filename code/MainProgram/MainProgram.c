@@ -227,7 +227,7 @@ int main(){
             while (abs(theta - targetAngle) > 2 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
-                theta = odometry_getAngle(robot.R, robot.L);
+                theta = odometry_GetAngle(robot.R, robot.L);
                 // printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta);
             }
 #endif

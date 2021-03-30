@@ -84,7 +84,7 @@ EXTRA_MATH_FUNC_HEAD double max(double x1, double x2) {
     return (x1 > x2) ? x1 : x2;
 }
 
-// Clamp a ingeger value to a range
+// Clamp an integer value to a range
 // @param x: Value to clamp
 // @param min: Minimum value of range
 // @param max: Maximum value of range
@@ -128,30 +128,14 @@ EXTRA_MATH_FUNC_HEAD double avg(double* array, int size) {
 // @param theta: Angle to wrap (in radians)
 EXTRA_MATH_FUNC_HEAD double wrapToPi(double theta)
 {
-    while(theta > M_PI)
-    {
-        theta -= 2*M_PI;
-    }
-    while(theta < -M_PI)
-    {
-        theta += 2*M_PI;
-    }
-    return theta;
+    return mod(theta, M_PI);
 }
 
 // Wraps theta between -180 and 180
 // @param theta: Angle to wrap (in degrees)
 EXTRA_MATH_FUNC_HEAD double wrapTo180(double theta)
 {
-    while(theta > 180)
-    {
-        theta -= 360;
-    }
-    while(theta < -180)
-    {
-        theta += 360;
-    }
-    return theta;
+    return mod(theta, 180.0);
 }
 
 #undef EXTRA_MATH_FUNC_HEAD

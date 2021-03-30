@@ -40,7 +40,7 @@ int robot_setSpeeds(Robot_t* robot, double v, double omega);
 int robot_init(Robot_t* robot)
 {
     // Assign robot variables
-    robot->L = 0.21668;
+    robot->L = 0.202406;
     robot->R = 0.0492125;
     robot->vMax = 0.12;
     robot->omegaMax = M_PI/4;
