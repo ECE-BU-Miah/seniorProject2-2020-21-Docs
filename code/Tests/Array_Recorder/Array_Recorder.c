@@ -29,9 +29,10 @@ static void __signal_handler(__attribute__ ((unused)) int dummy) {
 }
 
 // Prototypes
-int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep);
+int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep, int* numScans);
 int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height);
 int StripFloat(char* str, float* value);
+int StripInt(char* str, int* value);
 
 // Main
 int main(int argc, char* argv[]){
@@ -49,6 +50,7 @@ int main(int argc, char* argv[]){
 	double init_angle = 0; //atof(argv[1]);
 	double init_distance = 1; //atof(argv[2]);
 	double init_height = 0;
+	int numScans = 100;
 	xbeeArray_settings array = {
 		5,1,   // Uart buses Top(1) and Side(5) 
 		3,1,  // GPIO 0 (Chip 1 Pin 25)
@@ -62,7 +64,7 @@ int main(int argc, char* argv[]){
 	FILE* fp;
 
 	// Read in peramiters
-	result = ProcessArguments(argc, argv, &init_angle, &init_distance, &init_height, &useSweep);
+	result = ProcessArguments(argc, argv, &init_angle, &init_distance, &init_height, &useSweep, &numScans);
 	MAIN_ASSERT(result != -1, "\tERROR: Failed to Read in Arguments.\n");
 
 	// Initalize XBee Reflector Array
@@ -85,14 +87,15 @@ int main(int argc, char* argv[]){
 		int segment = 0;
 		int direction = 1;
 		float angleOffset = 0;
-		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)) {
+		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)-2) {
 			// Add recored
+			msleap(300);
 			double curAngle = fmod((init_angle + (double)angleOffset), 360.0);
-			result = AddRecored(fp, &array, curAngle, init_distance, init_height);
+			result = AddRecored(fp, &array, curAngle, init_distance, init_height, numScans);
 			MAIN_ASSERT(result != -1, " ");
 
 			// Move the stepper motor
-			direction = (segment < NUM_MEASUREMENTS) ? 1: -1;
+			direction = (segment < NUM_MEASUREMENTS-1) ? 1: -1;
         	result = stepMotor_Step(&sm, direction, 5);
 			MAIN_ASSERT(result != -1, " ")
 			angleOffset += (DEG_PER_MEASUREMENT * direction);
@@ -100,7 +103,7 @@ int main(int argc, char* argv[]){
 		}
 	} else {
 		// Add record
-		result = AddRecored(fp, &array, init_angle, init_distance, init_height);
+		result = AddRecored(fp, &array, init_angle, init_distance, init_height, numScans);
 		MAIN_ASSERT(result != -1, " ");
 	}
 
@@ -122,7 +125,7 @@ int main(int argc, char* argv[]){
 	return result;
 }
 
-int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height) {
+int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height, int scanCount) {
 	// Initalize storage variables
 	int result;
 	ubyte strengths[5];
@@ -133,7 +136,7 @@ int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distan
 		ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
 	}
 
-    for (int m = 0; m < 100; ++m)
+    for (int m = 0; m < scanCount; ++m)
     {
         // Get Stenght Values from the XBee Reflector Array
         result = xbeeArray_GetStrengths(arrayP, strengths);
@@ -155,13 +158,14 @@ int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distan
 	return 0;
 }
 
-int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep) {
+int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep, int* numScans) {
 	// Check for Help menue argument
 	if(argc > 1 && !strcmp(argv[1],"-help")){
 		printf("\t--- [ Help ] ---\n");
-		printf("\t>    Set inital angle : -a [int]\n");
-		printf("\t> Set inital distance : -d [int]\n");
-		printf("\t>   Set inital height : -h [int]\n");
+		printf("\t>    Set inital angle : -a [float]\n");
+		printf("\t> Set inital distance : -d [float]\n");
+		printf("\t>   Set inital height : -h [float]\n");
+		printf("\t>Number Scans per Pos : -n [int]\n");
 		printf("\t>           Use sweep : -s\n");
 		return 0;
 	}
@@ -184,7 +188,7 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				printf("ERROR: -a(Set Inital angle) should be in format of \"-a [int]\".\n");
+				printf("ERROR: -a(Set Inital angle) should be in format of \"-a [float]\".\n");
                 return -1;
 			case 'd': // Distance Set argument
 				if(argId < argc) {
@@ -195,7 +199,7 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				printf("ERROR: -d(Set inital distance) should be in format of \"-d [int]\".\n");
+				printf("ERROR: -d(Set inital distance) should be in format of \"-d [float]\".\n");
                 return -1;
 			case 'h': // Distance Set argument
 				if(argId < argc) {
@@ -206,7 +210,18 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 						break;
 					}
 				}
-				printf("ERROR: -h(Set inital height) should be in format of \"-h [int]\".\n");
+				printf("ERROR: -h(Set inital height) should be in format of \"-h [float]\".\n");
+                return -1;
+			case 'n': // Distance Set argument
+				if(argId < argc) {
+					int tNumScan;
+					result = StripInt(argv[argId++], &tNumScan);
+				 	if(result > 0) {
+					 	*numScans = tNumScan;
+						break;
+					}
+				}
+				printf("ERROR: -n(Number Scans per Pos) should be in format of \"-n [int]\".\n");
                 return -1;
 			case 's': // Distance Set argument
 				*useSweep = true;
@@ -224,6 +239,15 @@ int ProcessArguments(int argc, char* argv[], double* angle, double* distance, do
 int StripFloat(char* str, float* value) {
 	int len;
 	int result = sscanf(str, "%f %n", value, &len);
+	if(result==1 && !str[len]){
+		return len;
+	}
+	return -1;
+}
+
+int StripInt(char* str, int* value) {
+	int len;
+	int result = sscanf(str, "%d %n", value, &len);
 	if(result==1 && !str[len]){
 		return len;
 	}
