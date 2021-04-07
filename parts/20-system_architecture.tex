@@ -58,7 +58,7 @@ There are three outputs of the mobile cart subsystem. The first is the wheel vel
 %----------------------------------------------------------------------
 \section{System Components}
 %----------------------------------------------------------------------
-There are several components that are required for the mobile cart system. Although some of these parts are available in the Bradley University laboratory, other parts must be purchased. The parts that exist in the lab are shown in \autoref{tab:Partslablist}. Also, \autoref{tab:Partslist} shows the list of parts that we must purchase. The parts lists shown are the parts needed to build two mobile cart systems.
+There are several components that are required for the mobile cart system. Although some of these parts are available in the Bradley University laboratory, other parts must be purchased. The parts that exist in the lab are shown in \autoref{tab:Partslablist}. Also, \autoref{tab:Partslist} shows the list of parts that we purchased. The parts compiled in the lists are the required parts needed to build two smart robotic cart systems.
 
 \begin{table}[h!]
   \centering
@@ -104,8 +104,7 @@ There are several components that are required for the mobile cart system. Altho
 
 \vspace*{12pt}
 \noindent
-The main components for this project are the Budget Bot Chassis (\autoref{fig:budgetBotChassis}), the BeagleBone Blue embedded computer (\autoref{fig:beagleboneBlue}), and the XBee S2C Modules (\autoref{fig:XBeeModule}). Another major component is the reflector array that
-will be used to directionalize the RF signals received from the remote target that is with the user.
+The main components for this project are the Budget Bot Chassis (\autoref{fig:budgetBotChassis}), the BeagleBone Blue embedded computer (\autoref{fig:beagleboneBlue}), and the XBee S2C Modules (\autoref{fig:XBeeModule}). Another major component is the reflector array that will be used to directionally receive the RF signals from the remote target that is with the user.
 
 \begin{figure}
   \centering
@@ -131,7 +130,7 @@ will be used to directionalize the RF signals received from the remote target th
 
 \vspace*{12pt}
 \noindent
-The reflector array will be mounted on top of the cart where it will be attached with a stepper motor. There are two reflector designs that we will be evaluating in this project. The first, shown in \autoref{fig:parabolodialReflector}, is a paraboloidal reflector which maximizes the signal strength of signals that come into the reflector directly perpendicularly. Since the remote will be carried by the user, it is likely that it will be positioned at a higher altitude than the reflector array. The paraboloidal reflector design may not be able to pick up the signals from the remote as well because of this. To solve this problem, we designed a combination parabolic/paraboloidal reflector, as shown in \autoref{fig:parabolicReflector}. The lower half of this reflector is paraboloidal in shape to limit the signals coming from below. The upper part of the reflector is strictly parabolic. This shape focuses the signals in the horizontal plane, but allows signals from above to still be received. We plan to construct both of these reflector designs by 3d printing the frames, then lining them with reflective foil tape. Both models will then be tested to determine which design works better.
+The reflector array will be mounted on top of the cart with a stepper motor. There are two reflector designs that we will be evaluating in this project. The first, shown in \autoref{fig:parabolodialReflector}, is a paraboloidal reflector which maximizes the signal strength of the signals that come into the reflector perpendicularly. Since the remote will be carried by the user, it is likely that it will be positioned at a higher altitude than the reflector array. The paraboloidal reflector design may not be able to pick up the signals from the remote as well because of this. To solve this problem, we designed a combination parabolic/paraboloidal reflector, as shown in \autoref{fig:parabolicReflector}. The lower half of this reflector is paraboloidal in shape to limit the signals coming from below. The upper part of the reflector is strictly parabolic. This shape focuses the signals in the horizontal plane, but allows signals from above to still be received. We plan to construct both of these reflector designs by 3D printing the frames, then lining them with reflective foil tape. Both models will then be tested to determine which design works better.
 
 \begin{figure}[h!]
   \centering
@@ -152,7 +151,7 @@ The reflector array will be mounted on top of the cart where it will be attached
 \end{figure}
 
 \subsection{Operation of Mobile Cart System}
-The Mobile Cart will controlled by a central embedded computer which we are using the BeagleBone Blue for. Two DC motors will be used to drive wheels to move the cart. Five XBee modules will be used to allow communication with the remote target. One of these radio sensors will be mounted on top of the cart to broadcast in all directions. The other four sensors will be placed inside parabolic reflectors at right angles to each other. This sensor array will be mounted on a stepper motor to allow rotation.
+The mobile cart will be controlled by a central embedded computer which is the BeagleBone Blue since it is ideal in robotics control. Two DC motors will be used to drive wheels and move the cart. Five XBee modules on the cart will be used to allow communication with the remote target. One of these radio sensors will be mounted on top of the cart to broadcast in all directions. The other four sensors will be placed inside parabolic reflectors at right angles to each other. This sensor array will be mounted on a stepper motor to allow rotation.
 
 
 %%% Local Variables:
