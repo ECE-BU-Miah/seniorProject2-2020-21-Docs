@@ -64,15 +64,13 @@
 \setbeamertemplate{bibliography item}{\insertbiblabel}  % insert bibliography numbers instead of symbol
 \setbeamertemplate{caption}[numbered] % adds the figure or table number to the caption.
 
+%==============================================================================
+%     TITLE
+%==============================================================================
+\title[Smart Robotic Cart]{Smart Robotic Cart: A Prototype}
 
-
-\title[2-DOF Helicopter]{Smart Control Algorithm for 2-DOF Helicopter}
-
-% % A subtitle is optional and this may be deleted
-% \subtitle{Product Proposal}
-
-\author[G.~Janiak, K.~Vonckx]{Glenn~Janiak \and Kenneth~Vonckx \and
-Advisor: Dr. Suruz Miah}
+\author[K.~Allen, D.~Beebe, J.~Braker]{Kallistah~Allen \and Darrah~Beebe \and Jason~Braker
+Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -87,7 +85,7 @@ Advisor: Dr. Suruz Miah}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date[May~4,~2019]{Saturday, May~4,~2019}
+\date[April~20,~2021]{Tuesday, April~20,~2021}
 
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -109,12 +107,18 @@ Advisor: Dr. Suruz Miah}
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-\AtBeginSubsection[]
+\AtBeginSection[]
 {
   \begin{frame}<beamer>{Outline}
     \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
+
+%==============================================================================
+%==============================================================================
+%     START OF SLIDES
+%==============================================================================
+%==============================================================================
 
 % Let's get started
 \begin{document}
@@ -133,30 +137,64 @@ Advisor: Dr. Suruz Miah}
 \section{Introduction}
 
 \begin{frame}{Introduction}{}
-  % applications of mobile robot navigation and problem description
-    \begin{itemize}
-        \item Helicopter are important for short-distance travel
-            \begin{itemize}
-                \item air-sea rescue
-                \item fire fighting
-                \item traffic control
-                \item tourism
-            \end{itemize}
-        \item Purpose of control system
-            \begin{itemize}
-                \item resistance to turbulence
-                \item enable use of mobile device
-            \end{itemize}
-        \item Which is better?
-            \begin{itemize}
-                \item Optimal Control (Linear Quadratic Regulator)
-                \item Optimal Noise Resistant Control (Linear Quadratic Gaussian) 
-                \item Machine Learning (Approximate Dynamic Programming)
-            \end{itemize}
-    \end{itemize}
+
 \end{frame}
 
-%----------------------------------
+%------------------------------------------------------------------------------
+%     SECTION BREAK
+%------------------------------------------------------------------------------
+
+\section{System Architecture}
+
+\begin{frame}{System Architecture}
+  
+\end{frame}
+
+%------------------------------------------------------------------------------
+%     SECTION BREAK
+%------------------------------------------------------------------------------
+
+\section{Customized Reflector Array}
+
+\begin{frame}{Customized Reflector Array}
+  
+\end{frame}
+
+%------------------------------------------------------------------------------
+%     SECTION BREAK
+%------------------------------------------------------------------------------
+
+\section{Algorithms}
+
+\begin{frame}{Algorithms}
+  
+\end{frame}
+
+%------------------------------------------------------------------------------
+%     SECTION BREAK
+%------------------------------------------------------------------------------
+
+\section{Implementation}
+
+\begin{frame}{Implementation}
+  
+\end{frame}
+
+%------------------------------------------------------------------------------
+%     SECTION BREAK
+%------------------------------------------------------------------------------
+
+\section{Conclusion and Future Work}
+
+\begin{frame}{Conclusion and Future Work}
+  
+\end{frame}
+
+%==============================================================================
+%==============================================================================
+%     END OF SLIDES
+%==============================================================================
+%==============================================================================
 
 % \subsection*{Demonstration}
 
@@ -948,63 +986,33 @@ Advisor: Dr. Suruz Miah}
 %   \end{frame}
 
 % All of the following is optional and typically not needed. 
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
+% \appendix
+% \section<presentation>*{\appendixname}
+% \subsection<presentation>*{For Further Reading}
 
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-  \bibliographystyle{IEEEtran}
-  \bibliography{bib/references,bib/refsHelicopter}
+% \begin{frame}[allowframebreaks]
+%   \frametitle<presentation>{For Further Reading}
+%   \bibliographystyle{IEEEtran}
+%   \bibliography{bib/references,bib/refsHelicopter}
   
 %   \begin{thebibliography}{10}
     
 %   \beamertemplatebookbibitems
 %   % Start with overview books.
-    
-    
+
 %   \beamertemplatearticlebibitems
- 
+
 %   % Followed by interesting articles. Keep the list short. 
-    
-%     \bibitem{Article1}
-% M. Hernandez-Gonzalez, A.Y. Alanis, E.A. Hernandez-Vargas,
-% \emph{Decentralized discrete-time neural control for a Quanser 2-DOF helicopter }.
-% 2012
 
-% \bibitem{Article2}
-% F. Dos Santos Barbosa,
-% \emph{4DOF quadcopter: development, modeling and control }.
-% 2017
-
-% \bibitem{Article3}
-% G.G. Neto, F.S. Barbosa, B.A. Ang\'{e}lico,
-% \emph{2-DOF helicopter controlling by pole-placements }.
-
-% \bibitem{Article4}
-% Weinan Gao and Zhong-Ping Jiang
-% \emph{Data-driven Adaptive Optimal Output-feedback Control of a 2-DOF Helicopter }.
-
-% \bibitem{Article5}
-% P. Méndez-Monroy, H. Benítez-Pérez,
-% \emph{Fuzzy Control with Estimated Variable Sampling Period for Non-Linear Networked Control Systems: 2-DOF Helicopter as Case Study }. 
-% Transactions of the Institute of Measurement \& Control 34, no. 7 (October 15, 2012): 802–14. 
-    
-%     \bibitem{Article6}
-%     Q. Ahmed and A.I.Bhatti and S.Iqbal and I.H. Kazmi
-%     \emph{2-Sliding Mode Based Robust Control for 2-DOF Helicopter}.
-    
 % %   \bibitem{Someone2000}
 % %     S.~Someone.
 % %     \newblock On this and that.
 % %     \newblock {\em Journal of This and That}, 2(1):50--100,
 % %     2000.
 %   \end{thebibliography}
-\end{frame}
+% \end{frame}
 
 \end{document}
-
-
 
 %%% Local Variables:
 %%% mode: latex
