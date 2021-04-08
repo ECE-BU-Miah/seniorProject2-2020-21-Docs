@@ -66,14 +66,13 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
          // Read in response
          // int rc_uart_read_bytes(int bus, uint8_t* buf, size_t bytes);
         int num_Bytes = rc_uart_read_bytes(bus, buf, bufSize);
-        if(num_Bytes == -1) { printf("\tRC Read Bytes Failed.\n"); return -1; }
+        ASSERT(num_Bytes != -1, "\tRC Read Bytes Failed.\n");
 
          // Check that the response is not empty
         if(num_Bytes == 0){
 #if DEBUG_XBEECOM
                 printf("\t[DEBUG] Did not recive a response message.\n");
 #endif
-                printf("\tDid not recive a response message. D:\n");
                 return -3;
         }
 
@@ -84,7 +83,7 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
 
         // Check for valid checksum
         if(!xbeeCom_CheckChecksum(buf,num_Bytes)) {
-                printf("\tInvalid Checksum :(\n");
+                core_printf("\tInvalid Checksum :(\n");
                 return -2;
         }
 #if DEBUG_XBEECOM
@@ -129,7 +128,7 @@ ubyte xbeeCom_GetFrameState(ubyte* msg, int length){
         if(frameType == 0x97 && length > 17) { return msg[17]; }
         else if(frameType == 0x88 && length > 7) { return msg[7]; }
         else {
-                printf("\tInvalied frame type 0x%02X or formating encountered.\n",frameType);
+                core_printf("\tInvalied frame type 0x%02X or formating encountered.\n",frameType);
                 return 255;
         }
 }
