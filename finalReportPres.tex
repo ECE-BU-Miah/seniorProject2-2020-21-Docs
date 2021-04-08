@@ -52,6 +52,11 @@
 \usepackage{subfigure}
 \usepackage{booktabs,array}
 \usepackage[font=tiny,labelfont=bf]{caption}
+\usepackage{tabulary}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{arydshln}
 
 
 % Customize Warsaw color 
@@ -161,10 +166,10 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{center}
 \end{frame}
 
-\begin{frame}{Problem Statement}
+\begin{frame}{Introduction}{Problem Statement}
   \begin{block}{Problem Statement}
     \begin{LARGE}
-      Design a robotic cart that follows the user.
+      Design a robotic cart that follows the user without line of sight sensors.
     \end{LARGE}
   \end{block}
   \pause
@@ -175,11 +180,11 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
 \end{frame}
 
-\begin{frame}{Existing Solutions}
-  \begin{block}{Problems}
+\begin{frame}{Indtroduction}{Existing Solutions}
+  \begin{block}{Current Problems}
     \begin{itemize}
       \item Require line-of-sight between robot and user
-      \item Some require costly dedicated image processing hardware
+      \item Some require costly dedicated sensors and hardware
     \end{itemize}
   \end{block}
   \pause
@@ -191,16 +196,39 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
 \end{frame}
 
-
-\begin{frame}{System Requirements}
-  \begin{block}{Specifications}
+\begin{frame}{Introduction}{Challenges}
+  \begin{block}{Challenges}
     \begin{itemize}
-      \item Cart should be able to follow the remote target
-      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
-      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
-      \item Cart should not require line-of-sight to follow remote
-     \end{itemize}
+      \item Accuracy of angle estimation is low and causes some errors in the robots trajectory to the remote
+      \item Distance estimation is not consistent and will drastically change if the user stands between the remote and the robot
+    \end{itemize}
   \end{block}
+\end{frame}
+
+%\begin{frame}{System Requirements}
+%  \begin{block}{Specifications}
+%    \begin{itemize}
+%      \item Cart should be able to follow the remote target
+%      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
+%      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
+%      \item Cart should not require line-of-sight to follow remote
+%     \end{itemize}
+%  \end{block}
+%\end{frame}
+
+\begin{frame}{Introduction}{Nomenclature}
+    \begin{itemize}
+      \item[]\textbf{RF} - Radio Frequency
+      \item[]\textbf{LoS} - Line of Sight
+    \end{itemize}
+    \bigbreak
+    
+    \begin{itemize}
+      \item[]$K_v$ - proportional gain for linear velocity
+      \item[]$K_\omega$ - proportional gain for angular velocity
+      \item[]$\theta_r$ - angle of the remote with respect to robot
+      \item[]$d_r$ - distance from robot to remote
+     \end{itemize}
 \end{frame}
 
 
@@ -210,12 +238,55 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \section{System Architecture}
 
+\subsection{Block Diagrams}
+\begin{frame}{Block Diagrams}
+  \begin{block}{}
+    Two main components of system
+    \begin{itemize}
+      \item Mobile Cart
+      \item Remote Target
+    \end{itemize}
+    System Block Diagram shown in Figure \autoref{fig:sysBlockDiag}
+  \end{block}
+  \begin{figure}[b]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/system_block_diagram_2}
+    \caption{Block Diagram of the Robotic Cart System}
+    \label{fig:sysBlockDiag}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Block Diagrams}
+  \begin{block}{}
+    Remote Target Subsystem Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
+  \end{block}
+  \begin{figure}[b]
+    \centering
+    \includegraphics[width=\textwidth]{figs/remote_target_block_diagram}
+    \caption{Block Diagram of Remote Target Subsystem}
+    \label{fig:sysRemoteBlockDiag}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Block Diagrams}
+  \begin{block}{}
+    Mobile Cart Subsystem Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
+  \end{block}
+  \begin{figure}[b]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figs/mobile_cart_block_diagram}
+    \caption{Block Diagram of Mobile Cart Subsystem}
+    \label{fig:sysMobileBlockDiag}
+  \end{figure}
+\end{frame}
+
+\subsection{System Components}
 \begin{frame}{System Components}
   \begin{block}{Main Components}
     \begin{itemize}
-      \item Budget Bot mobile robot chassis (Fig. \ref{fig:budgetBotChassis})
-      \item BeagleBone Blue (Fig. \ref{fig:beagleboneBlue})
-      \item XBee S2C module (Fig. \ref{fig:XBeeModule})
+      \item Budget Bot Chassis - Physical framework of robotic cart (Fig. \ref{fig:budgetBotChassis})
+      \item BeagleBone Blue - Embedded computer to control robotic cart (Fig. \ref{fig:beagleboneBlue})
+      \item XBee S2C Module - Wireless communication module (Fig. \ref{fig:XBeeModule})
     \end{itemize}
   \end{block}
   \begin{figure}
@@ -242,8 +313,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \begin{block}{Reflector Array}
     Two designs for reflector array:
     \begin{itemize}
-      \item Paraboloidal Reflector (Fig. \ref{fig:parabolodialReflector})
-      \item Combined Parabolic/Paraboloidal Reflector (Fig. \ref{fig:parabolicReflector})
+      \item Paraboloidal Reflector - Focuses signals coming directly into reflector (Fig. \ref{fig:parabolodialReflector})
+      \item Parabolic/Paraboloidal Reflector - Better reception of signals from above (Fig. \ref{fig:parabolicReflector})
     \end{itemize}
     \end{block}
     \begin{figure}
