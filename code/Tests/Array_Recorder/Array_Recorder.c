@@ -12,7 +12,11 @@
 #include <signal.h>
 #include <math.h>
 
+// Robotics libarary header
+#include <rc/button.h>
+
 // Custom headers
+#define CORE_DISABLE_MESSAGES 1
 #define DEBUG_XBEECOM 0
 #define XBEE_ARRAY_DEBUG 1
 #include "xbeeArray.h"
@@ -28,9 +32,15 @@ static void __signal_handler(__attribute__ ((unused)) int dummy) {
         return;
 }
 
+// Function to stop program on pause press
+static void __on_pause_press(void) {
+    rc_set_state(EXITING);
+    return;
+}
+
 // Prototypes
 int ProcessArguments(int argc, char* argv[], double* angle, double* distance, double* height, bool* useSweep, int* numScans);
-int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height);
+int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distance, double height, int numScan);
 int StripFloat(char* str, float* value);
 int StripInt(char* str, int* value);
 
@@ -80,17 +90,39 @@ int main(int argc, char* argv[]){
 	fp = fopen("Strengths.csv", "a");
 	MAIN_ASSERT(fp != NULL, "\tERROR: Failed to open file.\n");
 	
+	// Set up pause button
+	MAIN_ASSERT(
+		rc_button_init(RC_BTN_PIN_PAUSE, RC_BTN_POLARITY_NORM_HIGH, RC_BTN_DEBOUNCE_DEFAULT_US),
+		"\tERROR: Failed to initalize pause button!!!\n"
+	);
+	rc_button_set_callbacks(RC_BTN_PIN_PAUSE, __on_pause_press, NULL);
+
+	// Setup mode button for start
+	MAIN_ASSERT(
+		rc_button_init(RC_BTN_PIN_MODE, RC_BTN_POLARITY_NORM_HIGH, RC_BTN_DEBOUNCE_DEFAULT_US),
+		"\tERROR: Failed to initalize mode button!!!\n"
+	);
+	printf("\tPress Mode button to start...\n");
+    do {msleep(10);} while (rc_button_get_state(RC_BTN_PIN_MODE) == RC_BTN_STATE_RELEASED); 
+
 	// Main Program loop
 	rc_set_state(RUNNING);
 	if(useSweep){
+		// Dumb-Auto align array with stopper
+		stepMotor_Step(&sm, -1, 50);
+		msleep(500);
+
 		// Speep with angles with steper motor array
 		int segment = 0;
 		int direction = 1;
 		float angleOffset = 0;
 		while(rc_get_state() != EXITING && segment < (NUM_MEASUREMENTS*2)-2) {
 			// Add recored
-			msleap(300);
+			msleep(300);
 			double curAngle = fmod((init_angle + (double)angleOffset), 360.0);
+			#ifndef CORE_DISABLE_MESSAGES
+			printf("\tCurrent Angle is: %.00f\n", curAngle);
+			#endif
 			result = AddRecored(fp, &array, curAngle, init_distance, init_height, numScans);
 			MAIN_ASSERT(result != -1, " ");
 
@@ -136,8 +168,7 @@ int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distan
 		ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
 	}
 
-    for (int m = 0; m < scanCount; ++m)
-    {
+    for (int m = 0; m < scanCount; ++m) {
         // Get Stenght Values from the XBee Reflector Array
         result = xbeeArray_GetStrengths(arrayP, strengths);
         ASSERT(result == 0, "\tERROR: Failed to Get Signal Strength values from the XBee Array.\n");
@@ -153,6 +184,8 @@ int AddRecored(FILE* fp, xbeeArray_settings* arrayP, double angle, double distan
         }
         result = fprintf(fp, "\n");
         ASSERT(result >= 0, "\tERROR: Failed to write to the file\n");
+
+		ASSERT_NOMSG(rc_get_state() != EXITING);
     }
 
 	return 0;

@@ -14,8 +14,12 @@
 /// ----- Defenitions----- ///
 
 // Define Assert statement
-#define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
 #define ASSERT_NOMSG(condition) if(!(condition)){return -1;}
+#ifndef CORE_DISABLE_MESSAGES
+    #define ASSERT(condition,failTxt...) if(!(condition)){ printf(failTxt); return -1;}
+#else
+    #define ASSERT(condition,failTxt...) ASSERT_NOMSG(condition)
+#endif
 
 // Define Main Assert statement
 #ifndef CORE_MAIN_ASSERT_LAMBDA
@@ -36,6 +40,7 @@ typedef unsigned char ubyte;
 void msleep(int milliSeconds);
 void printHexBuffer(void* buf, int bufSize);
 void fprintHexBuffer(void* buf, int bufSize, char* header, char* footer);
+//void core_Print();
 
 /// ----- Function Defenitions ----- ///
 
