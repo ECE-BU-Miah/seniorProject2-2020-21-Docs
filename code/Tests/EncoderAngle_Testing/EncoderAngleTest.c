@@ -11,7 +11,7 @@
 #include "core.h"
 #include "odometry.h"
 
-double L = 0.202406;
+double L = 0.199;
 double R = 0.0492125;
 
 // interrupt handler to catch ctrl-c

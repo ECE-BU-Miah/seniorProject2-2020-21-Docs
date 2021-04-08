@@ -128,14 +128,14 @@ EXTRA_MATH_FUNC_HEAD double avg(double* array, int size) {
 // @param theta: Angle to wrap (in radians)
 EXTRA_MATH_FUNC_HEAD double wrapToPi(double theta)
 {
-    return mod(theta, M_PI);
+    return mod(theta + M_PI, 2*M_PI) - M_PI;
 }
 
 // Wraps theta between -180 and 180
 // @param theta: Angle to wrap (in degrees)
 EXTRA_MATH_FUNC_HEAD double wrapTo180(double theta)
 {
-    return mod(theta, 180.0);
+    return mod(theta + 180.0, 360.0) - 180.0;
 }
 
 #undef EXTRA_MATH_FUNC_HEAD

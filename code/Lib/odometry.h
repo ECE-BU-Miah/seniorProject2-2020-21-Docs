@@ -31,7 +31,7 @@ double odometry_GetDistance(double R)
 {
     int leftEncVal = -rc_encoder_eqep_read(ODOMETRY_ENCODER_LEFT);
     int rightEncVal = rc_encoder_eqep_read(ODOMETRY_ENCODER_RIGHT);
-    double distance = (leftEncVal + rightEncVal)*2*M_PI*R/(1200*2);
+    double distance = (leftEncVal + rightEncVal)*2*M_PI*R/(ODOMETRY_COUNTS_PER_REV*2);
 
     return distance;
 }

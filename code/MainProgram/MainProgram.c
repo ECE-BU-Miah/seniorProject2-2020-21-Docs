@@ -59,9 +59,9 @@ double getDistance(ubyte* distance_strengths, int num_strengths);
 int getAngle(int* directional_strengths, int num_strengths);
 
 // Global control parameters
-const double Kp = 1; // Linear speed proportional gain
+const double Kp = 2; // Linear speed proportional gain
 const double Kw = 4; // Angular speed proportional gain
-const int maxTargetAngle = 30; // Maximum angle change for a single measurement
+const int maxTargetAngle = 15; // Maximum angle change for a single measurement
 
 int main(){
     printf("\tStarting Main Program...\n");
@@ -131,7 +131,7 @@ int main(){
 
     // Initialize Robot
     printf("\tInitializing Robot...\n");
-    robot_init(&robot);
+    MAIN_ASSERT(robot_init(&robot) == 0, "\tERROR: Failed to initialize robot.\n");
 
     // Fill out the measurement arrays
     result = getMeasurement(&(robot.array), curStep, strengths, distance_strengths, directional_strengths);
@@ -202,12 +202,14 @@ int main(){
             
             // Find the target angle
             targetAngle = avg_i(angle, MOVING_AVG_SIZE);
-            // printf("Angle to remote: %.0f\n", targetAngle);
+            printf("Angle to remote: %.0f\n", targetAngle);
             //Saturate the target angle to avoid turning too fast
             targetAngle = clamp(targetAngle, -maxTargetAngle, maxTargetAngle);
             
             // Convert target angle to radians
             targetAngle_rad = targetAngle*M_PI/180;
+
+            // Get rectangular coordinates
             targetX = targetDistance*cos(targetAngle_rad);
             // targetY = targetDistance*sin(targetAngle);
 
@@ -224,11 +226,11 @@ int main(){
             // Pause measurements until robot is turned to target angle
             MAIN_ASSERT(robot_setSpeeds(&robot, v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
 #if !MOTORS_OFF // Odometry only works if the motors move
-            while (abs(theta - targetAngle) > 2 && rc_get_state() != EXITING)
+            while (abs(theta - targetAngle) > 0.5 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
                 theta = odometry_GetAngle(robot.R, robot.L);
-                // printf("Target angle: %f\n Robot angle: %f\n", targetAngle, theta);
+                printf("Target angle: %f\t Robot angle: %f\n", targetAngle, theta);
             }
 #endif
 
