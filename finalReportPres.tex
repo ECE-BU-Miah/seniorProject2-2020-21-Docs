@@ -137,8 +137,53 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \section{Introduction}
 
 \begin{frame}{Introduction}{}
-
+ \begin{center}
+    \href{videos/proposalVideo.mp4}{\includegraphics[width=0.8\textwidth]{figs/img/proposalVideoTitle}}
+  \end{center}
 \end{frame}
+
+\begin{frame}{Problem Statement}
+  \begin{block}{Problem Statement}
+    \begin{LARGE}
+      Design a robotic cart that follows the user.
+    \end{LARGE}
+  \end{block}
+  \pause
+  \begin{block}{Proposed Solution}
+    \begin{LARGE}
+      Utilize wireless signal strength to locate and then follow the user.
+    \end{LARGE}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Existing Solutions}
+  \begin{block}{Problems}
+    \begin{itemize}
+      \item Require line-of-sight between robot and user
+      \item Some require costly dedicated image processing hardware
+    \end{itemize}
+  \end{block}
+  \pause
+  \begin{block}{Benefits of Proposed Solution}
+    \begin{itemize}
+      \item Line-of-sight is not required since analog RF signals will be used
+      \item RF components are cost-effective
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{System Requirements}
+  \begin{block}{Specifications}
+    \begin{itemize}
+      \item Cart should be able to follow the remote target
+      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
+      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
+      \item Cart should not require line-of-sight to follow remote
+     \end{itemize}
+  \end{block}
+\end{frame}
+
 
 %------------------------------------------------------------------------------
 %     SECTION BREAK
@@ -146,9 +191,109 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \section{System Architecture}
 
-\begin{frame}{System Architecture}
-  
+\begin{frame}{System Components}
+  \begin{block}{Main Components}
+    \begin{itemize}
+      \item Budget Bot mobile robot chassis (Fig. \ref{fig:budgetBotChassis})
+      \item BeagleBone Blue (Fig. \ref{fig:beagleboneBlue})
+      \item XBee S2C module (Fig. \ref{fig:XBeeModule})
+    \end{itemize}
+  \end{block}
+  \begin{figure}
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1\textwidth]{figs/img/budgetbot_chassis}
+      \caption{Budget Bot Chassis}
+      \label{fig:budgetBotChassis}
+    \end{minipage}%
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1\textwidth]{figs/img/beaglebone_blue}
+      \caption{BeagleBone Blue}
+      \label{fig:beagleboneBlue}
+    \end{minipage}
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1\textwidth]{figs/img/Xbee-S2C-Module}
+      \caption{XBee S2C Module}
+      \label{fig:XBeeModule}
+    \end{minipage}
+  \end{figure}
+\end{frame} 
+
+\begin{frame}{System Components}
+    \begin{block}{Reflector Array}
+    Two designs for reflector array:
+    \begin{itemize}
+      \item Paraboloidal Reflector (Fig. \ref{fig:parabolodialReflector})
+      \item Combined Parabolic/Paraboloidal Reflector (Fig. \ref{fig:parabolicReflector})
+    \end{itemize}
+    \end{block}
+    \begin{figure}
+      \centering
+      \begin{minipage}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.5cm]{figs/img/paraboloidalReflector}
+        \caption{Paraboloidal Reflector Model}
+        \label{fig:parabolodialReflector}
+      \end{minipage}
+      \begin{minipage}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[height=3.5cm]{figs/img/parabolicReflector}
+        \caption{Combined Parabolic/Paraboloidal Reflector}
+        \label{fig:parabolicReflector}
+      \end{minipage}
+    \end{figure}
 \end{frame}
+
+\setlength{\dashlinedash}{2pt}
+\setlength{\dashlinegap}{4pt}
+\setlength{\arrayrulewidth}{0.3pt}
+
+\begin{frame}{System Components}
+  \begin{table}[h!]
+      \centering
+      \begin{tabular}{c|c}
+          \toprule
+          \textbf{Quantity} & \textbf{Parts}\\
+          \toprule
+          2 & Budget Bot Chassis\\
+          2 & Battery Packs for Budget Bot\\ \hdashline
+          4 & 10 uF Ceramic Capacitor\\
+          4 & LM1117 Regulator\\
+          8 & 9V Batteries\\
+          4 & Solderable PCB Boards\\ \hdashline
+          3 & XBee USB Adapter\\
+          \bottomrule
+          %\multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+          %\bottomrule
+      \end{tabular}
+      \caption{Parts Available in Laboratory}
+      \label{tab:Partslablist}
+  \end{table}
+\end{frame}
+
+\begin{frame}{System Components}
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c}
+      \toprule
+      \textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
+      \toprule
+      12 & XBee S2C Module & \$ 23.10\\
+      10 & XBee Adapter Board & \$ 4.99\\ \cdashline{1-2}
+      4 & Pololu 37D Metal Gearmotor 4751 & \$ 39.95\\
+      2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\ \cdashline{1-2}
+      1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
+      1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\ \cdashline{1-2}
+      1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
+      \bottomrule
+      \multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+      \bottomrule
+    \end{tabular}
+    \caption{Purchased parts for the Robotic Cart Project}
+    \label{tab:Partslist}
+  \end{table}
+\end{frame}
+ 
 
 %------------------------------------------------------------------------------
 %     SECTION BREAK
