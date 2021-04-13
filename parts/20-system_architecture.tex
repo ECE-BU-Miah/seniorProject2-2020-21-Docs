@@ -6,11 +6,11 @@
 %----------------------------------------------------------------------
 \section{System Block Diagram}
 %----------------------------------------------------------------------
-The overall system architecture of this project consists of two subsystems which are the Mobile Cart and the Remote Target, which is held by the user or customer, as shown in Fig.~ \ref{fig:sys_block_diag}. The proposed smart robotic cart is a wheeled robot that sends and receives radio signals to follow the remote target which acts as the beacon for the robotic cart system.
+The overall system architecture of this project consists of two subsystems which are the Mobile Cart and the Remote Target, which is held by the user or customer, as shown in Fig. \ref{fig:sys_block_diag}. The proposed smart robotic cart is a wheeled robot that sends and receives radio signals to follow the remote target which acts as the beacon for the robotic cart system.
 
 \vspace*{12pt}
 \noindent
-The high-level system block diagram of the proposed robotic cart (prototype) is shown in \autoref{fig:sys_block_diag}. There are four inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. The motion of the cart is dependent on the motion of the remote. A stretch-goal for the project are mode selection buttons that allow the user to put the robotic cart system into different operating modes.
+The high-level system block diagram of the proposed robotic cart (prototype) is shown in Fig. \ref{fig:sys_block_diag}. There are four inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. The motion of the cart is dependent on the motion of the remote. A stretch-goal for the project are mode selection buttons that allow the user to put the robotic cart system into different operating modes.
 
 \vspace*{12pt}
 \noindent
@@ -28,7 +28,7 @@ The main output of the system is the position trajectory of the robotic cart in 
 %----------------------------------------------------------------------
 \section{Subsystem Block Diagrams}
 %----------------------------------------------------------------------
-The Mobile Cart and the Remote Target subsystems are two separate operations within the robotic cart system that run simultaneously. The two subsystems communicate with one another by relaying radio messages between them. The first block diagram is of the Remote Target subsystem shown in \autoref{fig:remote_block_diag}. Of the two subsystems the Remote Target is the simplest since it only requires an XBee module attached to a 7.4V Li-Po battery with a voltage regulation circuit since the XBee has a smaller input voltage of 3.3 volts.
+The Mobile Cart and the Remote Target subsystems are two separate operations within the robotic cart system that run simultaneously. The two subsystems communicate with one another by relaying radio messages between them. The first block diagram is of the Remote Target subsystem shown in Fig. \ref{fig:remote_block_diag}. Of the two subsystems the Remote Target is the simplest since it only requires an XBee module attached to a 7.4V Li-Po battery with a voltage regulation circuit since the XBee has a smaller input voltage of 3.3 volts.
 
 \begin{figure}[h!]
   \centering
@@ -39,7 +39,7 @@ The Mobile Cart and the Remote Target subsystems are two separate operations wit
 
 \vspace*{12pt}
 \noindent
-The Mobile Cart subsystem block diagram is shown in \autoref{fig:mobile_block_diag}. The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the Li-Po works well with powering the embedded computer (BeagleBone Blue). The power to the subsystem will be toggled by an on/off switch located on the chassis of the robotic cart. The mode selection buttons for changing the operating mode of the robotic cart is a stretch-goal of the project and will be implemented on the cart if we have time. The final input to the mobile cart subsystem is the XBee network messages received from the remote target.
+The Mobile Cart subsystem block diagram is shown in Fig. \ref{fig:mobile_block_diag}. The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the Li-Po works well with powering the embedded computer (BeagleBone Blue). The power to the subsystem will be toggled by an on/off switch located on the chassis of the robotic cart. The mode selection buttons for changing the operating mode of the robotic cart is a stretch-goal of the project and will be implemented on the cart if we have time. The final input to the mobile cart subsystem is the XBee network messages received from the remote target.
 
 \vspace*{12pt}
 \noindent
@@ -56,7 +56,7 @@ There are three outputs of the mobile cart subsystem. The first is the wheel vel
 %----------------------------------------------------------------------
 \section{System Components}
 %----------------------------------------------------------------------
-There are several components that are required for the mobile cart system. Although some of these parts are available in the Bradley University laboratory, other parts must be purchased. The parts that exist in the lab are listed in \autoref{tab:Partslablist}. Also, \autoref{tab:Partslist} shows the list of parts that were purchased. The parts compiled in the lists are the required parts needed to build two smart robotic cart systems.
+There are several components that are required for the mobile cart system. Although some of these parts are available in the Bradley University laboratory, other parts must be purchased. The parts that exist in the lab are listed in \autoref{tab:Partslablist}. Also, Fig. \ref{tab:Partslist} shows the list of parts that were purchased. The parts compiled in the lists are the required parts needed to build two smart robotic cart systems.
 
 \begin{table}[h!]
   \centering
@@ -106,7 +106,7 @@ There are several components that are required for the mobile cart system. Altho
 
 \vspace*{12pt}
 \noindent
-The main components for this project are the Budget Bot Chassis (\autoref{fig:budgetBotChassis}), the BeagleBone Blue embedded computer (\autoref{fig:beagleboneBlue}), and the XBee S2C Modules (\autoref{fig:XBeeModule}). Another major component is the reflector array that will be used to directionally receive the RF signals from the remote target that is with the user.
+The main components for this project are the Budget Bot Chassis (Fig. \ref{fig:budgetBotChassis}), the BeagleBone Blue embedded computer (Fig. \ref{fig:beagleboneBlue}), and the XBee S2C Modules (Fig. \ref{fig:XBeeModule}). Another major component is the reflector array that will be used to directionally receive the RF signals from the remote target that is with the user.
 
 \begin{figure}
   \centering
@@ -132,11 +132,11 @@ The main components for this project are the Budget Bot Chassis (\autoref{fig:bu
 
 \vspace*{12pt}
 \noindent
-The reflector array will be mounted on top of the cart with a stepper motor. There are two reflector designs that were evaluated in this project. The first, shown in \autoref{fig:parabolodialReflector}, is a paraboloidal reflector which maximizes the signal strength of the signals that come into the reflector perpendicularly. Since the remote will be carried by the user, it is likely that it will be positioned at a higher altitude than the reflector array. The paraboloidal reflector design may not be able to pick up the signals from the remote as well because of this.
+The reflector array will be mounted on top of the cart with a stepper motor. There are two reflector designs that were evaluated in this project. The first, shown in Fig. \ref{fig:parabolodialReflector}, is a paraboloidal reflector which maximizes the signal strength of the signals that come into the reflector perpendicularly. Since the remote will be carried by the user, it is likely that it will be positioned at a higher altitude than the reflector array. The paraboloidal reflector design may not be able to pick up the signals from the remote as well because of this.
 
 \vspace*{12pt}
 \noindent
-To solve this problem, a combination parabolic/paraboloidal reflector was designed, as shown in \autoref{fig:parabolicReflector1}. The lower half of this reflector is paraboloidal in shape to limit the signals coming from below. The upper part of the reflector is strictly parabolic. This shape focuses the signals in the horizontal plane, but allows signals from above to still be received. The plan is to construct both of these reflector designs by 3D printing the frames, then lining them with reflective foil tape. Both models will then be tested to determine which design works better.
+To solve this problem, a combination parabolic/paraboloidal reflector was designed, as shown in Fig. \ref{fig:parabolicReflector1}. The lower half of this reflector is paraboloidal in shape to limit the signals coming from below. The upper part of the reflector is strictly parabolic. This shape focuses the signals in the horizontal plane, but allows signals from above to still be received. The plan is to construct both of these reflector designs by 3D printing the frames, then lining them with reflective foil tape. Both models will then be tested to determine which design works better.
 
 \begin{figure}[h!]
   \centering
