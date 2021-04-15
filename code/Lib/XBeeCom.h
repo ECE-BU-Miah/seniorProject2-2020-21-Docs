@@ -1,4 +1,4 @@
-#ifndef XEBB_COM_H
+#ifndef XBEE_COM_H
 #define XBEE_COM_H
 
 // C Library headers
@@ -10,7 +10,7 @@
 // Robot Control Library headers
 #include <rc/uart.h>
 
-// Cutom lIbrary headers
+// Cutom library headers
 #include "core.h"
 
 // Prototypes
@@ -23,7 +23,7 @@ bool xbeeCom_CheckChecksum(ubyte* msg, int length);
 ubyte xbeeCom_GetFrameState(ubyte* msg, int length);
 
 // Initalize UART port to XBee
-// @peram bus: UART bus address for the Beagle Bone Blu
+// @param bus: UART bus address for the BeagleBone Blue
 // @return 0 for success or -1 for failure
 int xbeeCom_InitUART(int bus){
         // int rc_uart_init(int bus, int baudrate, float timeout, int canonical_en, int stop_bits, int parity_en);
@@ -31,7 +31,7 @@ int xbeeCom_InitUART(int bus){
 }
 
 // Close UART port to XBee
-// @peram bus: UART bus address for the Beagle Bone Blu
+// @param bus: UART bus address for the BeagleBone Blue
 // @return 0 for success or -1 for failure
 int xbeeCom_CloseUART(int bus){
         // int rc_uart_close(int bus);
@@ -39,9 +39,9 @@ int xbeeCom_CloseUART(int bus){
 }
 
 // Send a given Command using UART connection
-// @peram bus: UART bus address for the Beagle Bone Blue
-// @peram msg: pointer to buffer containg command message
-// @peram length: length of message in the given buffer
+// @param bus: UART bus address for the BeagleBone Blue
+// @param msg: pointer to buffer containg command message
+// @param length: length of message in the given buffer
 // @return number of sent bytes or -1 for failure
 int xbeeCom_SendCommand(int bus, ubyte* msg, int length){
         // Send Command
@@ -58,9 +58,9 @@ int xbeeCom_SendCommand(int bus, ubyte* msg, int length){
 }
 
 // Read in Command response into given buffer
-// @peram bus: UART bus address for the Beagle Bone Blue
-// @peram buf: pointer to ubyte buffer to hold input
-// @peram bufSize: Size of buffer given to "buf"
+// @param bus: UART bus address for the BeagleBone Blue
+// @param buf: pointer to ubyte buffer to hold input
+// @param bufSize: Size of buffer given to "buf"
 // @return recived message length or -1 for failure
 int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
          // Read in response
@@ -83,7 +83,7 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
 
         // Check for valid checksum
         if(!xbeeCom_CheckChecksum(buf,num_Bytes)) {
-                core_printf("\tInvalid Checksum :(\n");
+                printf("\tInvalid Checksum :(\n");
                 return -2;
         }
 #if DEBUG_XBEECOM
@@ -101,8 +101,8 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
 }
 
 // Calculate AT Message checksum
-// @peram msg: Pointer to buffer containing AT Message
-// @peram length: length of AT Meassage in "msg" buffer
+// @param msg: Pointer to buffer containing AT Message
+// @param length: length of AT Message in "msg" buffer
 // @return Checksum byte
 ubyte xbeeCom_CalculateChecksum(ubyte* msg, int length) {
         unsigned int sum = 0;
@@ -112,23 +112,23 @@ ubyte xbeeCom_CalculateChecksum(ubyte* msg, int length) {
 }
 
 // Calculate AT Message checksum and compare it
-// @peram msg: Pointer to buffer containing AT Message
-// @peram length: length of AT Meassage in "msg" buffer
+// @param msg: Pointer to buffer containing AT Message
+// @param length: length of AT Meassage in "msg" buffer
 // @return bool for if vaild checksum
 bool xbeeCom_CheckChecksum(ubyte* msg, int length){
         return (xbeeCom_CalculateChecksum(msg,length) == msg[length-1]);
 }
 
 // Extract Return AT Message state from AT Return message
-// @peram msg: Pointer to buffer containing AT Message
-// @peram length: length of AT Meassage in "msg" buffer
+// @param msg: Pointer to buffer containing AT Message
+// @param length: length of AT Message in "msg" buffer
 // @return Frame State or 255 for failure
 ubyte xbeeCom_GetFrameState(ubyte* msg, int length){
         ubyte frameType = msg[3];        // Get Frame Type
         if(frameType == 0x97 && length > 17) { return msg[17]; }
         else if(frameType == 0x88 && length > 7) { return msg[7]; }
         else {
-                core_printf("\tInvalied frame type 0x%02X or formating encountered.\n",frameType);
+                printf("\tInvalid frame type 0x%02X or formating encountered.\n",frameType);
                 return 255;
         }
 }

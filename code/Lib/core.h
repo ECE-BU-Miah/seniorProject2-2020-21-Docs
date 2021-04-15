@@ -11,7 +11,7 @@
 // Robot Control Library headers
 #include <rc/start_stop.h>
 
-/// ----- Defenitions----- ///
+/// ----- Definitions----- ///
 
 // Define Assert statement
 #define ASSERT_NOMSG(condition) if(!(condition)){return -1;}
@@ -37,8 +37,8 @@ typedef unsigned char ubyte;
 
 /// ----- Prototypes ----- ///
 
-inline void msleep(int milliSeconds);
-inline void core_printf( const char* format, ...);
+// inline void msleep(int milliSeconds);
+// inline void core_printf( const char* format, ...);
 void printHexBuffer(void* buf, int bufSize);
 void fprintHexBuffer(void* buf, int bufSize, char* header, char* footer);
 //void core_Print();
@@ -47,17 +47,17 @@ void fprintHexBuffer(void* buf, int bufSize, char* header, char* footer);
 
 // Milliseconds Sleep
 // @param milliSeconds: Time in milliseconds to sleep for
-inline void msleep(int milliSeconds) { usleep((milliSeconds)*1000); }
+// inline void msleep(int milliSeconds) { usleep((milliSeconds)*1000); }
 
 // Core Formated Print
-inline void core_printf( const char* format, ...) {
-#ifndef CORE_DISABLE_MESSAGES
-    va_list argptr;
-    va_start(argptr, format);
-    printf(format, argptr); 
-    va_end(argptr);
-#endif
-}
+// inline void core_printf( const char* format, ...) {
+// #ifndef CORE_DISABLE_MESSAGES
+//     va_list argptr;
+//     va_start(argptr, format);
+//     printf(format, argptr); 
+//     va_end(argptr);
+// #endif
+// }
 
 // Print out byte array in hexidecimal
 // @param buf: Pointer to array of bytes to print out
