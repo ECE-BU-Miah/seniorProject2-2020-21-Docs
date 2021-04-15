@@ -42,7 +42,7 @@ int robot_init(Robot_t* robot)
     // Assign robot variables
     robot->L = 0.199;
     robot->R = 0.0492125;
-    robot->vMax = 0.2;
+    robot->vMax = 0.25;
     robot->omegaMax = M_PI/4;
     robot->left_motor = 1;
     robot->right_motor = 2;

@@ -37,7 +37,7 @@
 #define STEPS_PER_MEASUREMENT 5
 #define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
-#define MOVING_AVG_SIZE 2 // Size of the moving average window
+#define MOVING_AVG_SIZE 4 // Size of the moving average window
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -204,9 +204,19 @@ int main(){
             // TODO: Get rid of this once the angle part is working
             targetDistance = 1; 
             
-            // Find the target angle
-            targetAngle = avg_i(angle, MOVING_AVG_SIZE);
+            // Find the target angle (weighted average of the angle array)
+            double weightedSum = 0;
+            double multiplier = 1;
+            double divisor = 0;
+            for (int i = 0; i < MOVING_AVG_SIZE; ++i)
+            {
+                weightedSum += angle[(curMsmt + i)%MOVING_AVG_SIZE]*multiplier;
+                divisor += multiplier;
+                multiplier *= 0.5;
+            }
+            targetAngle = weightedSum/divisor;
             // printf("Angle to remote: %.0f\n", targetAngle);
+
             //Saturate the target angle to avoid turning too fast
             targetAngle = clamp(targetAngle, -maxTargetAngle, maxTargetAngle);
             
