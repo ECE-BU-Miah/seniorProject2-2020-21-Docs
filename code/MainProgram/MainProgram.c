@@ -229,16 +229,25 @@ int main(){
 
             // Pause measurements until robot is turned to target angle
             MAIN_ASSERT(robot_setSpeeds(&robot, v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
-            int counter = 0;
+
 #if !MOTORS_OFF // Odometry only works if the motors move
-            while (abs(theta - targetAngle) > 0.5 && rc_get_state() != EXITING)
+            double anglediff = fabs(theta - targetAngle);
+            uint64_t lastPrint = rc_nanos_since_boot();
+            uint64_t curTime;
+            while (anglediff > 0.5 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
                 theta = odometry_GetAngle(robot.R, robot.L);
-                if (counter % 40 == 0)
-                    printf("Target angle: %f\t Robot angle: %f\n", targetAngle, theta);
-                
-                ++counter;
+                // Print out every 0.2 seconds
+                curTime = rc_nanos_since_boot();
+                if ( curTime- lastPrint > 200000000ULL)
+                {
+                    // printf("Target angle: %f\t Robot angle: %f\n", targetAngle, theta);
+                    printf("Angle error: %f\n", anglediff);
+                    lastPrint = curTime;
+                }
+
+                anglediff = fabs(theta - targetAngle);
             }
 #endif
 

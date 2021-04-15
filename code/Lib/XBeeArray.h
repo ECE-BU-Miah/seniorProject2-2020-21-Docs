@@ -35,7 +35,7 @@ int xbeeArray_GetStrengths(xbeeArray_settings* array, ubyte strengths[5]);
 int xbeeArray_Init(xbeeArray_settings* array) {
     int result;
 
-    // Initalize UART busses
+    // Initalize UART buses
     result = xbeeCom_InitUART(array->top_uart_bus);
     XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to initalize top UART on bus %d\n", array->top_uart_bus);
     xbeeCom_InitUART(array->side_uart_bus);
@@ -53,7 +53,7 @@ int xbeeArray_Init(xbeeArray_settings* array) {
 int xbeeArray_Close(xbeeArray_settings* array) {
     int result;
 
-    // Close UART busses
+    // Close UART buses
     result = xbeeCom_CloseUART(array->top_uart_bus);
     XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] ERROR: Failed to close top UART on bus %d\n", array->top_uart_bus);
     result = xbeeCom_CloseUART(array->side_uart_bus);
@@ -74,23 +74,23 @@ int xbeeArray_GetStrengths(xbeeArray_settings* array, ubyte strengths[5]){
         result = atCom_SendRemote(array->top_uart_bus, array->remoteAddr, 0x6462);
         XBEE_ARRAY_DEBUG_ASSERT(result != -1, "\t[DEBUG] ERROR: Failed to write Remote AT command to UART Port %d.\n", array->top_uart_bus);
 
-        // Read in Signel Stength for the remote from the top XBee
+        // Read in signal strength for the remote from the top XBee
         result = atCom_ReadRemoteResponseData(array->top_uart_bus, &(strengths[0]), 1);
 
         if(result < 0)
         {
-            msleep(10);
+            usleep(1000*10);
             XBEE_ARRAY_DEBUG_ASSERT(rc_uart_flush(array->top_uart_bus) == 0, "\t[DEBUG] failed to flush UART for bus %d.\n", array->top_uart_bus);
         }
     }  while(result < 0 && readAttempts < 4);
     XBEE_ARRAY_DEBUG_ASSERT(result >= 0, "\t[DEBUG] ERROR: Failed to read Remote AT command response data on UART Port %d.\n", array->top_uart_bus);
 
-    // Flush Side UART in preperation for local AT commands
-    msleep(1);
+    // Flush side UART in preparation for local AT commands
+    usleep(1000*1);
     result = rc_uart_flush(array->side_uart_bus);
     XBEE_ARRAY_DEBUG_ASSERT(result == 0, "\t[DEBUG] failed to flush UART for bus %d.\n", array->side_uart_bus);
 
-    // Check Strength of recived message for the side XBees
+    // Check strength of received message for the side XBees
     for(int i=0; i<4; i++) {
         // Set Multiplexer chanel to 'i'
         result = rc_gpio_set_value(array->io_chip_0, array->io_pin_0, (i)&1);
@@ -111,7 +111,7 @@ int xbeeArray_GetStrengths(xbeeArray_settings* array, ubyte strengths[5]){
 
             if(result < 0)
             {
-                msleep(1);
+                usleep(1000*1);
                 XBEE_ARRAY_DEBUG_ASSERT(rc_uart_flush(array->side_uart_bus) == 0, "\t[DEBUG] failed to flush UART for bus %d.\n", array->side_uart_bus);
             }
         } while(result < 0 && readAttempts < 4);

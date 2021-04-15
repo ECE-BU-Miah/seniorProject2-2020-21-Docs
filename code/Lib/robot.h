@@ -7,12 +7,8 @@
 
 // Custom headers
 #include "core.h"
-#include "extraMath.h"
 #include "xbeeArray.h"
 #include "stepMotor.h"
-
-static double vLMax = 1.291988; // Maximum linear velocity of left wheel in m/s
-static double vRMax = 1.265705; // Maximum linear velocity of right wheel in m/s
 
 typedef struct
 {
@@ -46,7 +42,7 @@ int robot_init(Robot_t* robot)
     // Assign robot variables
     robot->L = 0.199;
     robot->R = 0.0492125;
-    robot->vMax = 0.13;
+    robot->vMax = 0.2;
     robot->omegaMax = M_PI/4;
     robot->left_motor = 1;
     robot->right_motor = 2;
@@ -82,15 +78,15 @@ int robot_close(Robot_t* robot)
 {
     // Close XBee Reflector Array
     printf("\tClosing XBee Reflector Array...\n");
-    MAIN_ASSERT(xbeeArray_Close(&(robot->array)) == 0, "\tERROR: Failed to close XBee Array.\n");
+    ASSERT(xbeeArray_Close(&(robot->array)) == 0, "\tERROR: Failed to close XBee Array.\n");
 
     // Close the stepper motor
     printf("\tClosing Stepper Motor...\n");
-    MAIN_ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
+    ASSERT(stepMotor_Cleanup() != -1, "\tERROR: Failed to close Stepper Motor\n");
 
     // Close the encoders
     printf("\tClosing Encoders...\n");
-    MAIN_ASSERT(rc_encoder_eqep_cleanup() != -1, "\tERROR: Failed to close Encoders\n");
+    ASSERT(rc_encoder_eqep_cleanup() != -1, "\tERROR: Failed to close Encoders\n");
 
     return 0;
 }
@@ -101,32 +97,12 @@ int robot_close(Robot_t* robot)
 // @param omega: Angular velocity
 int robot_setSpeeds(Robot_t* robot, double v, double omega)
 {
-    // Minimum duty cycle to apply to make sure the robot moves
-    // (does not apply if velocity is 0)
-    static const double minDuty = 0.25;
-    
-    // Velocities below this threshold will be treated as 0
-    static const double threshold = 1E-3;
+    double omegaR = (v - omega*robot->L/2)/robot->R; // right wheel angular speed [rad/s]
+    double omegaL = (v + omega*robot->L/2)/robot->R; // left wheel angular speed [rad/s]
 
-    double vR = (v - omega*robot->L/2); // right wheel linear speed [m/s]
-    double vL = (v + omega*robot->L/2); // left wheel linear speed [m/s]
-    
-    double dutyR = 0;
-    double dutyL = 0;
-
-    // Only compute duty cycle if the velocity is above the threshold. Otherwise, leave it at 0
-    if (fabs(vR) > threshold)
-    {
-        // Convert linear wheel speed to duty cycle by dividing by the maximum speed
-        dutyR = sign(vR)*clamp(fabs(vR)/vRMax, minDuty, 1.0); // Right wheel duty cycle
-    }
-
-    // Only compute duty cycle if the velocity is above the threshold. Otherwise, leave it at 0
-    if (fabs(vL) > threshold)
-    {
-        // Convert angular wheel speeds to duty cycles by dividing by the maximum speed of each wheel
-        dutyL = -sign(vL)*clamp(fabs(vL)/vLMax, minDuty, 1.0); // Left wheel duty cycle
-    }
+    // Convert angular wheel speeds to duty cycles
+    double dutyR = omegaR*0.05/robot->omegaMax; // Right wheel duty cycle
+    double dutyL = -omegaL*0.05/robot->omegaMax; // Left wheel duty cycle
 
 #if !MOTORS_OFF
     ASSERT(rc_motor_set(robot->right_motor, dutyR) != -1, "\tERROR: Failed to set right motor\n");
