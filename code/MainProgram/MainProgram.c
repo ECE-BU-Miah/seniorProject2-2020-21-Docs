@@ -60,7 +60,7 @@ int getAngle(int* directional_strengths, int num_strengths);
 
 // Global control parameters
 const double Kv = 2; // Linear speed proportional gain
-const double Kw = 8; // Angular speed proportional gain
+const double Kw = 15; // Angular speed proportional gain
 const int maxTargetAngle = 15; // Maximum angle change for a single measurement
 
 int main(){
@@ -229,33 +229,30 @@ int main(){
 
             // Calculate motor control signals
             v = sign(targetX)*Kv*targetDistance;
-            v = clamp(v, -robot.vMax, robot.vMax); // Saturate velocity
             omega = Kw*targetAngle_rad;
-            omega = clamp(omega, -robot.omegaMax, robot.omegaMax); // Saturate velocity
 
             // Reset the encoder positions to 0
             odometry_SetZeroRef();
             theta = 0;
 
-            // Pause measurements until robot is turned to target angle
+            // Set speeds and pause measurements until robot is turned to target angle
             MAIN_ASSERT(robot_setSpeeds(&robot, v, omega) == 0, "\tERROR: Failed to set motor speeds\n");
 
 #if !MOTORS_OFF // Odometry only works if the motors move
             double anglediff = fabs(theta - targetAngle);
-            uint64_t lastPrint = rc_nanos_since_boot();
-            uint64_t curTime;
+            // uint64_t lastPrint = rc_nanos_since_boot();
+            // uint64_t curTime;
             while (anglediff > 0.5 && rc_get_state() != EXITING)
             {
                 // Determine the angle of the robot relative to where it was when the last measurement was completed
                 theta = odometry_GetAngle(robot.R, robot.L);
-                // Print out every 0.2 seconds
-                curTime = rc_nanos_since_boot();
-                if ( curTime- lastPrint > 200000000ULL)
-                {
-                    // printf("Target angle: %f\t Robot angle: %f\n", targetAngle, theta);
-                    printf("Angle error: %f\n", anglediff);
-                    lastPrint = curTime;
-                }
+                // // Print out every 0.2 seconds
+                // curTime = rc_nanos_since_boot();
+                // if ( curTime- lastPrint > 200000000ULL)
+                // {
+                //     printf("Angle error: %f\n", anglediff);
+                //     lastPrint = curTime;
+                // }
 
                 anglediff = fabs(theta - targetAngle);
             }
