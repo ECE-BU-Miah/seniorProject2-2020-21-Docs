@@ -109,7 +109,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date[April~20,~2021]{Tuesday, April~20,~2021}
+\date[April~20,~2021]{Tuesday, April~27,~2021}
 
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -180,7 +180,85 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
 \end{frame}
 
-\begin{frame}{Indtroduction}{Existing Solutions}
+%----------------------------------
+
+\begin{frame}{Introduction}{}
+%\documentclass{beamer}
+  % applications of mobile robot navigation and problem description
+  \begin{block}{Applications of Mobile Carts}
+    \begin{itemize}
+      %\item Mail delivery
+      %\item Transferring files in offices
+      \item Carrying medical supplies in hospitals (Fig.\ref{fig:medCart})
+      \item Carrying materials and tools in factories (Fig. \ref{fig:factCart})
+      \item Shopping carts for ease of use and people with disabilities
+    \end{itemize}
+  \end{block}
+      \begin{figure}
+      \centering
+      \begin{minipage}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.0cm]{figs/img/MedicalRoboticCart}
+        \caption{Medical Mobile Robotic Cart\textsuperscript{a}}
+        \label{fig:medCart}
+      \end{minipage}
+      \begin{minipage}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[height=2.0cm]{figs/img/FactoryRoboticCart}
+        \caption{Factory Mobile Robotic Cart\textsuperscript{b}}
+        \label{fig:factCart}
+      \end{minipage}
+      \end{figure}
+    \begin{tiny}
+      \textsuperscript{a}https://www.cnet.com/news/robots-give-a-helping-hand-in-san-franciscos-newest-hospital/\\\textsuperscript{b}https://www.greencarcongress.com/2020/05/20200515-nvidia.html
+    \end{tiny}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Introduction}{Previous Work}
+  \begin{block}{Existing Solution}
+        Mobile platform interface with ultrasound and radio transmission technology~\cite{Sales2016-CompaRob}
+  \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.45\textwidth]{figs/img/CompaRob}
+        \caption{CompaRob}
+        %\label{fig:sysBlockDiag}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Introduction}{Previous Work}
+  \begin{block}{Existing Solution}
+        Gated Recurrent Unit (GRU) network with LiDAR sensor and camera to map the customer~\cite{islam_lam_fukuda_kobayashi_kuno_2019}
+  \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.40\textwidth]{figs/img/ShoppingSuportRobot}
+        \caption{Shopping Support Robot}
+        %\label{fig:sysBlockDiag}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Introduction}{Previous Work}
+  \begin{block}{Existing Solution}
+    Arduino MEGA 2560, six ultrasonic sensors, two DC motors with Pulse Width Modulation (PWM), an Android Studio IDE device, and Bluetooth~\cite{Rawashdeh2017-Person}
+  \end{block}
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=0.50\textwidth]{figs/img/SmartCart}
+        \caption{Smart Cart Robot}
+        %\label{fig:sysBlockDiag}
+    \end{figure}
+\end{frame}
+
+%----------------------------------
+
+\begin{frame}{Introduction}{Existing Solutions}
   \begin{block}{Current Problems}
     \begin{itemize}
       \item Require line-of-sight between robot and user
@@ -196,25 +274,31 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
 \end{frame}
 
+%----------------------------------
+
+\begin{frame}{Introduction}{System Requirements}
+  \begin{block}{Specifications}
+    \begin{itemize}
+      \item Cart should be able to follow the remote target
+      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
+      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
+      \item Cart should not require line-of-sight to follow remote
+     \end{itemize}
+  \end{block}
+\end{frame}
+
+%----------------------------------
+
 \begin{frame}{Introduction}{Challenges}
   \begin{block}{Challenges}
     \begin{itemize}
-      \item Accuracy of angle estimation is low and causes some errors in the robots trajectory to the remote
+      \item Accuracy of angle estimation fluctuates and causes some errors in the robots trajectory to the remote
       \item Distance estimation is not consistent and will drastically change if the user stands between the remote and the robot
     \end{itemize}
   \end{block}
 \end{frame}
 
-%\begin{frame}{System Requirements}
-%  \begin{block}{Specifications}
-%    \begin{itemize}
-%      \item Cart should be able to follow the remote target
-%      \item Cart should maintain a distance of 1~[\si{\meter}] to 1.5~[\si{\meter}] from the remote target.
-%      \item Cart should be able to attain a speed of at least 1~[\si{\meter\per\second}]
-%      \item Cart should not require line-of-sight to follow remote
-%     \end{itemize}
-%  \end{block}
-%\end{frame}
+%----------------------------------
 
 \begin{frame}{Introduction}{Nomenclature}
     \begin{itemize}
@@ -256,6 +340,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{figure}
 \end{frame}
 
+%----------------------------------
+
 \begin{frame}{Block Diagrams}
   \begin{block}{}
     Remote Target Subsystem Block Diagram shown in Figure \autoref{fig:sysRemoteBlockDiag}
@@ -268,6 +354,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{figure}
 \end{frame}
 
+%----------------------------------
+
 \begin{frame}{Block Diagrams}
   \begin{block}{}
     Mobile Cart Subsystem Block Diagram shown in Figure \autoref{fig:sysMobileBlockDiag}
@@ -279,6 +367,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \label{fig:sysMobileBlockDiag}
   \end{figure}
 \end{frame}
+
+%----------------------------------
 
 \subsection{System Components}
 \begin{frame}{System Components}
@@ -309,6 +399,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{figure}
 \end{frame} 
 
+%----------------------------------
+
 \begin{frame}{System Components}
     \begin{block}{Reflector Array}
     Two designs for reflector array:
@@ -334,6 +426,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \end{figure}
 \end{frame}
 
+%----------------------------------
+
 \setlength{\dashlinedash}{2pt}
 \setlength{\dashlinegap}{4pt}
 \setlength{\arrayrulewidth}{0.3pt}
@@ -349,8 +443,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
           2 & Battery Packs for Budget Bot\\ \hdashline
           4 & 10 uF Ceramic Capacitor\\
           4 & LM1117 Regulator\\
-          8 & 9V Batteries\\
-          4 & Solderable PCB Boards\\ \hdashline
+          2 & 7.4V LiPo Batteries\\
+          4 & 5.5 x 8.2 x 0.85 cm Mini Breadboard\\ \hdashline
           3 & XBee USB Adapter\\
           \bottomrule
           %\multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
@@ -360,6 +454,8 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       \label{tab:Partslablist}
   \end{table}
 \end{frame}
+
+%----------------------------------
 
 \begin{frame}{System Components}
   \begin{table}[h!]
@@ -371,12 +467,14 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
       12 & XBee S2C Module & \$ 23.10\\
       10 & XBee Adapter Board & \$ 4.99\\ \cdashline{1-2}
       4 & Pololu 37D Metal Gearmotor 4751 & \$ 39.95\\
+      2 & Ovonic 7.4V 8,000mAh LiPo Battery & \$ 61.47\\
       2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\ \cdashline{1-2}
+      4 & Multiplexers & \$ 0.89\\
       1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
       1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\ \cdashline{1-2}
       1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
       \bottomrule
-      \multicolumn{2}{r|}{\textbf{Total}} & \$ 562.34\\
+      \multicolumn{2}{r|}{\textbf{Total}} & \$ 688.84\\
       \bottomrule
     \end{tabular}
     \caption{Purchased parts for the Robotic Cart Project}
