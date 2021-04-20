@@ -107,13 +107,13 @@ int main(int argc, char* argv[]){
     // printf("\tPress Mode button to start...\n");
     // do {msleep(10);} while (rc_button_get_state(RC_BTN_PIN_MODE) == RC_BTN_STATE_RELEASED); 
 
+    // Dumb-Auto align array with stopper
+    stepMotor_Step(&sm, -1, 50);
+    msleep(500);
+
     // Main Program loop
     rc_set_state(RUNNING);
     if(useSweep){
-        // Dumb-Auto align array with stopper
-        stepMotor_Step(&sm, -1, 50);
-        msleep(500);
-
         // Sweep with angles with steper motor array
         int segment = 0;
         int direction = 1;

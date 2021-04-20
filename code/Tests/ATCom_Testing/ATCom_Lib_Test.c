@@ -24,7 +24,7 @@ int main(){
 
 	// Initalize state variables
 	int bus = 1;
-	uint16_t remoteAddr = 0x0003;
+	uint16_t remoteAddr = 0x1111;
 
 	// Initalize storage variables
 	int success;

@@ -83,7 +83,7 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
 
         // Check for valid checksum
         if(!xbeeCom_CheckChecksum(buf,num_Bytes)) {
-                printf("\tInvalid Checksum :(\n");
+                core_printf("\tInvalid Checksum :(\n");
                 return -2;
         }
 #if DEBUG_XBEECOM
@@ -92,7 +92,7 @@ int xbeeCom_ReadCommand(int bus,  ubyte* buf, int bufSize){
 
         // Check if Error flag set in response
         ubyte frameState = xbeeCom_GetFrameState(buf,num_Bytes);
-        ASSERT(frameState == 0, "\tCommand Errored out :(\n");
+        ASSERT(frameState == 0, "\tCommand Errored out with code: 0x%02X\n", frameState);
 #if DEBUG_XBEECOM
         printf("\t[DEBUG] Command Ran Sucesfuly!\n");
 #endif
@@ -128,7 +128,7 @@ ubyte xbeeCom_GetFrameState(ubyte* msg, int length){
         if(frameType == 0x97 && length > 17) { return msg[17]; }
         else if(frameType == 0x88 && length > 7) { return msg[7]; }
         else {
-                printf("\tInvalid frame type 0x%02X or formating encountered.\n",frameType);
+                core_printf("\tInvalid frame type 0x%02X or formating encountered.\n",frameType);
                 return 255;
         }
 }
