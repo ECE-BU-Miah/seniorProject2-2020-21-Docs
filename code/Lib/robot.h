@@ -46,7 +46,7 @@ int robot_init(Robot_t* robot)
     // Assign robot variables
     robot->L = 0.199;
     robot->R = 0.0492125;
-    robot->vMax = 0.5;
+    robot->vMax = 0.4;
     robot->omegaMax = M_PI/2;
     robot->left_motor = 1;
     robot->right_motor = 2;
@@ -103,7 +103,7 @@ int robot_setSpeeds(Robot_t* robot, double v, double omega)
 {
     // Minimum duty cycle to apply to make sure the robot moves
     // (does not apply if velocity is 0)
-    static const double minDuty = 0.25;
+    static const double minDuty = 0.2;
     
     // Velocities below this threshold will be treated as 0
     static const double threshold = 1E-3;

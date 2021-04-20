@@ -37,7 +37,7 @@
 #define STEPS_PER_MEASUREMENT 5
 #define DEG_PER_MEASUREMENT (int)(STEPS_PER_MEASUREMENT*STEP_MOTOR_DEG_PER_STEP)
 #define NUM_MEASUREMENTS 90/DEG_PER_MEASUREMENT
-#define MOVING_AVG_SIZE 4 // Size of the moving average window
+#define MOVING_AVG_SIZE 2 // Size of the moving average window
 
 // interrupt handler to catch ctrl-c
 static void __signal_handler(__attribute__ ((unused)) int dummy)
@@ -123,7 +123,7 @@ int main(){
     double targetDistance = 0; // Average of distance array in meters
     double targetAngle = 0; // Average of angle array in degrees
     double targetAngle_rad = 0; // Average of angle array in radians
-    double targetX = 0; // Estimated X coordinate of remote w.r.t. robot's local frame
+    // double targetX = 0; // Estimated X coordinate of remote w.r.t. robot's local frame
     // double targetY = 0; // Estimated Y coordinate of remote w.r.t. robot's local frame
     double v = 0; // Desired linear velocity
     double omega = 0; // Desired angular velocity
@@ -224,11 +224,11 @@ int main(){
             targetAngle_rad = targetAngle*M_PI/180;
 
             // Get rectangular coordinates
-            targetX = targetDistance*cos(targetAngle_rad);
+            // targetX = targetDistance*cos(targetAngle_rad);
             // targetY = targetDistance*sin(targetAngle);
 
             // Calculate motor control signals
-            v = sign(targetX)*Kv*targetDistance;
+            v = Kv*targetDistance;
             omega = Kw*targetAngle_rad;
 
             // Reset the encoder positions to 0
