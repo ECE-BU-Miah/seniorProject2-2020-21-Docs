@@ -460,21 +460,22 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \begin{frame}{System Components}
   \begin{table}[h!]
     \centering
-    \begin{tabular}{c|c|c}
+    \small
+    \begin{tabular}{c|c|c|c}
       \toprule
-      \textbf{Quantity} & \textbf{Parts} & \textbf{Price}\\
+      \textbf{Quantity} & \textbf{Parts} & \textbf{Price} & \textbf{Total}\\
       \toprule
-      12 & XBee S2C Module & \$ 23.10\\
-      12 & XBee Adapter Board & \$ 4.99\\
-      4 & Pololu 37D Metal Gearmotor 4751 & \$ 39.95\\
-      2 & Ovonic 7.4V 8,000mAh LiPo Battery & \$ 43.99\\
-      2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99\\
-      2 & DG409DJ+ Multiplexer & \$ 9.07\\
-      1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99\\
-      1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99\\
-      1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05\\
+      12 & XBee S2C Module & \$ 23.10 & \$ 277.20\\
+      12 & XBee Adapter Board & \$ 4.99 & \$ 59.88\\
+      4 & Pololu 37D Metal Gearmotor 4751 & \$ 39.95 & \$ 159.80\\
+      2 & Ovonic 7.4V 8,000mAh LiPo Battery & \$ 43.99 & \$ 87.98\\
+      2 & Twotrees 4 Lead Nema 17 Stepper Motor & \$ 9.99 & \$ 19.98\\
+      2 & DG409DJ+ Multiplexer & \$ 9.07 & \$ 18.14\\
+      1 & 4-Pin JST SH Connector - 20 Pack & \$ 7.99 & \$ 7.99\\
+      1 & 6-Pin JST SH Connector - 10 Pack & \$ 9.99 & \$ 9.99\\
+      1 & Aluminum Foil Tape - 2 in x 5 yd & \$ 6.05 & \$ 6.05\\
       \bottomrule
-      \multicolumn{2}{r|}{\textbf{Total}} & \$ 653.88\\
+      \multicolumn{3}{r|}{\textbf{Sub Total}} & \$ 653.88\\
       \bottomrule
     \end{tabular}
     \caption{Purchased parts for the Robotic Cart Project}
@@ -514,6 +515,54 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
         \label{fig:parabolicReflectorDiagram}
       \end{figure}
   \end{columns}
+\end{frame}
+
+\begin{frame}{Customized Reflector Array}
+  \begin{block}{Paraboloidal Reflector Design}
+    \begin{itemize}
+      \item Maximizes signals entering perfectly horizontally
+      \item Works best if remote is held at same level as robot
+      \item Shown in Fig. \ref{fig:reflectorDesign1}
+    \end{itemize}
+  \end{block}
+  \begin{figure}
+    \centering
+    \includegraphics[height=0.5\textheight]{figs/img/paraboloidalReflector.png}
+    \caption{Paraboloidal Reflector}
+    \label{fig:reflectorDesign1}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Customized Reflector Array}
+  \begin{block}{Parabolic/Paraboloidal Reflector Design}
+    \begin{itemize}
+      \item Maximizes signals entering directly in line with reflector
+      \item Allows remote to be held higher than the robot
+      \item Shown in Fig. \ref{fig:reflectorDesign2}
+    \end{itemize}
+  \end{block}
+  \begin{figure}
+    \centering
+    \includegraphics[height=0.5\textheight]{figs/img/parabolicReflector.png}
+    \caption{Parabolic/Paraboloidal Reflector}
+    \label{fig:reflectorDesign2}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Customized Reflector Array}
+  \begin{block}{Reflector Construction}
+    \begin{itemize}
+      \item 3D printed parts (dishes, top and bottom frames)
+      \item Lined dishes with foil tape
+      \item Fastened parts together with M3 screws and nuts
+    \end{itemize}
+  \end{block}
+  \begin{figure}
+    \centering
+    \includegraphics[height=0.5\textheight]{figs/img/reflectorConstruction.jpg}
+    \caption{Reflector Construction}
+    \label{fig:reflectorConstruction}
+  \end{figure}
 \end{frame}
 
 %------------------------------------------------------------------------------
