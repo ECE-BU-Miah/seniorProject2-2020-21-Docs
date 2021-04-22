@@ -500,7 +500,25 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
           \item Need to know direction of signals
         \end{itemize}
       \end{block}
-      \pause
+   \column{0.4\textwidth}
+     \begin{figure}
+    	\centering
+    	\includegraphics[height=0.5\textheight]{figs/img/XBee_signal.png}
+    	\caption{XBee Signal Broadcast Range}
+    	\label{fig:XBeeSignal}
+  	  \end{figure}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{customized Reflector Array}
+  \begin{columns}
+    \column{0.6\textwidth}
+      \begin{block}{Problem}
+        \begin{itemize}
+          \item XBee S2C modules are omnidirectional
+          \item Need to know direction of signals
+        \end{itemize}
+      \end{block}
       \begin{block}{Solution}
         Use a parabolic reflector
         \begin{itemize}
@@ -622,10 +640,26 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 %     SECTION BREAK
 %------------------------------------------------------------------------------
 
-\section{Conclusion and Future Work}
+\section{Conclusions and Future Work}
 
-\begin{frame}{Conclusion and Future Work}
-  
+\begin{frame}{Conclusions and Future Work}
+  \begin{block}{Future Work}
+    \begin{itemize}
+      \item Improve the angle estimation calculation
+      \item Improve distance calculation by implementing a modified EKF algorithm
+      \item Test more variations of parabolic reflectors to see if the XBee signals can be more refined
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Conclusions and Future Work}
+  \begin{block}{Conclusions}
+    \begin{itemize}
+      \item The navigation algorithm we implemented works moderately with only a few errors in the robot's trajectory to the remote
+      \item By testing and gathering data we were able to come up with multiple variations of the code that eventually got the robotic cart to move more predictably
+      \item In comparison to other robotic carts, our robotic cart was cost effective in it's design
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 %------------------------------------------------------------------------------
