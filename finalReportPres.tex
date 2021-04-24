@@ -57,6 +57,7 @@
 \usepackage{graphicx}
 \usepackage{siunitx}
 \usepackage{arydshln}
+\usepackage{rotating}
 
 
 % Customize Warsaw color 
@@ -625,19 +626,29 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \begin{frame}{Implementation}
 \begin{block}{Robot Assembly}
     \begin{itemize}
-      \item 
-      \item  
-      \item 
+      \item We modified the Budget Bot Chassis to have a switch and LED indicator for the external power to the system
+      \item The connections to the directional receiver XBees were labeled for each reflector and connected to the breadboard with the multiplexer
+      \item The reflector was customized to have a notch so that when the stepper motor turns them the readings start at zero
     \end{itemize}
   \end{block}
+	\begin{figure}
+      \centering
+      \begin{minipage}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.5cm]{figs/img/Finalized_robot}
+        \caption{Final Version of the Robotic Cart}
+        \label{fig:FinalizedRobot}
+      \end{minipage}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Implementation}
 \begin{block}{Code Trials}
+We worked on many variations to our code in order to improve the robot's trajectory to the remote. Below are some methods we applied to the code.
     \begin{itemize}
-      \item 
-      \item  
-      \item 
+      \item We used an angle estimation code to help determine if the reflectors could get more accurate readings of the angle of the remote with respect to the robot's position 
+      \item We tried to implement a neural network to improve the angle estimation accuracy
+      \item Our finalized code fixed some of the weights for the angle estimation and improved the movement of the robot towards the remote
     \end{itemize}
   \end{block}
 \end{frame}
@@ -645,11 +656,20 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \begin{frame}{Implementation}
 \begin{block}{Experimental Results}
     \begin{itemize}
-      \item 
-      \item  
-      \item 
+      \item We tested the robot in the anechoic chamber to see if the robot could move in a straight line with more idealized environment conditions
+      \item We switched to the second model of reflectors due to the better reception of signals from a standing height 
+      \item We used some noise absorbers in testing and were able to observe better results in the robots movement	
     \end{itemize}
   \end{block}
+    \begin{figure}
+      \centering
+      \begin{minipage}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[height=3.5cm]{figs/img/Absorber_test.png}
+        \caption{Robot Navigation Test with Absorbers}
+        \label{fig:AbsorberTest}
+      \end{minipage}
+    \end{figure}
 \end{frame}
 
 %------------------------------------------------------------------------------
