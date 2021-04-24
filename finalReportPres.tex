@@ -336,7 +336,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=0.75\textwidth]{figs/system_block_diagram_2}
+    \includegraphics[width=\textwidth]{figs/img/systemBlockDiagram.png}
     \caption{Block Diagram of the Robotic Cart System}
     \label{fig:sysBlockDiag}
   \end{figure}
@@ -350,7 +350,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=\textwidth]{figs/remote_target_block_diagram}
+    \includegraphics[width=\textwidth]{figs/img/remoteBlockDiagram.png}
     \caption{Block Diagram of Remote Target Subsystem}
     \label{fig:sysRemoteBlockDiag}
   \end{figure}
@@ -364,7 +364,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/mobile_cart_block_diagram}
+    \includegraphics[width=\textwidth]{figs/img/mobileCartBlockDiagram.png}
     \caption{Block Diagram of Mobile Cart Subsystem}
     \label{fig:sysMobileBlockDiag}
   \end{figure}
@@ -501,13 +501,13 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
           \item Need to know direction of signals
         \end{itemize}
       \end{block}
-   \column{0.4\textwidth}
+    \column{0.4\textwidth}
      \begin{figure}
       \centering
       \includegraphics[height=0.5\textheight]{figs/img/XBee_signal.png}
       \caption{XBee Signal Pattern}
       \label{fig:XBeeSignal}
-      \end{figure}
+    \end{figure}
   \end{columns}
 \end{frame}
 
@@ -624,51 +624,51 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \section{Implementation}
 
 \begin{frame}{Implementation}
-\begin{block}{Robot Assembly}
-    \begin{itemize}
-      \item We modified the Budget Bot Chassis to have a switch and LED indicator for the external power to the system
-      \item The connections to the directional receiver XBees were labeled for each reflector and connected to the breadboard with the multiplexer
-      \item The reflector was customized to have a notch so that when the stepper motor turns them the readings start at zero
-    \end{itemize}
-  \end{block}
-	\begin{figure}
+  \begin{columns}
+    \column{0.6\textwidth}
+    \begin{block}{Robot Assembly}
+      \begin{itemize}
+        \item The Budget Bot Chassis was modified to have a switch and LED indicator for the battery power to the system
+        \item The connections to the directional receiver XBees were labeled for each reflector and connected to the breadboard with the multiplexer
+        \item The base of the reflector array was designed with a stop to allow the robot to automatically initialize the reflector to the zero position
+      \end{itemize}
+    \end{block}
+    \column{0.4\textwidth}
+    \begin{figure}
       \centering
-      \begin{minipage}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[height=3.5cm]{figs/img/Finalized_robot}
-        \caption{Final Version of the Robotic Cart}
-        \label{fig:FinalizedRobot}
-      \end{minipage}
+      \includegraphics[width=\textwidth]{figs/img/Finalized_robot.png}
+      \caption{Final Version of the Robotic Cart}
+      \label{fig:FinalizedRobot}
     \end{figure}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Implementation}
 \begin{block}{Code Trials}
-We worked on many variations to our code in order to improve the robot's trajectory to the remote. Below are some methods we applied to the code.
+Several methods of estimating the angle were attempted to try to achieve a smoother robot trajectory.
     \begin{itemize}
-      \item We used an angle estimation code to help determine if the reflectors could get more accurate readings of the angle of the remote with respect to the robot's position 
-      \item We tried to implement a neural network to improve the angle estimation accuracy
-      \item Our finalized code fixed some of the weights for the angle estimation and improved the movement of the robot towards the remote
+      \item Sweep reflectors and estimate angle as direction of max signal strength
+      \item Implement K-nearest-neighbors algorithm to predict the angle without rotating the reflectors
+      \item Implement a neural network to predict the angle without rotating the reflectors.
     \end{itemize}
+  \end{block}
+  \begin{block}{Results}
+    The initial method of sweeping the reflectors and taking measurements produced the most accurate results
   \end{block}
 \end{frame}
 
 \begin{frame}{Implementation}
 \begin{block}{Experimental Results}
     \begin{itemize}
-      \item We tested the robot in the anechoic chamber to see if the robot could move in a straight line with more idealized environment conditions
-      \item We switched to the second model of reflectors due to the better reception of signals from a standing height 
-      \item We used some noise absorbers in testing and were able to observe better results in the robots movement	
+      \item The robot was tested in an anechoic chamber to evaluate its performance in an ideal environment. However, the performance did not improve greatly. This is probably due to problems in the algorithms at the time of test.
+      \item RF absorbers were placed along the walls in the lab to see if reduced reflections would provide better performance. The robot did seem to perform slightly better in this environment (Fig. \ref{fig:AbsorberTest}).
     \end{itemize}
   \end{block}
     \begin{figure}
       \centering
-      \begin{minipage}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[height=3.5cm]{figs/img/Absorber_test.png}
-        \caption{Robot Navigation Test with Absorbers}
-        \label{fig:AbsorberTest}
-      \end{minipage}
+      \includegraphics[height=3cm]{figs/img/Absorber_test.png}
+      \caption{Robot Navigation Test with RF Absorbers}
+      \label{fig:AbsorberTest}
     \end{figure}
 \end{frame}
 
@@ -691,7 +691,7 @@ We worked on many variations to our code in order to improve the robot's traject
 \begin{frame}{Conclusions and Future Work}
   \begin{block}{Future Work}
     \begin{itemize}
-      \item Improve the angle estimation calculation
+      \item Improve the localization algorithm for better angle estimation
       \item Test more reflector designs to see if the XBee signals can be more refined
       \item Implement obstacle detection and avoidance
     \end{itemize}
