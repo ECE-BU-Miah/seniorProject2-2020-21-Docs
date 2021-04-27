@@ -600,10 +600,10 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \column{0.6\textwidth}
     \begin{block}{Robot Assembly}
       \begin{itemize}
-      	\item power from 2 cell LIPO battery
-        \item Added power switch and led indicator
-        \item Swamped out motors to achieve 1 m/s
-        \item Steeper motor mount with stop block
+      	\item Power from 2 cell LIPO battery
+        \item Added power switch and LED indicator
+        \item Swapped out motors to achieve 1 m/s
+        \item Stepper motor mount with stop block
         \item BBB to XBee connections using UART
         \begin{itemize}
         	\item 4 out of 5 UART's are available
@@ -624,11 +624,11 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \begin{frame}{Implementation}
 \begin{block}{Code Base}
-	Custom library's were put together to handle...
+	Custom library's were put together to handle:
 	\begin{itemize}
-		\item Sending XBee Frames over UART
-		\item Assembling and Interpreting AT Command Frames
-		\item Stepper Motor control with 2 dc motor control ports
+		\item Sending XBee frames over UART
+		\item Assembling and interpreting AT command frames
+		\item Stepper motor control with 2 DC motor control ports
 	\end{itemize}
 \end{block}
 \begin{figure}
@@ -640,7 +640,7 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \begin{frame}{Implementation}
 \begin{block}{Code Trials}
-Several different methods were tested for estimating the remote angle...
+Several different methods were tested for estimating the remote angle:
     \begin{itemize}
     	\item Reflector Sweeping (40 strengths / 10 steps)
     	\begin{itemize}
@@ -656,8 +656,8 @@ Several different methods were tested for estimating the remote angle...
     \end{itemize}
 \end{block}
 \begin{block}{Results}
-	(Currently most stable) sweeping with segmented movement \\
-	(Most promising) sweeping with continues movement
+	Currently most stable - sweeping with segmented movement \\
+	Most promising - sweeping with continuous movement
 \end{block}
 \end{frame}
 
@@ -684,7 +684,7 @@ Several different methods were tested for estimating the remote angle...
 	\begin{itemize}
 		\item Noise in reported XBee signal strength values
 		\item Multi-path effect
-		\item No know global scope references 
+		\item No known global scope references 
 	\end{itemize}	  
   	Effects
     \begin{itemize}
@@ -705,7 +705,7 @@ Several different methods were tested for estimating the remote angle...
     \begin{itemize}
       \item The algorithm we implemented works the majority of the time
       \item Through tests and gathering data we were able iterate on our approach and tune the algorithms to function more reliably
-      \item Our Designed is cost effective in comparison to other robotic carts
+      \item Our design is cost effective in comparison to other robotic carts
     \end{itemize}
   \end{block}
   \begin{block}{Future Work}
