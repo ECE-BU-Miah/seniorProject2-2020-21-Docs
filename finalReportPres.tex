@@ -600,15 +600,15 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
     \column{0.6\textwidth}
     \begin{block}{Robot Assembly}
       \begin{itemize}
-      	\item Power from 2 cell LIPO battery
+        \item Power from 2-cell LIPO battery
         \item Added power switch and LED indicator
         \item Swapped out motors to achieve 1 m/s
         \item Stepper motor mount with stop block
         \item BBB to XBee connections using UART
         \begin{itemize}
-        	\item 4 out of 5 UART's are available
-        	\item 1 UART for top XBee
-        	\item 1 UART for side XBee's using dual-direction multiplexer
+          \item 4 out of 5 UARTs are available
+          \item 1 UART for top XBee
+          \item 1 UART for side XBees using dual-direction multiplexer
         \end{itemize}
       \end{itemize}
     \end{block}
@@ -624,17 +624,18 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 
 \begin{frame}{Implementation}
 \begin{block}{Code Base}
-	Custom library's were put together to handle:
-	\begin{itemize}
-		\item Sending XBee frames over UART
-		\item Assembling and interpreting AT command frames
-		\item Stepper motor control with 2 DC motor control ports
-	\end{itemize}
+  Custom libraries were put together to handle:
+  \begin{itemize}
+    \item Sending XBee frames over UART
+    \item Assembling and interpreting AT command frames
+    \item Stepper motor control with 2 DC motor control ports
+  \end{itemize}
 \end{block}
 \begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{figs/img/Command Process Diagram.png}				 		\caption{Process for XBee Communication over UART}
-	\label{fig:CommandProcessDiagram}
+  \centering
+  \includegraphics[width=\textwidth]{figs/img/Command Process Diagram.png}
+  \caption{Process for XBee Communication over UART}
+  \label{fig:CommandProcessDiagram}
 \end{figure}
 \end{frame}
 
@@ -642,22 +643,22 @@ Advisors:~Dr.~Suruz~Miah \and Dr.~Prasad~Shastry}
 \begin{block}{Code Trials}
 Several different methods were tested for estimating the remote angle:
     \begin{itemize}
-    	\item Reflector Sweeping (40 strengths / 10 steps)
-    	\begin{itemize}
-    		\item Continuous Movement
-    		\item Segmented Movement
-    	\end{itemize}
-    	\item Reflector Locked (4 strengths / 1 step)
-    	\begin{itemize}
-    		\item Strongest 2-side interpolation
-    		\item K-Nearest-Neighbors
-    		\item Neural Network
-    	\end{itemize}
+      \item Reflector Sweeping (40 strengths / 10 steps)
+      \begin{itemize}
+        \item Continuous Movement
+        \item Segmented Movement
+      \end{itemize}
+      \item Reflector Locked (4 strengths / 1 step)
+      \begin{itemize}
+        \item Strongest 2-side interpolation
+        \item K-Nearest-Neighbors
+        \item Neural Network
+      \end{itemize}
     \end{itemize}
 \end{block}
 \begin{block}{Results}
-	Currently most stable - sweeping with segmented movement \\
-	Most promising - sweeping with continuous movement
+  Currently most stable - sweeping with segmented movement \\
+  Most promising - sweeping with continuous movement
 \end{block}
 \end{frame}
 
@@ -680,16 +681,16 @@ Several different methods were tested for estimating the remote angle:
 
 \begin{frame}{Implementation}{Challenges}
   \begin{block}{Challenges}
-	Sources
-	\begin{itemize}
-		\item Noise in reported XBee signal strength values
-		\item Multi-path effect
-		\item No known global scope references 
-	\end{itemize}	  
-  	Effects
+  Sources
+  \begin{itemize}
+    \item Noise in reported XBee signal strength values
+    \item Multi-path effect
+    \item No known global scope references 
+  \end{itemize}    
+    Effects
     \begin{itemize}
-    	\item Reduced angle accuracy and occasional random values
-    	\item  Accurate distance estimation was determined to be impossible with the current approach to the best of our knowledge
+      \item Reduced angle accuracy and occasional random values
+      \item  Accurate distance estimation was determined to be impossible with the current approach to the best of our knowledge
     \end{itemize}
   \end{block}
 \end{frame}
@@ -713,7 +714,7 @@ Several different methods were tested for estimating the remote angle:
       \item Improve the localization algorithm for better angle estimation
       \item Test more reflector designs to see if the XBee signals can be more refined
       \item Implement obstacle detection and avoidance
-      \item Multi-frequency radio modules to try and fix distance
+      \item Multi-frequency radio modules to try to improve distance estimation
     \end{itemize}
   \end{block}
 \end{frame}
