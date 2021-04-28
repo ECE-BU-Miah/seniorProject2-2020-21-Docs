@@ -10,17 +10,17 @@ The overall system architecture of this project consists of two subsystems which
 
 \vspace*{12pt}
 \noindent
-The high-level system block diagram of the proposed robotic cart (prototype) is shown in Fig. \ref{fig:sys_block_diag}. There are four inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. The motion of the cart is dependent on the motion of the remote. A stretch-goal for the project are mode selection buttons that allow the user to put the robotic cart system into different operating modes.
+The high-level system block diagram of the proposed robotic cart (prototype) is shown in Fig. \ref{fig:sys_block_diag}. There are three inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. This will save the battery from being drained by the XBees in the reflector array. The motion of the robotic cart is dependent on the motion of the remote.
 
 \vspace*{12pt}
 \noindent
-The main output of the system is the position trajectory of the robotic cart in its environment. When the user moves with the remote, the cart is designed to follow the user. The other output of the robotic cart system is a status indication in the form of LED lights. These lights will be used to notify the user of the status of the robotic cart.
+The main output of the system is the position trajectory of the robotic cart in its environment. When the user moves with the remote target, the robotic cart is designed to follow the user.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{figs/img/systemBlockDiagram.png}
     \caption{System level block diagram detailing inputs and outputs to the
-      mobile cart system.}
+      robotic cart system.}
 	\label{fig:sys_block_diag}
 \end{figure}
 
@@ -28,7 +28,7 @@ The main output of the system is the position trajectory of the robotic cart in 
 %----------------------------------------------------------------------
 \section{Subsystem Block Diagrams}
 %----------------------------------------------------------------------
-The Mobile Cart and the Remote Target subsystems are two separate operations within the robotic cart system that run simultaneously. The two subsystems communicate with one another by relaying radio messages between them. The first block diagram is of the Remote Target subsystem shown in Fig. \ref{fig:remote_block_diag}. Of the two subsystems the Remote Target is the simplest since it only requires an XBee module attached to a 7.4V Li-Po battery with a voltage regulation circuit since the XBee has a smaller input voltage of 3.3 volts.
+The Mobile Cart and the Remote Target subsystems are two separate operations within the robotic cart system that run simultaneously. The two subsystems communicate with one another by relaying radio messages between them. The first block diagram is of the Remote Target subsystem shown in Fig. \ref{fig:remote_block_diag}. Of the two subsystems the Remote Target is the simplest since it only requires an XBee module attached to a 7.4V Li-Po battery with a voltage regulation circuit since the XBee has a smaller input voltage of 3.3 volts. The two inputs for this system are the battery power and the incoming RF messages which are passed through the RF transceiver Module and output the outgoing RF messages.
 
 \begin{figure}[h!]
   \centering
@@ -39,11 +39,11 @@ The Mobile Cart and the Remote Target subsystems are two separate operations wit
 
 \vspace*{12pt}
 \noindent
-The Mobile Cart subsystem block diagram is shown in Fig. \ref{fig:mobile_block_diag}. The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the Li-Po works well with powering the embedded computer (BeagleBone Blue). The power to the subsystem will be toggled by an on/off switch located on the chassis of the robotic cart. The mode selection buttons for changing the operating mode of the robotic cart is a stretch-goal of the project and will be implemented on the cart if we have time. The final input to the mobile cart subsystem is the XBee network messages received from the remote target.
+The Mobile Cart subsystem block diagram, shown in Fig. \ref{fig:mobile_block_diag}, is the most complex of the two subsystems. The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the Li-Po works well with powering the embedded computer (BeagleBone Blue). The power to the subsystem will be toggled by an on/off switch located on the chassis of the robotic cart. The final input to the mobile cart subsystem is the incoming RF signals. These incoming RF signals are passed to the direction sensitive RF receivers which output the signals to the dual-direction multiplexer which takes the four inputs from the direction sensitive RF receivers and passes one output into the embedded computer. Once the embedded computer gets these signals it can calculate the localization and navigation algorithms and pass the information to the DC motors.
 
 \vspace*{12pt}
 \noindent
-There are three outputs of the mobile cart subsystem. The first is the wheel velocities that move the cart. There will also be LEDs to indicate the status of the system to the user. Lastly, the cart will send radio messages to the remote target by means of a parabolic array of XBee radio modules.
+There are two outputs of the mobile cart subsystem. The first is the wheel velocities that move the cart and are passed from the DC motors. Lastly, the incoming RF signals are passed to our omnidirectional RF transceiver which outputs the outgoing RF signals.
 
 \begin{figure}[h!]
   \centering
