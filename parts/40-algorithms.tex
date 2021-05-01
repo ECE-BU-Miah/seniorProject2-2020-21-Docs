@@ -1,12 +1,25 @@
 %======================================================================
-\chapter{Algorithms}
+\chapter{Localization and Navigation}
 \label{ch: Chapter4}
 %======================================================================
+
+\todo[inline]{Add an introductory paragraph. For example, ``In this Chapter, we
+  illustrate localization and navigation algorithms for the mobile cart to operate in an
+  indoor/outdoor environment. For that, we first model the proposed robotic cart
+  as a differential drive mobile robot (DDMR). The position of the cart is then
+  determined using a localization algorithm. $\ldots$''}
 
 %----------------------------------------------------------------------
 \section{Robot Model}\label{sec:robotModel}
 %----------------------------------------------------------------------
-The robot used in this project was a differential drive mobile robot, which has two drive wheels and a caster wheel for balance. The robot turns by applying different speeds to the left and right wheels. As shown in Fig. \ref{fig:robotGeometry}, the radius of the wheels is $R$, and the distance between the wheels is $L$. The pose of the robot is given by the $x$-coordinate ($x$), the $y$-coordinate ($y$), and the orientation, ($\theta$), as shown in Fig. \ref{fig:robotPose}.
+The robot used in this project was a differential drive mobile robot, which has
+two drive wheels and a caster wheel for balance. The robot turns by applying
+different speeds to the left and right wheels. As shown in Fig.
+\ref{fig:robotGeometry}, the radius of the wheels is $R$, and the distance
+between the wheels is $L$. The pose of the robot is given by the $x$-coordinate
+($x$), the $y$-coordinate ($y$), and the orientation, ($\theta$), as shown in
+Fig. \ref{fig:robotPose}. %
+%
 \begin{figure}
     \centering
     \begin{subfigure}{0.3\textwidth}
@@ -24,9 +37,8 @@ The robot used in this project was a differential drive mobile robot, which has 
     \caption{Robot Model Parameters}
     \label{fig:robotModelParameters}
 \end{figure}
+%
 
-\vspace*{12pt}
-\noindent
 Generally the robot is controlled by commanding a linear and angular speed ($v$ and $\omega$, respectively). These speeds must be converted into left and right wheel speeds. The following equations are used to calculate the angular left and right wheel speeds ($\omega_l$ and $\omega_r$, respectively):
 $$\omega_l = \left(v - \omega\frac{L}{2}\right)\frac{1}{R}$$
 $$\omega_r = \left(v + \omega\frac{L}{2}\right)\frac{1}{R}$$
@@ -70,5 +82,5 @@ The appropriate duty cycles are then calculated as specified in section \ref{sec
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../finalReportMainV1"
+%%% TeX-master: "../finalReport"
 %%% End:
