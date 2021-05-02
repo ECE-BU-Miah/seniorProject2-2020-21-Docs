@@ -35,7 +35,10 @@ The Xbee modules from the reflector posed a bit of a problem when it came to con
 \section{Code Base}
 %----------------------------------------------------------------------
 
-\todo[inline]{Please complete this section}
+For the project we needed some base functionality to use with the main follower program so it can interact with the other components in the system.  The Beagle Bone Blue already has a set of ports on it that we can access and control using the Robot Control Library from Strawson Design for the beagle bone blue ~\cite{Robot_Control_Library}. \par
+For the project we also build some custom libraries on top of the Robot Control Library to hand XBee Frames, AT Commands, and the stepper motor.  The XBee frames library takes a given block of data containing our message and then packages it into a XBee Frame to send over UART to the XBee module we want to interact with.  The XBee communications library also handles received messages from the XBee module and validates the received frames integrity and extracts the message data from it.  On top of the XBee communications library we also have a library that generates AT Commands to package in the XBee Frames.  The AT Command library also handles extracting response data from the AT Response Command structure and validating it.\par
+The final custom library is the stepper motor control library.  This library had to be written ourselves since instead of using a dedicated stepper motor controller for our project we were using two of the regular DC motor control ports that are build into the Beagle Bone Blue.  This library handled translating how many steps to turn into proper cycling of the DC motor ports to get the stepper motor to move the desired distance.  The library also helped to keep track of basic information related to the stepper motor such as what its current angel should be.
+
 
 %----------------------------------------------------------------------
 \section{Algorithm Testing}
@@ -46,6 +49,7 @@ The Xbee modules from the reflector posed a bit of a problem when it came to con
 %----------------------------------------------------------------------
 \section{Experimental Results}
 %----------------------------------------------------------------------
+
 
 \todo[inline]{See page 23 of~\url{http://ee.bradley.edu/projects/proj2017/ekf_slam/Downloads/seniorProject_finalReport.pdf}}
 
