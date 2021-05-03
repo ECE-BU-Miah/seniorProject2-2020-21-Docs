@@ -35,6 +35,8 @@ Fig. \ref{fig:robotPose}. %
 \end{figure}
 %
 
+\vspace*{12pt}
+\noindent
 Generally the robot is controlled by commanding a linear and angular speed ($v$ and $\omega$, respectively). These speeds must be converted into left and right wheel speeds. The following equations are used to calculate the angular left and right wheel speeds ($\omega_l$ and $\omega_r$, respectively):
 $$\omega_l = \left(v - \omega\frac{L}{2}\right)\frac{1}{R}$$
 $$\omega_r = \left(v + \omega\frac{L}{2}\right)\frac{1}{R}$$
@@ -52,7 +54,7 @@ The localization algorithm is used to estimate the position of the remote with r
 \end{figure}
 
 %----------------------------------------------------------------------
-\section{Navigation Algorithm}
+\section{Navigation Algorithm}\label{sec:navAlgo}
 %----------------------------------------------------------------------
 The navigation algorithm is used to drive the robot toward the remote. The inputs to the navigation algorithm are the angle to the remote ($\theta_r$) and the distance to the remote ($d_r$). A target point is then calculated as the point that is in the same direction as the remote, but closer to the robot by a fixed following distance ($d_{follow}$), as shown in Fig. \ref{fig:navAlgoDiagram}. The distance to the target point is calculated as $d_{tgt} = d_r - d_{follow}$, and the angle to the target point is $\theta_{tgt} = \theta_r$. The linear and angular speeds of the robot ($v$ and $\omega$, respectively) are then calculated using proportional control by the following equations:
 $$v = K_vd_{tgt}$$
