@@ -10,7 +10,7 @@ For the implementation of this project we had to start from scratch since this w
 \label{sec:Robot Assembly}
 %----------------------------------------------------------------------
 
-For this project we needed a Remote Target and Smart Robotic Cart that we designed and implemented from off the shelf components.  As mentioned above in section \ref{sec:System Components} some of our components came from what the school already owned as well as some we had to buy specifically for this project listed in \autoref{tab:Partslablist} and \autoref{tab:Partslist}.
+For this project we needed a Remote Target and Smart Robotic Cart that we designed and implemented from off the shelf components.  As mentioned above in section \ref{sec:System Components}, some of our components came from what the school already owned as well as some we had to buy specifically for this project listed in \autoref{tab:Partslablist} and \autoref{tab:Partslist}.
 
 \vspace*{12pt}
 \noindent
@@ -18,7 +18,7 @@ Since the school already owned the Budget Bot chassis, we decided to build our S
 
 \vspace*{12pt}
 \noindent
-As shown in Fig. \ref{fig:FinalizedRobot}, our next step was to attach the BeagleBone Blue microcomputer, XBee reflector array assembly, and breadboard to the top of the robot. We also installed a 2-cell LiPo battery inside the chassis of the mobile cart that delivers power to the BeagleBone Blue directly and the breadboard through the switch. \par
+As shown in Fig. \ref{fig:FinalizedRobot}, our next step was to attach the BeagleBone Blue microcomputer, XBee reflector array assembly, and breadboard to the top of the robot. We also installed a 2-cell LiPo battery inside the chassis of the mobile cart that delivers power to the BeagleBone Blue directly and the breadboard through the switch.
 
 \begin{figure}[H]
 	\centering
@@ -38,11 +38,11 @@ The power supplied to the breadboard is sent through a regulator circuit to drop
 
 \vspace*{12pt}
 \noindent
-The Reflector array assembly from Chapter \ref{ch: Chapter3} was mounted on a stepper motor that was then attached to the robot chassis using a 3D printed bracket. This bracket was then attached to the chassis using bolts. Another feature of this bracket is that it had a stop block built into the top of it to automatically zero the reflector array when the robot starts up.
+The reflector array assembly from Chapter \ref{ch: Chapter3} was mounted on a stepper motor that was then attached to the robot chassis using a 3D printed bracket. This bracket was then attached to the chassis using bolts. Another feature of this bracket is that it had a stop block built into the top of it to automatically zero the reflector array when the robot starts up.
 
 \vspace*{12pt}
 \noindent
-The Xbee modules from the reflector array posed a bit of a problem when it came to connecting them to the BeagleBone Blue. This problem comes from that the BeagleBone Blue has five UART ports if we are using the one found in the USB and the UART-GPS along with the three normal UART ports.\todo[inline]{This sentence needs to be revised. -Kalli}. This does not work since UART port zero is tied to the council used to communicate with it from a computer. Since this port is reserved for this function that reduces the number of usable ports down to four and we need to have five XBees in these ports. Our solution to this was to use two of the GPIO pins, two of the UART ports, and a two-way multiplexer. With this setup we can directly connect one of the UARTs to the top XBee and then rout the other four side XBee modules through the MUX so only one UART port is needed for them.
+The Xbee modules from the reflector array posed a bit of a problem when it came to connecting them to the BeagleBone Blue. This problem comes from that the BeagleBone Blue has five UART ports if we are using the one found in the USB and the UART-GPS along with the three normal UART ports.\todo[inline]{This sentence needs to be revised. -Kalli} This does not work since UART port zero is tied to the council used to communicate with it from a computer. Since this port is reserved for this function that reduces the number of usable ports down to four and we need to have five XBees in these ports. Our solution to this was to use two of the GPIO pins, two of the UART ports, and a two-way multiplexer. With this setup we can directly connect one of the UARTs to the top XBee and then rout the other four side XBee modules through the MUX so only one UART port is needed for them.
 
 
 %----------------------------------------------------------------------
@@ -65,7 +65,7 @@ For the project we also built some custom libraries on top of the Robot Control 
 
 \vspace*{12pt}
 \noindent
-The final custom library is the stepper motor control library. This library had to be written ourselves since instead of using a dedicated stepper motor controller for our project we were using two of the regular DC motor control ports that are build into the BeagleBone Blue. The library handled translating how many steps to turn into proper cycling of the DC motor ports to get the stepper motor to move the desired distance. \todo[inline]{This sentence needs to be revised since it makes no sense. -Kalli}. The library also helped to keep track of basic information related to the stepper motor such as what its current angle should be.
+The final custom library is the stepper motor control library. This library had to be written ourselves since instead of using a dedicated stepper motor controller for our project we were using two of the regular DC motor control ports that are build into the BeagleBone Blue. The library handled translating how many steps to turn into proper cycling of the DC motor ports to get the stepper motor to move the desired distance. \todo[inline]{This sentence needs to be revised since it makes no sense. -Kalli} The library also helped to keep track of basic information related to the stepper motor such as what its current angle should be.
 
 %----------------------------------------------------------------------
 \section{Experimental Results}
@@ -84,7 +84,7 @@ This method offers us a sufficiently dense set of data to base our angle predict
 
 \vspace*{12pt}
 \noindent
-\todo[inline]{This section needs to be fixed. I have done grammar corrections but I do not have any clue how to fix your wording issues. You have run-on sentences and duplicative language describing the same thing. -Kalli}
+\todo[inline]{This section needs to be fixed. You have some wording issues that makes it hard for me to understand what you are saying. -Kalli}
 The next version that used a rotating reflector as well as the final version works mostly the same as the first version but with some improvements to its navigation.  The first big fix is that we determined that the result of the oscillation we were seeing in the first test was a result of turning while also rotating the reflector which would add additional rotation to the measurements in global scope. Due to how our robot is designed we can only rotate the reflector array 90 degrees but to properly fix this rotation issue we would need to rotate the reflector more or less during a sweep to compensate for the robots rotation. Our compromise was simply to allow the robot to always move forward but to alternate between rotating the reflector and getting a measurement and then rotating the robot based on that measurement. In this version we also added some additional windowed filters to average out the angle measurements which did help to reduce the effects of random angles from noise in the system. We also applied offsets to each of the directional receivers revived signal strengths based off of data that we had collected while testing it when we noticed that each side had a different minimum that it would cap out at.
 
 \subsection{Locked Reflector Tests}
