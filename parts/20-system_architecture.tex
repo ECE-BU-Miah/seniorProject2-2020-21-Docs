@@ -10,20 +10,19 @@ The overall system architecture of this project consists of two subsystems which
 are the Mobile Cart and the Remote Target, which is held by the user or
 customer, as shown in Fig. \ref{fig:sys_block_diag}. The proposed smart robotic
 cart is a wheeled robot that sends and receives radio signals to follow the
-remote target which acts as the beacon for the robotic cart system. %
-%
-\begin{figure}
+remote target which acts as the beacon for the robotic cart system.
+
+\vspace*{12pt}
+\noindent
+The high-level system block diagram of the proposed robotic cart (prototype) is shown in Fig. \ref{fig:sys_block_diag}. There are three inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. This will save the battery from being drained by the XBees in the reflector array. The motion of the robotic cart is dependent on the motion of the remote.
+
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figs/img/systemBlockDiagram.png}
   \caption{System level block diagram detailing inputs and outputs to the
     robotic cart system.}
 	\label{fig:sys_block_diag}
 \end{figure}
-%
-
-\vspace*{12pt}
-\noindent
-The high-level system block diagram of the proposed robotic cart (prototype) is shown in Fig. \ref{fig:sys_block_diag}. There are three inputs to the proposed cart system. The robotic cart is supplied with power through a battery that is mounted in the chassis of the robotic cart. There will be an on/off switch to allow the system to be powered down when not in use. This will save the battery from being drained by the XBees in the reflector array. The motion of the robotic cart is dependent on the motion of the remote.
 
 \vspace*{12pt}
 \noindent
@@ -43,30 +42,19 @@ simplest since it only requires an XBee module attached to a 7.4V Li-Po battery
 with a voltage regulation circuit since the XBee has a smaller input voltage of
 3.3 volts. The two inputs for this system are the battery power and the incoming
 RF messages which are passed through the RF transceiver Module and output the
-outgoing RF messages. %
-%
-\begin{figure}
+outgoing RF messages.
+
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figs/img/remoteBlockDiagram.png}
   \caption{Remote Target block diagram}
   \label{fig:remote_block_diag}
 \end{figure}
-%
-
 
 \vspace*{12pt}
 \noindent
 The Mobile Cart subsystem block diagram, shown in Fig.
-\ref{fig:mobile_block_diag}, is the most complex of the two subsystems. %
-%
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{figs/img/mobileCartBlockDiagram.png}
-  \caption{Block diagram showing the subsystem-level components of the proposed robotic cart.}
-  \label{fig:mobile_block_diag}
-\end{figure}
-%
-The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the
+\ref{fig:mobile_block_diag}, is the most complex of the two subsystems.The cart requires a power source, which will be a 7.4V, 8,000 mAh Li-Po battery since the
 Li-Po works well with powering the embedded computer (BeagleBone Blue). The
 power to the subsystem will be toggled by an on/off switch located on the
 chassis of the robotic cart. The final input to the mobile cart subsystem is the
@@ -77,6 +65,13 @@ direction sensitive RF receivers and passes one output into the embedded
 computer. Once the embedded computer gets these signals it can calculate the
 localization and navigation algorithms and pass the information to the DC
 motors.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figs/img/mobileCartBlockDiagram.png}
+  \caption{Block diagram showing the subsystem-level components of the proposed robotic cart.}
+  \label{fig:mobile_block_diag}
+\end{figure}
 
 \vspace*{12pt}
 \noindent
@@ -151,19 +146,19 @@ user.
 
 \begin{figure}
   \centering
-  \begin{minipage}[t]{0.32\textwidth}
+  \begin{minipage}[H]{0.32\textwidth}
     \includegraphics[width=1\textwidth]{figs/img/budgetbot_chassis}
     \captionsetup{width=\textwidth}
     \caption{Budget Bot Chassis}
     \label{fig:budgetBotChassis}
   \end{minipage}%
-  \begin{minipage}[t]{0.32\textwidth}
+  \begin{minipage}[H]{0.32\textwidth}
     \includegraphics[width=1\textwidth]{figs/img/beaglebone_blue}
     \captionsetup{width=\textwidth}
     \caption{BeagleBone Blue}
     \label{fig:beagleboneBlue}
   \end{minipage}
-  \begin{minipage}[t]{0.32\textwidth}
+  \begin{minipage}[H]{0.32\textwidth}
     \includegraphics[width=1\textwidth]{figs/img/Xbee-S2C-Module}
     \captionsetup{width=\textwidth}
     \caption{XBee S2C Module}
@@ -185,14 +180,14 @@ remote as well because of this. %
 %
 \begin{figure}
   \centering
-  \begin{minipage}[t]{0.5\textwidth}
+  \begin{minipage}[H]{0.5\textwidth}
     \centering
     \includegraphics[height=2in]{figs/img/paraboloidalReflector}
     \captionsetup{width=\textwidth, justification=raggedright}
     \caption{Paraboloidal Reflector Model}
     \label{fig:parabolodialReflector}
   \end{minipage}
-  \begin{minipage}[t]{0.4\textwidth}
+  \begin{minipage}[H]{0.4\textwidth}
     \centering
     \includegraphics[height=2in]{figs/img/parabolicReflector}
     \captionsetup{width=\textwidth, justification=raggedright}
@@ -211,7 +206,10 @@ printing the frames, then lining them with reflective foil tape. Both models
 will then be tested to determine which design works better.
 
 
-\subsection{Operation of Robotic Cart System}
+%----------------------------------------------------------------------
+\section{Operation of Robotic Cart System}
+\label{sec:Operation of Robotic Cart System}
+%----------------------------------------------------------------------
 The mobile cart was controlled by a central embedded computer which is the BeagleBone Blue since it is ideal in robotics control. Two DC motors were used to drive wheels and move the cart. Five XBee modules on the cart were used to allow communication with the remote target. One of these radio sensors was mounted on top of the cart to broadcast in all directions. The other four sensors were placed inside parabolic reflectors at right angles to each other. This sensor array was mounted on a stepper motor to allow rotation.
 
 
