@@ -3,15 +3,14 @@
 \label{ch: Chapter3}
 %======================================================================
 
-\todo[inline]{Add an introductory paragraph (4/5 sentences maximum). What are
-  you trying to talk about in this chapter, for example}
+The XBee RF modules that were used are omnidirectional. In this project, however, it is desired to have differences in the received signals based on the angle from which the signal is coming. Therefore, one of the major components of this project is the reflector array that enables the XBee modules to be direction sensitive. This section discusses the steps that were taken to construct such a reflector array.
 
 %----------------------------------------------------------------------
 \section{Reflector Design}
 %----------------------------------------------------------------------
-The XBee RF modules that were used detect signals from any direction. In this project, however, it is desired to have differences in the received signals based on the angle from which the signal is coming. To accomplish this, two different models of reflector arrays were designed and constructed.
+Two different models of reflector arrays were designed and constructed. The first design was a paraboloidal reflector with the focus on the antenna of the XBee module. The second design was a combination of a paraboloidal shape and a simpler parabolic shape. The motivation for each design will be discussed in sections \ref{subsec:paraboloidalReflector} and \ref{subsec:parabolicReflector}.
 
-\subsection{Paraboloidal Reflector}
+\subsection{Paraboloidal Reflector}\label{subsec:paraboloidalReflector}
 The first design, shown in Fig. \ref{fig:paraboloidalReflector}, uses a reflector with a paraboloidal shape. This shape was selected since all signals entering the reflector parallel to the axis of the reflector will be focused at the focal point of the paraboloid. By mounting the XBee such that the center of the antenna coincides with the focal point of the paraboloid, the signal strength of the signals entering parallel to the axis will be maximized.
 \begin{figure}
     \centering
@@ -20,7 +19,7 @@ The first design, shown in Fig. \ref{fig:paraboloidalReflector}, uses a reflecto
     \label{fig:paraboloidalReflector}
 \end{figure}
 
-\subsection{Combined Parabolic/Paraboloidal Reflector}
+\subsection{Combined Parabolic/Paraboloidal Reflector}\label{subsec:parabolicReflector}
 The second design, shown in Fig. \ref{fig:parabolicReflector}, is the same on the lower half as the first design. However, the upper half is simply a surface where the horizontal cross-section is a parabola. The purpose for this design is similar to that of the first design, but the parabolic shape on the top will allow stronger detected signal strength of signals coming from above the reflector. Since the remote will be held by a person, it will generally be above the robot. The parabolic/paraboloidal reflector design is intended to allow better reception of signals from above.
 \begin{figure}
     \centering
