@@ -1,6 +1,6 @@
 %======================================================================
 \chapter{System Architecture}
-\label{ch: Chapter2}
+\label{ch: sysArchitecture}
 %======================================================================
 
 %----------------------------------------------------------------------
@@ -142,7 +142,7 @@ The main components for this project are the Budget Bot Chassis (Fig.
 \ref{fig:beagleboneBlue}), and the XBee S2C Modules (Fig. \ref{fig:XBeeModule}).
 Another major component is the reflector array that will be used to
 directionally receive the RF signals from the remote target that is with the
-user.
+user, which will be discussed in detail in the next section.
 
 \begin{figure}[H]
   \centering
@@ -167,53 +167,122 @@ user.
   \caption{Main System Components}
 \end{figure}
 
-\vspace*{12pt}
-\noindent
-The reflector array will be mounted on top of the cart with a stepper motor.
-There are two reflector designs that were evaluated in this project. The first,
-shown in Fig. \ref{fig:parabolodialReflector}, is a paraboloidal reflector which
-maximizes the signal strength of the signals that come into the reflector
-perpendicularly. Since the remote will be carried by the user, it is likely that
-it will be positioned at a higher altitude than the reflector array. The
-paraboloidal reflector design may not be able to pick up the signals from the
-remote as well because of this. %
-%
+%----------------------------------------------------------------------
+\section{Customized Reflector Array}\label{sec:customReflector}
+%----------------------------------------------------------------------
+The XBee RF modules that were used are omnidirectional. In this project, however, it is desired to have differences in the received signals based on the angle from which the signal is coming. Therefore, one of the major components of this project is the reflector array that enables the XBee modules to be direction sensitive. This section discusses the steps that were taken to construct such a reflector array.
+
+\subsection{Reflector Design}
+Two different models of reflector arrays were designed and constructed. The first design was a paraboloidal reflector with the focus on the antenna of the XBee module. The second design was a combination of a paraboloidal shape and a simpler parabolic shape. The motivation for each design will be discussed in sections \ref{subsec:paraboloidalReflector} and \ref{subsec:parabolicReflector}.
+
+\subsubsection{Paraboloidal Reflector}\label{subsec:paraboloidalReflector}
+The first design, shown in Fig. \ref{fig:paraboloidalReflector}, uses a reflector with a paraboloidal shape. This shape was selected since all signals entering the reflector parallel to the axis of the reflector will be focused at the focal point of the paraboloid. By mounting the XBee such that the center of the antenna coincides with the focal point of the paraboloid, the signal strength of the signals entering parallel to the axis will be maximized.
+\begin{figure}
+    \centering
+    \includegraphics[width=3.5in]{figs/img/paraboloidalReflector.png}
+    \caption{Purely Paraboloidal Reflector Array}
+    \label{fig:paraboloidalReflector}
+\end{figure}
+
+\subsubsection{Combined Parabolic/Paraboloidal Reflector}\label{subsec:parabolicReflector}
+The second design, shown in Fig. \ref{fig:parabolicReflector}, is the same on the lower half as the first design. However, the upper half is simply a surface where the horizontal cross-section is a parabola. The purpose for this design is similar to that of the first design, but the parabolic shape on the top will allow stronger detected signal strength of signals coming from above the reflector. Since the remote will be held by a person, it will generally be above the robot. The parabolic/paraboloidal reflector design is intended to allow better reception of signals from above.
+\begin{figure}
+    \centering
+    \includegraphics[width=3.5in]{figs/img/parabolicReflector.png}
+    \caption{Parabolic/Paraboloidal Reflector Array}
+    \label{fig:parabolicReflector}
+\end{figure}
+
+\subsection{Reflector Construction}
+With the recent advancements in 3D printing technology, it is not difficult to
+create an object with a parabolic shape. In this project, the reflector dishes
+were created using a 3D printer. The reflector array was designed to be modular,
+where the dishes, top plate, and bottom frame were printed separately. After
+printing, the dishes were lined with foil tape to provide the reflective surface
+to focus the signals onto the antenna of the XBee. A layer of foil tape was also
+placed on the top plate to provide a ground plane for the XBee. The parts were
+then fastened together using M3 screws and nuts (Fig.
+\ref{fig:reflectorConstruction}).
 %
 \begin{figure}[H]
-  \centering
-  \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \includegraphics[height=2in]{figs/img/paraboloidalReflector}
-    \captionsetup{width=\textwidth, justification=raggedright}
-    \caption{Paraboloidal Reflector Model}
-    \label{fig:parabolodialReflector}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.4\textwidth}
+    \includegraphics[width=2.5in]{figs/img/reflectorConstruction.jpg}
+    \caption{Reflector Construction}
+    \label{fig:reflectorConstruction}
+\end{figure}
+
+%----------------------------------------------------------------------
+\section{Localization and Navigation}\label{sec:locAndNavAlgos}
+%----------------------------------------------------------------------
+
+This section illustrates the localization and navigation algorithms for the mobile cart to operate in an indoor/outdoor environment. The proposed robotic cart was modeled as a differential drive mobile robot (DDMR). The direction and distance of the remote relative to the cart are determined using a localization algorithm. This distance and angle are then passed to a navigation algorithm which calculates and applies the wheel speeds to move the robot toward the remote.
+
+\subsection{Robot Model}\label{subsec:robotModel}
+The robot used in this project was a differential drive mobile robot, which has
+two drive wheels and a caster wheel for balance. The robot turns by applying
+different speeds to the left and right wheels. As shown in Fig.
+\ref{fig:robotGeometry}, the radius of the wheels is $R$, and the distance
+between the wheels is $L$. The pose of the robot is given by the $x$-coordinate
+($x$), the $y$-coordinate ($y$), and the orientation, ($\theta$), as shown in
+Fig. \ref{fig:robotPose}. %
+%
+\begin{figure}[H]
     \centering
-    \includegraphics[height=2in]{figs/img/parabolicReflector}
-    \captionsetup{width=\textwidth, justification=raggedright}
-    \caption{Combined Parabolic/Paraboloidal Reflector}
-    \label{fig:parabolicReflector1}
-  \end{subfigure}
-  \caption{Reflector Array Models}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{figs/robotGeometry.pdf}
+        \caption{Robot Geometry}
+        \label{fig:robotGeometry}
+    \end{subfigure}%
+    \begin{subfigure}{0.7\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{figs/robotPose.pdf}
+        \caption{Robot Pose}
+        \label{fig:robotPose}
+    \end{subfigure}
+    \caption{Robot Model Parameters}
+    \label{fig:robotModelParameters}
 \end{figure}
 %
-To solve this problem, a combination parabolic/paraboloidal reflector was
-designed, as shown in Fig. \ref{fig:parabolicReflector1}. The lower half of this
-reflector is paraboloidal in shape to limit the signals coming from below. The
-upper part of the reflector is strictly parabolic. This shape focuses the
-signals in the horizontal plane, but allows signals from above to still be
-received. The plan is to construct both of these reflector designs by 3D
-printing the frames, then lining them with reflective foil tape. Both models
-will then be tested to determine which design works better.
 
+\vspace*{12pt}
+\noindent
+Generally the robot is controlled by commanding a linear and angular speed ($v$ and $\omega$, respectively). These speeds must be converted into left and right wheel speeds. The following equations are used to calculate the angular left and right wheel speeds ($\omega_l$ and $\omega_r$, respectively):
+$$\omega_l = \left(v - \omega\frac{L}{2}\right)\frac{1}{R}$$
+$$\omega_r = \left(v + \omega\frac{L}{2}\right)\frac{1}{R}$$
+To control DC motors in this way, the relationship between duty cycle and angular speed must be determined. Then the duty cycles to apply to the wheels can be calculated for the commanded $v$ and $\omega$.
 
-%----------------------------------------------------------------------
-\section{Operation of Robotic Cart System}
-\label{sec:Operation of Robotic Cart System}
-%----------------------------------------------------------------------
-The mobile cart was controlled by a central embedded computer which is the BeagleBone Blue since it is ideal in robotics control. Two DC motors were used to drive wheels and move the cart. Five XBee modules on the cart were used to allow communication with the remote target. One of these radio sensors was mounted on top of the cart to broadcast in all directions. The other four sensors were placed inside parabolic reflectors at right angles to each other. This sensor array was mounted on a stepper motor to allow rotation.
+\subsection{Localization Algorithm}
+The localization algorithm is used to estimate the position of the remote with respect to the robot's local coordinate system. First the omnidirectional transceiver on top of the reflectors sends a signal strength request to the remote. The remote then replies with a message containing the strength of the signal it just received. This reply is detected by the receivers inside the reflectors as well as the omnidirectional transceiver. The strength detected by each of the directional receivers and the strength contained in the reply are then recorded. At this point, the entire reflector array is rotated 9\textdegree, and this process is repeated. The robot continues taking measurements in this way until the reflectors have been rotated one quarter turn. Since there are four reflectors at 90\textdegree to each other, a strength measurement has been recorded for every 9\textdegree increment around the robot. The angle of the remote is then estimated as the direction from which the strongest signal was received. The distance to the remote is calculated using the free-space path loss formula. The direction of reflector rotation is then reversed since the wires connecting the RF modules in the reflectors prevent the reflector from freely spinning. A flowchart of this algorithm is shown in Fig. \ref{fig:localizationAlgoFlowchart}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{figs/localizationAlgorithmFlowchart.pdf}
+    \caption{Flowchart of Localization Algorithm}
+    \label{fig:localizationAlgoFlowchart}
+\end{figure}
 
+\subsection{Navigation Algorithm}\label{subsec:navAlgo}
+The navigation algorithm is used to drive the robot toward the remote. The inputs to the navigation algorithm are the angle to the remote ($\theta_r$) and the distance to the remote ($d_r$). A target point is then calculated as the point that is in the same direction as the remote, but closer to the robot by a fixed following distance ($d_{follow}$), as shown in Fig. \ref{fig:navAlgoDiagram}. The distance to the target point is calculated as $d_{tgt} = d_r - d_{follow}$, and the angle to the target point is $\theta_{tgt} = \theta_r$. The linear and angular speeds of the robot ($v$ and $\omega$, respectively) are then calculated using proportional control by the following equations:
+$$v = K_vd_{tgt}$$
+$$\omega = K_\omega\theta_{tgt}$$
+The appropriate duty cycles are then calculated as specified in section \ref{subsec:robotModel} and applied to the wheel motors.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]{figs/navigationAlgorithmDiagram.pdf}
+        \caption{Target Point Diagram}
+        \label{fig:navAlgoDiagram}
+    \end{subfigure}%
+    \begin{subfigure}{0.55\textwidth}
+        \centering
+        \includegraphics[width=0.95\textwidth]{figs/navigationAlgorithmFlowchart.pdf}
+        \caption{Flowchart}
+        \label{fig:navAlgoFlowchart}
+    \end{subfigure}
+    \caption{Navigation Algorithm Details}
+    \label{fig:navAlgoDetails}
+\end{figure}
 
 %%% Local Variables:
 %%% mode: latex
