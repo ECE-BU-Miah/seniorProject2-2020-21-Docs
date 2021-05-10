@@ -1,6 +1,6 @@
 %======================================================================
 \chapter{System Architecture}
-\label{ch: Chapter2}
+\label{ch: sysArchitecture}
 %======================================================================
 
 %----------------------------------------------------------------------
@@ -168,7 +168,7 @@ user, which will be discussed in detail in the next section.
 \end{figure}
 
 %----------------------------------------------------------------------
-\section{Customized Reflector Array}
+\section{Customized Reflector Array}\label{sec:customReflector}
 %----------------------------------------------------------------------
 The XBee RF modules that were used are omnidirectional. In this project, however, it is desired to have differences in the received signals based on the angle from which the signal is coming. Therefore, one of the major components of this project is the reflector array that enables the XBee modules to be direction sensitive. This section discusses the steps that were taken to construct such a reflector array.
 
@@ -212,7 +212,7 @@ then fastened together using M3 screws and nuts (Fig.
 \end{figure}
 
 %----------------------------------------------------------------------
-\section{Localization and Navigation}
+\section{Localization and Navigation}\label{sec:locAndNavAlgos}
 %----------------------------------------------------------------------
 
 This section illustrates the localization and navigation algorithms for the mobile cart to operate in an indoor/outdoor environment. The proposed robotic cart was modeled as a differential drive mobile robot (DDMR). The direction and distance of the remote relative to the cart are determined using a localization algorithm. This distance and angle are then passed to a navigation algorithm which calculates and applies the wheel speeds to move the robot toward the remote.
@@ -261,7 +261,7 @@ The localization algorithm is used to estimate the position of the remote with r
     \label{fig:localizationAlgoFlowchart}
 \end{figure}
 
-\subsection{Navigation Algorithm}
+\subsection{Navigation Algorithm}\label{subsec:navAlgo}
 The navigation algorithm is used to drive the robot toward the remote. The inputs to the navigation algorithm are the angle to the remote ($\theta_r$) and the distance to the remote ($d_r$). A target point is then calculated as the point that is in the same direction as the remote, but closer to the robot by a fixed following distance ($d_{follow}$), as shown in Fig. \ref{fig:navAlgoDiagram}. The distance to the target point is calculated as $d_{tgt} = d_r - d_{follow}$, and the angle to the target point is $\theta_{tgt} = \theta_r$. The linear and angular speeds of the robot ($v$ and $\omega$, respectively) are then calculated using proportional control by the following equations:
 $$v = K_vd_{tgt}$$
 $$\omega = K_\omega\theta_{tgt}$$

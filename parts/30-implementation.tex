@@ -1,6 +1,6 @@
 %======================================================================
 \chapter{Implementation}
-\label{ch: Chapter5}
+\label{ch: implementation}
 %======================================================================
 
 For the implementation of this project we had to start from scratch since this was a new project concept introduced by our advisor Dr. Miah. There have been senior projects in the past that have used XBees to get signal strength but there is very little overlap between these projects to substantiate where our project needed to start from. For this project we had to first build a mobile robot and a remote to use for testing. We then had to build a code base to control the mobile robot that was then implemented with our test algorithms.
@@ -21,24 +21,24 @@ Since the school already owned the Budget Bot chassis, we decided to build our S
 As shown in Fig. \ref{fig:FinalizedRobot}, our next step was to attach the BeagleBone Blue microcomputer, XBee reflector array assembly, and breadboard to the top of the robot. We also installed a 2-cell LiPo battery inside the chassis of the mobile cart that delivers power to the BeagleBone Blue directly and the breadboard through the switch.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{figs/img/Finalized_robot.png}
-	\caption{Final Version of the Robotic Cart}
- 	\label{fig:FinalizedRobot}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figs/img/Finalized_robot.png}
+    \caption{Final Version of the Robotic Cart}
+    \label{fig:FinalizedRobot}
 \end{figure}
 
 The power supplied to the breadboard is sent through a regulator circuit to drop it down from the 7.4V of the LiPo to 3.3V of the XBee. This circuit is also used on the remote which consists of a 7.4V LiPo battery and the XBee module with voltage regulator in between. This voltage regulator is built out of a LM117 regulator and a 10uF ceramic capacitor between the input and output pins of the regulator as shown in Fig. \ref{fig:PowerConverter}.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{figs/img/PowerConverter.png}
-	\caption{Final Version of the Robotic Cart}
- 	\label{fig:PowerConverter}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figs/img/PowerConverter.png}
+    \caption{Final Version of the Robotic Cart}
+    \label{fig:PowerConverter}
 \end{figure}
 
 \vspace*{12pt}
 \noindent
-The reflector array assembly from Chapter \ref{ch: Chapter3} was mounted on a stepper motor that was then attached to the robot chassis using a 3D printed bracket. This bracket was then attached to the chassis using bolts. Another feature of this bracket is that it had a stop block built into the top of it to automatically zero the reflector array when the robot starts up.
+The reflector array assembly from \autoref{sec:customReflector} was mounted on a stepper motor that was then attached to the robot chassis using a 3D printed bracket. This bracket was then attached to the chassis using bolts. Another feature of this bracket is that it had a stop block built into the top of it to automatically zero the reflector array when the robot starts up.
 
 \vspace*{12pt}
 \noindent
@@ -72,7 +72,7 @@ The final custom library is the stepper motor control library. This library had 
 \label{sec:Experimental Results}
 %----------------------------------------------------------------------
 
-In this project after we had the Robotic Cart, Remote Target, and a code base to handle the specifics we started testing different variants of our algorithm explained in Chapter \ref{ch: Chapter4}. There were two main types of variants we put together, one type the stepper motor is locked preventing the reflector from turning and in the other we use the stepper motor to sweep through a set of angles.
+In this project after we had the Robotic Cart, Remote Target, and a code base to handle the specifics we started testing different variants of our algorithm explained in \autoref{sec:locAndNavAlgos}. There were two main types of variants we put together, one type the stepper motor is locked preventing the reflector from turning and in the other we use the stepper motor to sweep through a set of angles.
 
 \subsection{Rotating Reflector Tests}
 
@@ -137,7 +137,7 @@ Before constructing the physical robot prototype, a simulation was performed usi
 
 \vspace*{12pt}
 \noindent
-First, a model of the Budget Bot chassis was created in CoppeliaSim. The model is shown in Fig. \ref{fig:budgetBotModel}. The model was designed with the same dimensions as the physical chassis to accurately simulate the robot kinematics. Details on modeling a robot chassis in CoppeliaSim can be found in \autoref{ch:coppSimModeling}. Although \autoref{ch:coppSimModeling} explains the modeling of a robot chassis that is different than the Budget Bot chassis, the concepts are the same for modeling any robot chassis.
+First, a model of the Budget Bot chassis was created in CoppeliaSim. The model is shown in Fig. \ref{fig:budgetBotModel}. The model was designed with the same dimensions as the physical chassis to accurately simulate the robot kinematics. Details on modeling a robot chassis in CoppeliaSim can be found in \autoref{ch: coppSimModeling}. Although \autoref{ch: coppSimModeling} explains the modeling of a robot chassis that is different than the Budget Bot chassis, the concepts are the same for modeling any robot chassis.
 
 \begin{figure}
     \centering
@@ -148,7 +148,7 @@ First, a model of the Budget Bot chassis was created in CoppeliaSim. The model i
 
 \vspace*{12pt}
 \noindent
-MATLAB code was written to control the simulation. The actual distance between the robot and the remote was measured, then random noise was added with a mean of 0 and a standard deviation of 0.07. This noisy measurement was then used in the navigation algorithm to determine how to drive the robot (see \autoref{sec:navAlgo}). An image of the simulation is shown in Fig. \ref{fig:coppSimExample}, where the blue sphere represents the remote, and the green dot represents the target point.
+MATLAB code was written to control the simulation. The actual distance between the robot and the remote was measured, then random noise was added with a mean of 0 and a standard deviation of 0.07. This noisy measurement was then used in the navigation algorithm to determine how to drive the robot (see \autoref{subsec:navAlgo}). An image of the simulation is shown in Fig. \ref{fig:coppSimExample}, where the blue sphere represents the remote, and the green dot represents the target point.
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{figs/img/coppSimExample.png}
