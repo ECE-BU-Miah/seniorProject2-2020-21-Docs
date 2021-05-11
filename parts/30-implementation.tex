@@ -42,7 +42,7 @@ The reflector array assembly from \autoref{sec:customReflector} was mounted on a
 
 \vspace*{12pt}
 \noindent
-The Xbee modules from the reflector array posed a bit of a problem when it came to connecting them to the BeagleBone Blue. This problem comes from that the BeagleBone Blue has five UART ports if we are using the one found in the USB and the UART-GPS along with the three normal UART ports.\todo[inline]{This sentence needs to be revised. -Kalli} This does not work since UART port zero is tied to the council used to communicate with it from a computer. Since this port is reserved for this function that reduces the number of usable ports down to four and we need to have five XBees in these ports. Our solution to this was to use two of the GPIO pins, two of the UART ports, and a two-way multiplexer. With this setup we can directly connect one of the UARTs to the top XBee and then rout the other four side XBee modules through the MUX so only one UART port is needed for them.
+The Xbee modules from the reflector array posed a bit of a problem when it came to connecting them to the BeagleBone Blue. The BeagleBone Blue has five UART ports if one were the three standard UART ports and tow others found in the USB and UART-GPS. Unfortunately though this does not work since UART port zero is tied to the council used to communicate with it from a computer. Since this port is reserved for this function that reduces the number of usable ports down to four and we need to have five XBees in these ports. Our solution to this was to use two of the GPIO pins, two of the UART ports, and a two-way multiplexer. With this setup we can directly connect one of the UARTs to the top XBee and then rout the other four side XBee modules through the MUX so only one UART port is needed for them.
 
 
 %----------------------------------------------------------------------
@@ -65,7 +65,7 @@ For the project we also built some custom libraries on top of the Robot Control 
 
 \vspace*{12pt}
 \noindent
-The final custom library is the stepper motor control library. This library had to be written ourselves since instead of using a dedicated stepper motor controller for our project we were using two of the regular DC motor control ports that are build into the BeagleBone Blue. The library handled translating how many steps to turn into proper cycling of the DC motor ports to get the stepper motor to move the desired distance. \todo[inline]{This sentence needs to be revised since it makes no sense. -Kalli} The library also helped to keep track of basic information related to the stepper motor such as what its current angle should be.
+The final custom library is the stepper motor control library. This library had to be written ourselves since instead of using a dedicated stepper motor controller for our project we were using two of the regular DC motor control ports that are build into the BeagleBone Blue. The library handled translating how many steps to turn into the phase states to be sent to the DC motor ports that are connected to the stepper motor. The library also helped to keep track of basic information related to the stepper motor such as what its current angle should be.
 
 %----------------------------------------------------------------------
 \section{Experimental Results}
@@ -84,8 +84,7 @@ This method offers us a sufficiently dense set of data to base our angle predict
 
 \vspace*{12pt}
 \noindent
-\todo[inline]{This section needs to be fixed. You have some wording issues that makes it hard for me to understand what you are saying. -Kalli}
-The next version that used a rotating reflector as well as the final version works mostly the same as the first version but with some improvements to its navigation.  The first big fix is that we determined that the result of the oscillation we were seeing in the first test was a result of turning while also rotating the reflector which would add additional rotation to the measurements in global scope. Due to how our robot is designed we can only rotate the reflector array 90 degrees but to properly fix this rotation issue we would need to rotate the reflector more or less during a sweep to compensate for the robots rotation. Our compromise was simply to allow the robot to always move forward but to alternate between rotating the reflector and getting a measurement and then rotating the robot based on that measurement. In this version we also added some additional windowed filters to average out the angle measurements which did help to reduce the effects of random angles from noise in the system. We also applied offsets to each of the directional receivers revived signal strengths based off of data that we had collected while testing it when we noticed that each side had a different minimum that it would cap out at.
+The next version that used a rotating reflector, as well as the final version, works mostly the same as the first version but with some improvements to its navigation. The first big fix is that we determined that the oscillation we were seeing in the first test were a result of turning while also rotating the reflector which would add additional rotation to the measurements in global scope. Due to how our robot is designed we can only rotate the reflector array 90 degrees but to properly fix this rotation issue we would need to rotate the reflector more or less during a sweep to compensate for the robots rotation. Our compromise was simply to allow the robot to always move forward but to alternate between getting measurements and then rotating the robot based on the measurements. In this version some additional windowed filters to average out the angle measurements were added, which did help to reduce the effects of random angles from noise in the system. We also applied offsets to each of the directional receivers revived signal strengths based off the data that we had collected while testing it. This offset was needed due to each side having a different minimum that it would cap out at.
 
 \subsection{Locked Reflector Tests}
 
@@ -126,8 +125,7 @@ In both our fixed and sweeping experiments a underlying issue is the amount of n
 \end{figure}
 
 \subsection{Distance}
-
-\todo[inline]{Was going back over this and realized I should add this section in will do later don't have time at this exact moment. -Darrah}
+This project initially planned to use the top XBee modules signal strength to determine the distance to the remote.  In practice, though, it was determined to be practically impossible with our setup.  The free space path loss equation was used as a base equation to work from for implementing this feature in the project.  The issue arises initially from that the free space path loss failed to return a usable distance by itself whenever any form of obstacle ends up in the line of sight path to the remote.  The free space path loss equation also is thrown off by any reflective surfaces around it due to the multipath effect.  These issues could be potentially solved by Simultanius Localization and Mapping algorithms like EKF-SLAM.  Unfortunately, this approach also does not work since it relies on a known global reference point that is absent in this project design. Since within the allotted time for the project, no viable solution was found, it was decided that the distance measurement would be put on hold for future work on the project
 
 
 
