@@ -1,28 +1,25 @@
 %======================================================================
 \chapter{Conclusion and Future Work}
-<<<<<<< HEAD:parts/60-conclusion_and_future_work.tex
 \label{ch: Chapter6}
 =======
 \label{ch: conclusionAndFuture}
->>>>>>> 9e3deacdd38258c6493f669a814a6d4aebc5764b:parts/40-conclusion_and_future_work.tex
 %======================================================================
 
 %----------------------------------------------------------------------
 \section{Conclusion}
 %----------------------------------------------------------------------
 
-From what we have seen in this project we would conclude that the robotic cart can indeed successfully follow the remote target radio.
-
-
-  
-\todo[inline]{Complete the conclusion section}
+This project shows that it is possible to use signal strength alone to make a mobile cart follow a target remotes position.  From this project, a functional design for a mobile cart was developed and tested.  In these tests, it was concluded that with the robot's current design, it would be impossible to calculate an accurate distance to the remote from the signal strength alone.  Since the distance was determent to be impossible, the current design follows the target remote based on angle measurements alone.  Due to this limitation or not having a usable distance value, the current implementation is unable to dynamically adjust its behavior. One such planned parameter was the robot's velocity, which would have been reduced as the robot approached the remote target to prevent it from running into the user via momentum.  Based on the literature review from before the project was started, we also determined that our Smart Following Cart design is more cost-effective than most if not all existing solutions.  Another feature was validated through some sparse testing where it was shown that the robot could successfully track the remote target through obstacles.
 
 %----------------------------------------------------------------------
 \section{Future Work}
 %----------------------------------------------------------------------
 
-
-\todo[inline]{Complete the future work section}
+Although the robotic cart prototype did successfully follow the remote based on signal strength alone, there is still much to be desired from future work.  The first problem that would need to be addressed is a proper obstacle avoidance system.  For the current robotic cart prototype, it was initially planned to have a basic version of user avoidance, but this was scrapped due to the inaccuracy of our distance measurement.  This user avoidance in a future project can also be incorporated into an obstacle detection and avoidance system, most likely using inferred or sonar sensors mounted around the side of the robot.  This is a necessary continuation of this project since, as it currently stands, it can detect and follow the remote through obstacles but will attempt to drive in a straight path towards the remote despite the obstacle in between them.
+\par{}
+The project also requires more overall tuning in any future work that is done on it.  The two main places that need more tuning are the weights used to normalize the signal strengths out of the reflector array and the specs of the reflector array's design to optimize its performance.  The values for normalizing the signal strengths coming out of the array currently are based on a relatively small and limited set of recorded data from the robot.  For a future extension of this project, more measurements would be required to better determine the quality of the data coming out of each reflector.  These values would most likely be obtained by taking many measurements in an anechoic chamber, which was also used for the current smaller set of sensor data.  The data currently is only being used to calculate a base offset for each reflector's strength. Though with enough data, it may be possible to use the top radio module's strength to adjust for overall degradation to the signal strength.  The reflectors themselves also most likely need to be redesigned again. During testing, it was noted that the difference from facing the target to facing away from the target is barely a greater difference in signal strength than the difference in signal strengths' measurement noise.
+\par{}
+The last problem that needs to be addressed in this project is determining a reasonably accurate distance measurement.  The problem with distance stems from that the remote and robot are relative to each other, so there is no global reference point that can be used to stabilize the measurements.  The second problem then is that the only way with the signal strength to get distance is to use a version of free space path loss which fails the second a use stands between the remote and the robot.  For this, two possible solutions were thought up after it was determined that signal strength alone would not work.  These solutions were also determined to be outside the scope of what could be reasonably achieved within the allotted project time.  The two possible solutions are to use signal strength with multi-frequency radio modules or to use the travel time of the message from the robot.  The multi-frequency approach would still use signal strength but would potentially allow for a profile to be put together from the signal strength of each frequency to try and ignore the interference from objects.  The other approach of using a messages' travel time has been shown to work in such applications as GPS over large distances.  This approach may work since the speed of the radio signal is generally less affected by objects in its path than signal strength is.  The main challenge with this approach would be getting a sufficiently accurate time measurement for short distances.  If either of these approaches to determining distance ended up working, then the following algorithm could be more dynamic in its behavior and interpretation of the signal strengths.
 
 %%% Local Variables:
 %%% mode: latex
