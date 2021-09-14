@@ -117,15 +117,11 @@ through the store. %
 The operating principle of the proposed prototype of a smart robotic cart relies mainly on the radio frequency identification technology. For that, RF modules, XBee S2C RF radios, are primarily utilized to identify and communicate between the robotic cart and the remote (customer in a store, for example). XBee S2C RF radios are inexpensive and easily configurable. An RF module is configured as a remote target device that is carried
 by the user/customer. The robot will be able to track this remote instead of using line
 of sight methods~\cite{Miah2018-Intelligent}. In addition to the XBee S2C RF
-radios, the robot is equipped with a parabolic reflector, which improves radio
-reception at various distances and angles,~\textit{i.e.,} angle of arrivals of
-RF signals from the remote, based on research done previously in this type of
-robot localization and mapping~\cite{Miah2018-Intelligent,Li2013ANA}. The approach using signal strengths of RF signals also requires an understanding
+radios, the robot is equipped with a parabolic reflector. This reflector helps improves radio reception at various distances and angles,~\textit{i.e.,} the angle of arrival of
+the RF signals from the remote. This reflector setup is based on research done previously in this type of robot localization and mapping~\cite{Miah2018-Intelligent,Li2013ANA}. The approach using signal strengths of RF signals also requires an understanding
 of multipath interference which is common in RF based wireless positioning
 sensing systems. Authors in~\cite{xie_jiang_zhao_zhang_2019} explain that using
-course estimation calculations such as the received signal strength indicator (RSSI)
- together with the time difference of arrival (TDoA) is key to compensate for the effect of multipath
-interference. 
+course estimation calculations such as the received signal strength indicator (RSSI) together with the time difference of arrival (TDoA) is key to compensate for the effect of multipath interference. 
 
 The work in ~\cite{ladd_bekris_rudys_kavraki_wallach_2005} shows a different
 approach to the multipath issue by using an IEEE 802.11b wireless Ethernet
@@ -195,7 +191,7 @@ It requires an RF module, XBee, attached to $7.4~[\si{\volt}]$ Li-Po battery
 with a voltage regulation circuit since the XBee has a smaller input voltage of
 $3.3~[\si{\volt}].$ The two inputs of the remote are the battery power and the
 incoming RF messages which are passed through the RF transceiver. The remote
-outputs the RF message back to the mobile cart, which will be discussed
+outputs an RF message back to the mobile cart, which will be discussed
 later. The subsystem block diagram of the mobile cart is shown in
 Fig.~\ref{fig:mobile_block_diag}. The cart requires a power source, which will
 be a $7.4~[\si{\volt}],$ $8000~[\si{\milli\ampere\hour}]$ Li-Po battery since the Li-Po works well with powering the
