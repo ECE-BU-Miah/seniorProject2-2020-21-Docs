@@ -13,16 +13,18 @@
 \usepackage{xcolor}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{siunitx}
+\usepackage{tikz}
+% load libraries
+\usetikzlibrary{backgrounds,calc,patterns,decorations.pathmorphing,decorations.markings,snakes}
+\def\smgrid{0.5}
 \usepackage{nohyperref}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{A Smart Robotic Cart Prototype using RF Signal Strength \thanks{Authors would like to acknowledge Illinois Space
-    Grants Consortium for funding this project under grand no. \#}
-  \thanks{The results presented in this paper were produced by a group of senior
-    undergraduate students: Jason Braker, Darrah Beebe, and Kalistah Allen }
+\title{A Smart Robotic Cart Prototype using RF Signal Strength \thanks{Authors
+    would like to thank Mr. Christopher Mattus.  }
 }
 
 \author{\IEEEauthorblockN{Jason Braker, Darrah Beebe, Kallistah Allen, Prasad Shastry, and Md Suruz Miah}
@@ -117,11 +119,11 @@ through the store. %
 The operating principle of the proposed prototype of a smart robotic cart relies mainly on the radio frequency identification technology. For that, RF modules, XBee S2C RF radios, are primarily utilized to identify and communicate between the robotic cart and the remote (customer in a store, for example). XBee S2C RF radios are inexpensive and easily configurable. An RF module is configured as a remote target device that is carried
 by the user/customer. The robot will be able to track this remote instead of using line
 of sight methods~\cite{Miah2018-Intelligent}. In addition to the XBee S2C RF
-radios, the robot is equipped with a parabolic reflector. This reflector helps improves radio reception at various distances and angles,~\textit{i.e.,} the angle of arrival of
+radios, the robot is equipped with a parabolic reflector. This reflector helps improve radio reception at various distances and angles,~\textit{i.e.,} the angle of arrival of
 the RF signals from the remote. This reflector setup is based on research done previously in this type of robot localization and mapping~\cite{Miah2018-Intelligent,Li2013ANA}. The approach using signal strengths of RF signals also requires an understanding
-of multipath interference which is common in RF based wireless positioning
+of multipath interference which is common in RF based wireless position
 sensing systems. Authors in~\cite{xie_jiang_zhao_zhang_2019} explain that using
-course estimation calculations such as the received signal strength indicator (RSSI) together with the time difference of arrival (TDoA) is key to compensate for the effect of multipath interference. 
+course estimation calculations such as the received signal strength indicator (RSSI) together with the time difference of arrival (TDoA) is the key to compensate for the effect of multipath interference. 
 
 The work in ~\cite{ladd_bekris_rudys_kavraki_wallach_2005} shows a different
 approach to the multipath issue by using an IEEE 802.11b wireless Ethernet
@@ -134,7 +136,7 @@ discrete points without too much deviation from the robot's desired position in
 an indoor environment. Lastly, the method that is utilized in~\cite{Lindhe2009}
 exploits multipath fading by measuring the signal-to-noise ratio (SNR) and
 adjusting the robot's motion to spend more time where the channel strength is
-greater. All solutions reported in the literature referred to here required line-of-sight
+greater. All solutions reported in the literature referenced here required line-of-sight
 communication between the robot and the user. However, in this work, we aim to use the
 XBee S2C RF radios and a parabolic reflectors integrated into a rotating system
 similar to the one presented in~\cite{Miah2018-Intelligent} in order to have the
@@ -152,8 +154,34 @@ example) which acts as a beacon. The high-level system block diagram of the
 proposed robotic cart (prototype) is shown in Fig.~\ref{fig:sys_block_diag}. %
 % 
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.5\textwidth]{figs/systemBlockDiagram.pdf}
+  % \includegraphics[width=0.5\textwidth]{figs/systemBlockDiagram.pdf}
+    \centering
+    \begin{tikzpicture}    
+      % \tikzstyle{every node} = [font=\tiny];
+      \tikzstyle{block} = [draw, rectangle, fill=blue!15, rounded corners, minimum height=0.5 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 2.0cm, text centered](mobileCart){Mobile cart};
+      \node[block,text width= 2.0cm, text centered, below of=mobileCart, node distance=1.25cm](remote){Remote};
+      % Connections
+      \draw[stealth-stealth,ultra thick]
+      (mobileCart.south) --(remote.north);
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=red!10,draw = red,dashed,ultra thick, rounded corners]                
+        ($(remote.south west) + (-1.5*\smgrid,-0.25*\smgrid)$)node[](tmp1){} rectangle ($(mobileCart.north east) + (1.2*\smgrid,1.5*\smgrid)$)node[](tmp2){};
+        \draw
+        ($(mobileCart.north) + (-0.25*\smgrid,0.75*\smgrid)$)node{\textbf{Mobile cart system}};
+        % %%% Inputs and outputs
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,4.5*\smgrid)$) --node[near end,above]{Power}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,3*\smgrid)$) --node[near end,above]{On/Off switch}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,0.5*\smgrid)$) --node[near end,above]{Motion control}++(-3.0*\smgrid,0);
+        \draw[-stealth,thick]
+        ($(tmp2)+(0,-2.75*\smgrid)$) --node[very near end,above]{Cart position trajectory}++(4.0*\smgrid,0);
+      \end{pgfonlayer}
+    \end{tikzpicture}  
   \caption{System level block diagram detailing inputs and outputs to the
     robotic cart system.}
 	\label{fig:sys_block_diag}
@@ -173,13 +201,90 @@ As can be seen, two subsystems (mobile cart and remote) of the proposed robotic 
 \begin{figure}[htbp]
   \begin{subfigure}[b]{0.9\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/remoteBlockDiagram.pdf}
+    % \includegraphics[width=\textwidth]{figs/remoteBlockDiagram.pdf}
+    \begin{tikzpicture}    
+      \tikzstyle{every node} = [font=\footnotesize];
+      \tikzstyle{block} = [draw, rectangle, fill=orange!15, rounded corners, minimum height=0.5 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 2.5cm, text centered](rfTransceiverModule){RF transceiver module};
+      % Connections
+      % \draw[stealth-stealth,ultra thick]
+      % (mobileCart.south) --(remote.north);
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=green!10,draw = blue,dotted,thick, rounded corners]                
+        ($(rfTransceiverModule.south west) + (-0.25*\smgrid,-0.25*\smgrid)$)node[](tmp1){} rectangle ($(rfTransceiverModule.north east) + (0.25*\smgrid,0.75*\smgrid)$)node[](tmp2){};
+        \draw
+        ($(rfTransceiverModule.north) + (-0.25*\smgrid,0.5*\smgrid)$)node{\textbf{Remote}};
+        % %%% Inputs and outputs
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,2.0*\smgrid)$) --node[near end,above]{Battery power}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,0.75*\smgrid)$) --node[very near end,above]{Incoming RF messages}++(-3.5*\smgrid,0);
+        \draw[-stealth,thick]
+        ($(tmp2)+(0,-1.25*\smgrid)$) --node[midway,above]{Outgoing RF messages}++(5.25*\smgrid,0);
+      \end{pgfonlayer}
+    \end{tikzpicture}  
     \caption{}
     \label{fig:remote_block_diag}
   \end{subfigure}
   \begin{subfigure}[b]{0.9\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/mobileCartBlockDiagram.pdf}
+    % \includegraphics[width=\textwidth]{figs/mobileCartBlockDiagram.pdf}
+    \begin{tikzpicture}[scale=1.15,transform shape]    
+      \tikzstyle{every node} = [font=\tiny];
+      \tikzstyle{block} = [draw, rectangle, fill=orange!15, rounded corners, minimum height=0.6 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 1.0cm, text centered](embeddedComputer){Embedded computer};
+      \node[block,text width= 1.0cm, text centered, right of=embeddedComputer, node distance=2.5cm](DcMotors){DC motors};
+      \node[block,text width= 1.5cm, text centered, below of=DcMotors, node distance=0.75cm](omnidirectionalRfTransciever){Omnidirectional RF transceiver};
+      \node[block,text width= 1.5cm, text centered, below of=embeddedComputer, node distance=1.5cm](multiplexer){Multiplexer};
+      \node[block,text width= 1.5cm, text centered, below of=multiplexer, node distance=0.75cm](RFReceiver1){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, below of=RFReceiver1, node distance=0.75cm](RFReceiver2){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, right of=RFReceiver1, node distance=2.5cm](RFReceiver3){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, right of=RFReceiver2, node distance=2.5cm](RFReceiver4){Direction sensitive RF receiver};
+      % Connections
+      \draw[stealth-,thick]
+      (embeddedComputer.165) --node[near end,above]{Battery power}++(-2.5*\smgrid,0);
+      \draw[stealth-,thick]
+      (embeddedComputer.-165) --node[near end,below]{ON/OFF switch}++(-2.5*\smgrid,0);
+      \draw[-stealth,thick]
+      (embeddedComputer.0) --(DcMotors.180);
+      \draw[-stealth,thick]
+      (DcMotors.0) --node[midway,above]{Wheel velocities}++(2.5*\smgrid,0);
+      \draw[-stealth,thick]
+      (omnidirectionalRfTransciever.0) --node[near end,above]{Outgoing RF signals}++(2.75*\smgrid,0);
+      \draw[stealth-,thick]
+      (omnidirectionalRfTransciever.-170) --node[very near end,above]{Incoming RF signals}++(-7.5*\smgrid,0)node[](tmp1){};
+      \draw[stealth-stealth,very thick]
+      (multiplexer.90) --(embeddedComputer.-90);
+      \draw[stealth-stealth,thick]
+      (embeddedComputer.-45) |-(omnidirectionalRfTransciever.170);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- (RFReceiver1.west);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- (RFReceiver2.west);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- ($(RFReceiver2.south)+(0,-0.5*\smgrid)$) -| ($(RFReceiver3.east)+(0.5*\smgrid,0)$) -- (RFReceiver3.east);
+      \draw[stealth-]
+      (RFReceiver4.east) -- ++(0.5*\smgrid,0);
+      \draw[stealth-stealth]
+      (RFReceiver1.east) -- ++(0.5*\smgrid,0)|-(multiplexer.-10);
+      \draw[stealth-stealth]
+      (multiplexer.10) -| (RFReceiver3.north);
+      \draw[stealth-stealth]
+      (RFReceiver2.east) -- ++(0.75*\smgrid,0)|-(multiplexer.-5);
+      \draw[stealth-stealth]
+      (RFReceiver4.west) -- ++(-0.5*\smgrid,0)|-(multiplexer.0);
+      
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=green!10,draw =blue,dotted,thick, rounded corners]                
+        ($(RFReceiver2.south west) + (-0.25*\smgrid,-0.25*\smgrid)$) rectangle ($(DcMotors.north east) + (0.75*\smgrid,0.75*\smgrid)$);
+        \draw
+        ($(embeddedComputer.north) + (2*\smgrid,0.4*\smgrid)$)node{\textbf{Mobile cart}};
+      \end{pgfonlayer}
+    \end{tikzpicture}  
     \caption{}
     \label{fig:mobile_block_diag}
   \end{subfigure}
@@ -283,7 +388,7 @@ better reception of signals from above.
 
 
 \subsection{Reflector Construction}
-With the recent advancements in 3D printing technology, it is not difficult to
+With the recent advances in 3D printing technology, it is not difficult to
 create an object with a parabolic shape. Here, the reflector dishes
 were created using a 3D printer. The reflector array was designed to be modular,
 where the dishes, top plate, and bottom frame were printed separately. After
@@ -563,7 +668,7 @@ of Bradley University. %
     \label{fig:701}
   \end{subfigure}
   %
-  \caption{Experiment results demonstrating the performance of the proposed smart robotic cart in following the remote.}
+  \caption{Experimental results demonstrating the performance of the proposed smart robotic cart in following the remote.}
   \label{fig:experResultsImages}
 \end{figure}
 %
