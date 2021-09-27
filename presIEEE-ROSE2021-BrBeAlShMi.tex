@@ -59,6 +59,10 @@
 \usepackage{arydshln}
 \usepackage{rotating}
 
+\usepackage{tikz}
+% load libraries
+\usetikzlibrary{backgrounds,calc,patterns,decorations.pathmorphing,decorations.markings,snakes}
+\def\smgrid{0.5}
 
 % Customize Warsaw color 
 \setbeamercolor*{palette primary}{use=structure,fg=white,bg=red!50!black}
@@ -308,7 +312,33 @@ October~28-29,~2021}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=\textwidth]{figs/systemBlockDiagram.pdf}
+    % \includegraphics[width=0.2\textwidth]{figs/systemBlockDiagram.pdf}
+    \begin{tikzpicture}    
+      \tikzstyle{every node} = [font=\footnotesize];
+      \tikzstyle{block} = [draw, rectangle, fill=blue!15, rounded corners, minimum height=0.5 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 2.0cm, text centered](mobileCart){Mobile cart};
+      \node[block,text width= 2.0cm, text centered, below of=mobileCart, node distance=1.25cm](remote){Remote};
+      % Connections
+      \draw[stealth-stealth,ultra thick]
+      (mobileCart.south) --(remote.north);
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=red!10,draw = red,dashed,ultra thick, rounded corners]                
+        ($(remote.south west) + (-1.5*\smgrid,-0.25*\smgrid)$)node[](tmp1){} rectangle ($(mobileCart.north east) + (1.2*\smgrid,1.5*\smgrid)$)node[](tmp2){};
+        \draw
+        ($(mobileCart.north) + (-0.25*\smgrid,0.75*\smgrid)$)node{\textbf{Mobile cart system}};
+        % %%% Inputs and outputs
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,4.5*\smgrid)$) --node[near end,above]{Power}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,3*\smgrid)$) --node[near end,above]{On/Off switch}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,0.5*\smgrid)$) --node[near end,above]{Motion control}++(-3.0*\smgrid,0);
+        \draw[-stealth,thick]
+        ($(tmp2)+(0,-2.75*\smgrid)$) --node[very near end,above]{Cart position trajectory}++(4.0*\smgrid,0);
+      \end{pgfonlayer}
+    \end{tikzpicture}  
     \caption{Block Diagram of the Robotic Cart System}
     \label{fig:sysBlockDiag}
   \end{figure}
@@ -322,7 +352,30 @@ October~28-29,~2021}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=\textwidth]{figs/remoteBlockDiagram.pdf}
+    % \includegraphics[width=\textwidth]{figs/remoteBlockDiagram.pdf}
+    \begin{tikzpicture}    
+      \tikzstyle{every node} = [font=\tiny];
+      \tikzstyle{block} = [draw, rectangle, fill=orange!15, rounded corners, minimum height=0.5 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 2.5cm, text centered](rfTransceiverModule){RF transceiver module};
+      % Connections
+      % \draw[stealth-stealth,ultra thick]
+      % (mobileCart.south) --(remote.north);
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=green!10,draw = blue,dotted,thick, rounded corners]                
+        ($(rfTransceiverModule.south west) + (-0.25*\smgrid,-0.25*\smgrid)$)node[](tmp1){} rectangle ($(rfTransceiverModule.north east) + (0.25*\smgrid,0.75*\smgrid)$)node[](tmp2){};
+        \draw
+        ($(rfTransceiverModule.north) + (-0.25*\smgrid,0.5*\smgrid)$)node{\textbf{Remote}};
+        % %%% Inputs and outputs
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,1.75*\smgrid)$) --node[near end,above]{Battery power}++(-3.0*\smgrid,0);
+        \draw[stealth-,thick]
+        ($(tmp1)+(0,0.5*\smgrid)$) --node[very near end,above]{Incoming RF messages}++(-3.5*\smgrid,0);
+        \draw[-stealth,thick]
+        ($(tmp2)+(0,-1.0*\smgrid)$) --node[midway,above]{Outgoing RF messages}++(5.25*\smgrid,0);
+      \end{pgfonlayer}
+    \end{tikzpicture}  
     \caption{Block Diagram of Remote Target Subsystem}
     \label{fig:sysRemoteBlockDiag}
   \end{figure}
@@ -336,7 +389,61 @@ October~28-29,~2021}
   \end{block}
   \begin{figure}[b]
     \centering
-    \includegraphics[width=\textwidth]{figs/mobileCartBlockDiagram.pdf}
+    % \includegraphics[width=\textwidth]{figs/mobileCartBlockDiagram.pdf}
+    \begin{tikzpicture}[scale=1.0,transform shape]    
+      \tikzstyle{every node} = [font=\tiny];
+      \tikzstyle{block} = [draw, rectangle, fill=orange!15, rounded corners, minimum height=0.6 cm, minimum width=0.5cm];
+      \tikzstyle{pinstyle} = [pin edge={to-,thin,black}];
+      \node[block,text width= 1.0cm, text centered](embeddedComputer){Embedded computer};
+      \node[block,text width= 1.0cm, text centered, right of=embeddedComputer, node distance=2.5cm](DcMotors){DC motors};
+      \node[block,text width= 1.5cm, text centered, below of=DcMotors, node distance=0.75cm](omnidirectionalRfTransciever){Omnidirectional RF transceiver};
+      \node[block,text width= 1.5cm, text centered, below of=embeddedComputer, node distance=1.5cm](multiplexer){Multiplexer};
+      \node[block,text width= 1.5cm, text centered, below of=multiplexer, node distance=1.0cm](RFReceiver1){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, below of=RFReceiver1, node distance=1.0cm](RFReceiver2){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, right of=RFReceiver1, node distance=2.5cm](RFReceiver3){Direction sensitive RF receiver};
+      \node[block,text width= 1.5cm, text centered, right of=RFReceiver2, node distance=2.5cm](RFReceiver4){Direction sensitive RF receiver};
+      % Connections
+      \draw[stealth-,thick]
+      (embeddedComputer.165) --node[near end,above]{Battery power}++(-2.5*\smgrid,0);
+      \draw[stealth-,thick]
+      (embeddedComputer.-165) --node[near end,below]{ON/OFF switch}++(-2.5*\smgrid,0);
+      \draw[-stealth,thick]
+      (embeddedComputer.0) --(DcMotors.180);
+      \draw[-stealth,thick]
+      (DcMotors.0) --node[midway,above]{Wheel velocities}++(2.5*\smgrid,0);
+      \draw[-stealth,thick]
+      (omnidirectionalRfTransciever.0) --node[near end,above]{Outgoing RF signals}++(2.75*\smgrid,0);
+      \draw[stealth-,thick]
+      (omnidirectionalRfTransciever.-170) --node[very near end,above]{Incoming RF signals}++(-7.5*\smgrid,0)node[](tmp1){};
+      \draw[stealth-stealth,very thick]
+      (multiplexer.90) --(embeddedComputer.-90);
+      \draw[stealth-stealth,thick]
+      (embeddedComputer.-45) |-(omnidirectionalRfTransciever.170);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- (RFReceiver1.west);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- (RFReceiver2.west);
+      \draw[-stealth]
+      ($(tmp1) + (\smgrid,0)$) |- ($(RFReceiver2.south)+(0,-0.5*\smgrid)$) -| ($(RFReceiver3.east)+(0.5*\smgrid,0)$) -- (RFReceiver3.east);
+      \draw[stealth-]
+      (RFReceiver4.east) -- ++(0.5*\smgrid,0);
+      \draw[stealth-stealth]
+      (RFReceiver1.east) -- ++(0.5*\smgrid,0)|-(multiplexer.-10);
+      \draw[stealth-stealth]
+      (multiplexer.10) -| (RFReceiver3.north);
+      \draw[stealth-stealth]
+      (RFReceiver2.east) -- ++(0.75*\smgrid,0)|-(multiplexer.-5);
+      \draw[stealth-stealth]
+      (RFReceiver4.west) -- ++(-0.5*\smgrid,0)|-(multiplexer.0);
+      
+      % Layers
+      \begin{pgfonlayer}{background}
+        \filldraw[fill=green!10,draw =blue,dotted,thick, rounded corners]                
+        ($(RFReceiver2.south west) + (-0.25*\smgrid,-0.25*\smgrid)$) rectangle ($(DcMotors.north east) + (0.75*\smgrid,0.75*\smgrid)$);
+        \draw
+        ($(embeddedComputer.north) + (2*\smgrid,0.4*\smgrid)$)node{\textbf{Mobile cart}};
+      \end{pgfonlayer}
+    \end{tikzpicture}  
     \caption{Block Diagram of Mobile Cart Subsystem}
     \label{fig:sysMobileBlockDiag}
   \end{figure}
